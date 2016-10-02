@@ -5,9 +5,9 @@
 
 #pragma once
 
-//#include <cmath>
-//#include <iostream>
-//#include <functional>
+#include <cmath>
+#include <iostream>
+#include <functional>
 
 using namespace std;
 class Point
