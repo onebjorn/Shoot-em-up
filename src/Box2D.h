@@ -142,7 +142,6 @@ public:
               << ray_angle << ")" << endl;
      }
 
-
      void rayGeometry()
      {
 double ray_k = 0.0;
@@ -150,12 +149,36 @@ ray_k = tan(ray_angle);
 cout<< "Ray = " << ray_k  << endl;
      }
 
-     friend void rayCrossing(Ray2D&, Box2D&);
+friend void rayCrossing(Ray2D&, Box2D&);
 
         ~Ray2D()
         {
       //Код деструктора
         }
-
-
 };
+
+
+
+void boxCrossing( Box2D&obj1, Box2D&obj2 )
+{
+  obj1.boxGeometry();
+  obj2.boxGeometry();
+
+    double rho_x = 0.0, rho_y = 0.0;
+    double l = 0.0, h = 0.0;
+
+/* Вычисление растояния между центрами по осям x и y */
+rho_x =fabs(obj1.box2d_x_center - obj2.box2d_x_center);
+rho_y = fabs(obj1.box2d_y_center - obj2.box2d_y_center);
+
+/* Вычисление пересечения */
+l = (obj1.box2d_lenght + obj2.box2d_lenght) / 2.0;
+h = (obj1.box2d_height + obj2.box2d_height) / 2.0;
+
+if  (rho_x > l && rho_y > h)
+{ cout<< " NOTCrossing" << endl; }
+else
+{   cout<< " Crossing" << endl; }
+}
+
+
