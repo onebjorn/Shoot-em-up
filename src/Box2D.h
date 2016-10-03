@@ -5,6 +5,7 @@
 #include <cmath>
 
 using namespace std;
+
 /* Класс двумерного прямоугольника Box2d*/
 class Box2D
 {
