@@ -8,6 +8,5 @@ int main()
         cout << alpha.GetDirect(1) << endl;
         return 0;
 
-        Box2d a1();
 }
 
