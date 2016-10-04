@@ -103,9 +103,13 @@ l = (obj1.box2d_lenght + obj2.box2d_lenght) / 2.0;
 h = (obj1.box2d_height + obj2.box2d_height) / 2.0;
 
 if  (rho_x > l && rho_y > h)
+<<<<<<< HEAD
 { cout<< " NOT Crossing" <<  endl; }
+=======
+ cout<< " NOTCrossing" << endl; 
+>>>>>>> 4af4101e0905ad96abdbc20624194ea6caa40313
 else
-{   cout<< " Crossing" << endl; }
+ cout<< " Crossing" << endl; 
 }
 
 ~Box2D()
