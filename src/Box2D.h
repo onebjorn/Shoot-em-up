@@ -1,5 +1,6 @@
 #include <iostream>
 #pragma once
+#include <ray2d_maybe.h>
 #include <initializer_list>
 #include <functional>
 #include <cmath>
@@ -28,6 +29,8 @@ public:
     /* Длина и высота */
     double box2d_lenght = 0.0,
                  box2d_height = 0.0;
+    /* Координаты углов*/
+    double x1 = 0.0, y1 = 0.0, x2 = 0.0, y2 = 0.0;
 
     /* Обычный конструктор с параметрами*/
     Box2D(double x1, double y1, double x2,double y2)
@@ -60,14 +63,13 @@ public:
         return *this;
       }
 
- void getBox2d()
+ void getBox2D(Box2D const & obj)
  {
-  cout << "Box= " << "( "<< box2d_x1 <<", "<< box2d_y1 << ") & ( "
-          << box2d_x2<< ", "<< box2d_y2 << ")" << endl;
-
+     x1 = obj.box2d_x1;
+     y1 = obj.box2d_y1;
+     x2 = obj.box2d_x2;
+     y2 = obj.box2d_y2;
  }
-
-/* TODO операции сложений и умножений*/
 
  /* Вычисление площади*/
  void square()
@@ -83,14 +85,6 @@ public:
   box2d_lenght = fabs(box2d_x2 - box2d_x1);
   box2d_height = fabs(box2d_y2 - box2d_y1);
  }
-
- friend void boxCrossing(Box2D&, Box2D&);
-
-    ~Box2D()
-    {
-  //Код деструктора
-    }
-};
 
 void boxCrossing( Box2D&obj1, Box2D&obj2 )
 {
@@ -109,7 +103,14 @@ l = (obj1.box2d_lenght + obj2.box2d_lenght) / 2.0;
 h = (obj1.box2d_height + obj2.box2d_height) / 2.0;
 
 if  (rho_x > l && rho_y > h)
-{ cout<< " NOTCrossing" << endl; }
+{ cout<< " NOT Crossing" <<  endl; }
 else
 {   cout<< " Crossing" << endl; }
 }
+
+~Box2D()
+{
+//Код деструктора
+}
+};
+
