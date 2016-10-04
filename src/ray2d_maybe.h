@@ -1,16 +1,11 @@
-#ifndef RAY2D_MAYBE
-#define RAY2D_MAYBE
-
-#endif // RAY2D_MAYBE
-
 #pragma once
-
 #include <cmath>
 #include <iostream>
 #include <functional>
 #include <Box2D.h>
 
 using namespace std;
+
 class Point
 {
 public:
