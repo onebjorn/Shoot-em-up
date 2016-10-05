@@ -1,12 +1,11 @@
 #include <iostream>
 #pragma once
-#include <ray2d_maybe.h>
 #include <functional>
 #include <cmath>
 
 using namespace std;
 
-float const kEps = 1e-5f;
+float const Eps = 1e-5f;
 
 
 /* Класс двумерного прямоугольника Box2d*/
@@ -180,6 +179,6 @@ private:
 
 bool EqualWithEps(float v1, float v2) const
 {
-return fabs(v1 - v2) < kEps;
+return fabs(v1 - v2) < Eps;
 }
 };
