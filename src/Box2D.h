@@ -15,6 +15,7 @@ private:
              box2d_y1 = 0.0,
              box2d_x2 = 0.0,
              box2d_y2 = 0.0;
+
 public:
 
     Box2D() = default;
@@ -26,7 +27,14 @@ public:
     float box2d_lenght = 0.0,
              box2d_height = 0.0;
     /* Координаты углов*/
-    float x1 = 0.0, y1 = 0.0, x2 = 0.0, y2 = 0.0;
+  //  float x1 = 0.0, y1 = 0.0, x2 = 0.0, y2 = 0.0;
+
+
+    float & x1() { return box2d_x1; }
+    float & y1() { return box2d_y1; }
+    float & x2() { return box2d_x2; }
+    float & y2() { return box2d_y2; }
+
 
     /* Обычный конструктор с параметрами*/
     Box2D(float x1, float y1, float x2,float y2)
@@ -55,18 +63,10 @@ public:
         return *this;
       }
 
- void getBox2D(Box2D const & obj)
- {
-     x1 = obj.box2d_x1;
-     y1 = obj.box2d_y1;
-     x2 = obj.box2d_x2;
-     y2 = obj.box2d_y2;
- }
-
  void boxGeometry()
  {
-  box2d_x_center = (box2d_x2 + box2d_x1) / 2.0;
-  box2d_y_center = (box2d_y2 + box2d_y1) / 2.0;
+  box2d_x_center = (box2d_x2 + box2d_x1) / 2.0f;
+  box2d_y_center = (box2d_y2 + box2d_y1) / 2.0f;
   box2d_lenght = fabs(box2d_x2 - box2d_x1);
   box2d_height = fabs(box2d_y2 - box2d_y1);
  }
@@ -84,8 +84,8 @@ rho_x =fabs(obj1.box2d_x_center - obj2.box2d_x_center);
 rho_y = fabs(obj1.box2d_y_center - obj2.box2d_y_center);
 
 /* Вычисление пересечения */
-l = (obj1.box2d_lenght + obj2.box2d_lenght) / 2.0;
-h = (obj1.box2d_height + obj2.box2d_height) / 2.0;
+l = (obj1.box2d_lenght + obj2.box2d_lenght) / 2.0f;
+h = (obj1.box2d_height + obj2.box2d_height) / 2.0f;
 
 if  (rho_x > l && rho_y > h)
   {
