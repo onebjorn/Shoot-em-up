@@ -6,14 +6,10 @@ using namespace std;
 
 int main()
 {
-        Box2D obj1(1,1,2,2);
-        Box2D obj2(3,3,4,4);
-
-obj1.boxCrossing(obj1,obj2);
-
-cout<< obj1.x1()<<endl;
-
-
-        return 0;
+  Box2D obj1(1,1,2,2);
+  Box2D obj2(3,3,4,4);
+  obj1.boxCrossing(obj1,obj2);
+obj1.x1();
+  return 0;
 }
 
