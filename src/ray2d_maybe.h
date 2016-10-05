@@ -1,12 +1,18 @@
 #pragma once
+
 #include <cmath>
 #include <iostream>
 #include <functional>
 #include <Box2D.h>
+#include <point2d.h>
 
 using namespace std;
 
+float const pi = 3.14159265;
+float const kEps=1e-5f;
+=======
 class Point
+
 {
 public:
         Point()=default;
@@ -22,74 +28,244 @@ public:
         float & x() {return m_x;}
         float & y() {return m_y;}
 
-protected:
-        float m_x, m_y;
-};
-
-class Ray: public Point
+class Ray
 {
 public:
-        Ray()=default;
 
-        Ray(Ray const & obj)
-        {
-                origin[0]=obj.origin[0];
-                origin[0]=obj.origin[1];
-                direct[0]=obj.direct[0];
-                direct[1]=obj.direct[1];
-        }
+  Ray()=default;
 
-        Ray(float x_0, float y_0, float phi)
-        {
-                if (phi<0.0) phi= 2*3.14 - phi;
-                SetOrigin(x_0,y_0);
-                SetDir_1param(phi);
-        }
+  Ray(Ray const & obj)
+  {
+    m_origin = Point(obj.m_origin);
+    m_direct[0]=obj.m_direct[0];
+    m_direct[1]=obj.m_direct[1];
+  }
 
-        Ray(float x_0, float y_0, float x_1, float y_1)
-        {
-                SetOrigin(x_0,y_0);
-                float sq=sqrt(x_1*x_1 + y_1*y_1);
-                try
-                {
-                        if(sq<1){throw 123;}
-                        else
-                        {
-                                direct[0]=x_1/sq;
-                                direct[1]=y_1/sq;
-                        }
-                }
-                catch(int p)
-                {
-                        cout << "Invalid way to create direction" << endl;
-                }
-        }
+  Ray(float x_0, float y_0, float phi)
+  {
+    if (phi<0.0) phi= 2*3.14 - phi;
+    m_origin = Point(x_0,y_0);
+    SetDir_1param(phi);
+  }
 
-        float GetDirect(int i)
-        {
-                return direct[i];
-        }
+  Ray(float x_0, float y_0, float x_1, float y_1)
+  {
+    m_origin = Point(x_0,y_0);
+    float sq=sqrt((x_1-x_0)*(x_1-x_0) + (y_1-y_0)*(y_1-y_0));
+    try
+    {
+      if(sq<1){throw 123;}
+      else
+      {
+        m_direct[0]=(x_1-x_0)/sq;
+        m_direct[1]=(y_1-y_0)/sq;
+      }
+    }
+    catch(int p)
+    {
+      cout << "Invalid way to create direction, catch nothing:" << endl;
+    }
+    }
 
-        float GetOrigin(int i)
+  float GetDirect(int i)
+  {
+    return m_direct[i];
+  }
+
+  float & x0() {return m_origin.x();}
+  float & y0() {return m_origin.y();}
+
+  int Where(Box2D & obj1)
+  {
+    int wh;
+    if (m_origin.x()<obj1.x1()){
+        if (m_origin.y()<obj1.y1()) {wh=2;}
+        else if (m_origin.y()>obj1.y2()) {wh=8;}
+        else wh=1;
+      }
+    else if (m_origin.x()>obj1.x2()){
+        if (m_origin.y()<obj1.y1()) {wh=4;}
+        else if (m_origin.y()>obj1.y2()) {wh=6;}
+        else wh=5;
+      }
+    else {
+        if (m_origin.y()<obj1.y1()) {wh=3;}
+        else if (m_origin.y()>obj1.y2()) {wh=7;}
+        else wh=0;
+      }
+    return wh;
+  }
+
+  // Checking correct direction of ray
+  bool Correct_Dir(int b)
+  {
+    switch (b)
+      {
+      case 0:
         {
-                return origin[i];
+         return false;
+         break;
         }
+      case 1:
+        {
+          if (fabs(acos(-GetDirect(0)))<pi/2.0) {return false;}
+          else {return true;}
+          break;
+        }
+      case 2:
+        {
+          if ((acos(GetDirect(0)) > pi/2.0)||(acos(GetDirect(1)) > pi/2.0)) {return false;}
+          else {return true;}
+          break;
+        }
+      case 3:
+        {
+          if (fabs(acos(-GetDirect(1)))<pi/2.0) {return false;}
+          else {return true;}
+          break;
+        }
+      case 4:
+        {
+          if ((acos(-GetDirect(0)) > pi/2.0)||(acos(GetDirect(1)) > pi/2.0)) {return false;}
+          else {return true;}
+          break;
+        }
+      case 5:
+        {
+          if (fabs(acos(GetDirect(0)))<pi/2.0) {return false;}
+          else {return true;}
+          break;
+        }
+      case 6:
+        {
+          if ((acos(-GetDirect(0)) > pi/2.0)||(acos(-GetDirect(1)) > pi/2.0)) {return false;}
+          else {return true;}
+          break;
+        }
+      case 7:
+        {
+          if (fabs(acos(GetDirect(1)))<pi/2.0) {return false;}
+          else {return true;}
+          break;
+        }
+      case 8:
+        {
+          if ((acos(GetDirect(0)) > pi/2.0)||(acos(-GetDirect(1)) > pi/2.0)) {return false;}
+          else {return true;}
+          break;
+        }
+      }
+  }
+
+  float X_test(float y)
+  {
+    if (GetDirect(1)!=0.0)
+      {
+        float b = m_origin.x() + (y - m_origin.y())*GetDirect(0)/GetDirect(1);
+        return b;
+      }
+    else return m_origin.y();
+  }
+
+  float Y_test(float x)
+  {
+    if (GetDirect(0)!=0.0)
+      {
+        float b = m_origin.y() + (x - m_origin.x())*GetDirect(1)/GetDirect(0);
+        return b;
+      }
+    else return m_origin.x();
+  }
+
+  bool Condition(Box2D & obj1,int b)
+  {
+    switch (b)
+      {
+      case 1:
+        {
+          return (Y_test(obj1.x1()) > obj1.y1())&&(Y_test(obj1.x1()) < obj1.y2());
+          break;
+        }
+      case 2:
+        {
+          return ( ((Y_test(obj1.x1()) > obj1.y1())&&(Y_test(obj1.x1()) < obj1.y2()))
+                  || ((X_test(obj1.y1()) > obj1.x1())&&(X_test(obj1.y1()) < obj1.x2())) );
+          break;
+        }
+      case 3:
+        {
+          return ((X_test(obj1.y1()) > obj1.x1())&&(X_test(obj1.y1()) < obj1.x2()));
+          break;
+        }
+      case 4:
+        {
+          return ( ((X_test(obj1.y1()) > obj1.x1())&&(X_test(obj1.y1()) < obj1.x2()))
+                  || ( (Y_test(obj1.x2()) > obj1.y1())&&(Y_test(obj1.x2()) < obj1.y2()) ) );
+          break;
+        }
+      case 5:
+        {
+          return (Y_test(obj1.x2()) > obj1.y1())&&(Y_test(obj1.x2()) < obj1.y2());
+          break;
+        }
+      case 6:
+        {
+          return ( ( (Y_test(obj1.x2()) > obj1.y1())&&(Y_test(obj1.x2()) < obj1.y2()) )
+                  || ( (X_test(obj1.y2()) > obj1.x1())&&(X_test(obj1.y2()) < obj1.x2()) ) );
+          break;
+        }
+      case 7:
+        {
+          return (X_test(obj1.y2()) > obj1.x1())&&(X_test(obj1.y2()) < obj1.x2());
+          break;
+        }
+      case 8:
+        {
+          return ( ( (X_test(obj1.y2()) > obj1.x1())&&(X_test(obj1.y2()) < obj1.x2()) )
+                  || ( (Y_test(obj1.x1()) > obj1.y1())&&(Y_test(obj1.x1()) < obj1.y2()) ) );
+          break;
+        }
+      }
+  }
+
+  void GetCrossRect(Box2D & obj1)
+  {
+    int c = Where(obj1);
+
+    try
+    {
+      if (Correct_Dir(c)==false) {throw 123;}
+      else
+        {
+          if (Condition(obj1, c)==true) {cout << "Crossing" << endl;}
+          else {cout << "Not Crossing" << endl;}
+        }
+    }
+    catch(int p)
+    {
+      cout << "Not Crossing" << endl;
+    }
+  }
+
+  bool operator == (Ray const & obj) const
+    {
+      return EqualWithEps(m_origin.x(), obj.m_origin.x()) && EqualWithEps(m_origin.y(), obj.m_origin.y())
+          && EqualWithEps(m_direct[0], obj.m_direct[0]) && EqualWithEps(m_direct[1], obj.m_direct[1]);
+    }
 
 private:
-        float origin[2];
-        float direct[2];
+  Point m_origin = Point();
+  float m_direct[2]={0.0f, 0.0f};
 
-        void SetOrigin(float x,float y)
-        {
-                origin[0]=x;
-                origin[1]=y;
-        }
+  void SetDir_1param(float x)
+  {
+    m_direct[0]=cos(x);
+    m_direct[1]=sin(x);
+  }
 
-        void SetDir_1param(float x)
-        {
-                direct[0]=cos(x);
-                direct[1]=sin(x);
-        }
+  bool EqualWithEps(float v1, float v2) const
+  {
+    return fabs(v1 - v2) < kEps;
+  }
 
-        //void GetCrossRect(float a, float b){}
 };
