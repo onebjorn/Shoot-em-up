@@ -6,7 +6,7 @@
 TEST(Box2D_test, test_construction)
 {
   Box2D p1;
-  EXPECT_EQ(p1.x1() , 0.0);
+  EXPECT_EQ(p1.x1(), 0.0);
   EXPECT_EQ(p1.y1(), 0.0);
   EXPECT_EQ(p1.x2(), 0.0);
   EXPECT_EQ(p1.y2(), 0.0);
