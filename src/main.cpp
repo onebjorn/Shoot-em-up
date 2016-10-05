@@ -6,8 +6,6 @@ using namespace std;
 
 int main()
 {
-        Ray alpha(0.0, 0.0, 1.0, 0.0);
-
         Box2D obj1(1,1,2,2);
         Box2D obj2(3,3,4,4);
         obj2.getBox2D(obj2);
