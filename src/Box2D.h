@@ -125,7 +125,6 @@ public:
         && EqualWithEps(m_box2d_x2, obj.m_box2d_x2) && EqualWithEps(m_box2d_y2, obj.m_box2d_y2);
   }
 
-
   void boxGeometry()
   {
     m_box2d_x_center = (m_box2d_x2 + m_box2d_x1) / 2.0f;
@@ -133,29 +132,6 @@ public:
     m_box2d_lenght = fabs(m_box2d_x2 - m_box2d_x1);
     m_box2d_height = fabs(m_box2d_y2 - m_box2d_y1);
  }
-
-  int boxCrossing( Box2D&obj1, Box2D&obj2 )
-  {
-    obj1.boxGeometry();
-    obj2.boxGeometry();
-    float m_rho_x = 0.0f, m_rho_y = 0.0f;
-    float m_l = 0.0f, m_h = 0.0f;
-
-    m_rho_x =fabs(obj1.m_box2d_x_center - obj2.m_box2d_x_center); // Вычисление растояния между центрами по осям x и y.
-    m_rho_y = fabs(obj1.m_box2d_y_center - obj2.m_box2d_y_center);
-
-    m_l = (obj1.m_box2d_lenght + obj2.m_box2d_lenght) / 2.0f; // Вычисление пересечения.
-    m_h = (obj1.m_box2d_height + obj2.m_box2d_height) / 2.0f;
-
-    if  (m_rho_x > m_l && m_rho_y > m_h)
-    {
-      return 0;
-    }
-    else
-    {
-      return 1;
-    }
-  }
 
   Box2D operator + (Box2D const & obj) const  // Сложение.
   {
@@ -235,6 +211,15 @@ public:
   float & y1() { return m_box2d_y1; }
   float & x2() { return m_box2d_x2; }
   float & y2() { return m_box2d_y2; }
+
+  int BoxesIntersect(const Box2D &a, const Box2D &b)
+  {
+      if (a.m_box2d_x2 < b.m_box2d_x1) return 0; // a is left of b
+      if (a.m_box2d_x1 > b.m_box2d_x2) return 0; // a is right of b
+      if (a.m_box2d_y2 < b.m_box2d_y1) return 0; // a is above b
+      if (a.m_box2d_y1 > b.m_box2d_y2) return 0; // a is below b
+      return 1; // boxes overlap
+  }
 
   ~Box2D()
   {}
