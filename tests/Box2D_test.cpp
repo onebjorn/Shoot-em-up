@@ -69,12 +69,12 @@ TEST(Box2D_test, test_operators)
 }
 TEST(Box2D_test, test_cross)
 {
-   Box2D p1 = { 1.0f, 4.0f , 2.0f, 2.0f};
-   Box2D p2 = { 10.0f, 40.0f , 20.0f, 20.0f};
-   Box2D p3 = { 1.0f, 3.0f , 20.0f, 3.0f};
-   EXPECT_EQ(1, p1.boxCrossing(p1,p3));
-   EXPECT_EQ(1, p2.boxCrossing(p2,p3));
-   EXPECT_EQ(0, p1.boxCrossing(p1,p2));
+   Box2D p1 = { 1.0f, 1.0f , 4.0f, 2.0f};
+   Box2D p2 = { 1.0f, 3.0f , 4.0f, 4.0f};
+   Box2D p3 = { 2.0f, 1.0f , 3.0f, 5.0f};
+   EXPECT_EQ(1, p1.BoxesIntersect(p1,p3));
+   EXPECT_EQ(1, p2.BoxesIntersect(p2,p3));
+   EXPECT_EQ(0, p1.BoxesIntersect(p1,p2));
 }
 
 
