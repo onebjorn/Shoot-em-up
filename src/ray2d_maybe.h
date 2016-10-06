@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include <functional>
+#include <initializer_list>
 #include <Box2D.h>
 #include <point2d.h>
 
@@ -46,17 +47,67 @@ public:
     }
     catch(int p)
     {
-      cout << "Invalid way to create direction, catch nothing:" << endl;
+      m_direct[0]=0.0;
+      m_direct[1]=0.0;
+      cout << "Invalid way to create direction" << endl;
     }
     }
 
-  float GetDirect(int i)
+ Ray(std::initializer_list<float> const & lst)
+  {
+  float * vals[] = { &m_origin.x(), &m_origin.y(), &m_direct[0], &m_direct[1]};
+  int const count = sizeof(vals) / sizeof(vals[0]);
+
+  auto it = lst.begin();
+  for (int i = 0; i < count && it != lst.end(); i++, ++it) *vals[i] = *it;
+  int const n=lst.size();
+  switch(n)
+    {
+    case 3:
+      {
+        SetDir_1param(*vals[2]);
+        break;
+      }
+    case 4:
+      {
+        float sq=sqrt((*vals[2]-*vals[0])*(*vals[2]-*vals[0]) + (*vals[3]-*vals[1])*(*vals[3]-*vals[1]));
+        try
+        {
+          if(sq<1){throw 123;}
+          else
+          {
+            *vals[2]=(*vals[2]-*vals[0])/sq;
+            *vals[3]=(*vals[3]-*vals[1])/sq;
+          }
+        }
+        catch(int p)
+        {
+          *vals[2]=0.0;
+          *vals[3]=0.0;
+        }
+        break;
+     }
+   }
+
+  }
+
+
+  float & GetDirect(int i)
+  {
+    return m_direct[i];
+  }
+
+  float const & GetDirect(int i) const
   {
     return m_direct[i];
   }
 
   float & x0() {return m_origin.x();}
   float & y0() {return m_origin.y();}
+
+
+  float const & x() const {return m_origin.x();}
+  float const & y() const {return m_origin.y();}
 
   int Where(Box2D & obj1)
   {
@@ -240,9 +291,11 @@ private:
   Point m_origin = Point();
   float m_direct[2]={0.0f, 0.0f};
 
-  void SetDir_1param(float x)
+  void const SetDir_1param(float x)
   {
+
     m_direct[0]=cos(x);
+    if (x==pi/2.0) {m_direct[0]=0.0;} // Oh, I don't know how it happened...
     m_direct[1]=sin(x);
   }
 
