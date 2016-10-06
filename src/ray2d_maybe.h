@@ -8,11 +8,8 @@
 
 using namespace std;
 
-
 float const pi = 3.14159265;
-
 float const kEps=1e-5f;
-
 
 class Ray
 {
