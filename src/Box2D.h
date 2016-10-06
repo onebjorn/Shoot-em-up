@@ -9,26 +9,49 @@ float const Eps = 1e-5f;
 
 
 /* Класс двумерного прямоугольника Box2d*/
+/*  */
 class Box2D
 {
 public:
+
   Box2D() = default;
+
   float m_box2d_x_center = 0.0f;  // Иницилизация координат центра
   float m_box2d_y_center = 0.0f;
   float m_box2d_lenght = 0.0f;    // Длина и высота
   float m_box2d_height = 0.0f;
 
-  float & x1() { return m_box2d_x1; }
-  float & y1() { return m_box2d_y1; }
-  float & x2() { return m_box2d_x2; }
-  float & y2() { return m_box2d_y2; }
-
-  Box2D(float x1, float y1, float x2,float y2)    // Обычный конструктор с параметрами.
-    : m_box2d_x1(x1)
-    , m_box2d_y1(y1)
-    , m_box2d_x2(x2)
-    , m_box2d_y2(y2)
-  {}
+  Box2D(float x1, float y1, float x2, float y2) // Обычный конструктор с параметрами и проверкой на корректность.
+  {
+    if ( x2 > x1 )
+    {
+      m_box2d_x1 = x1;
+      m_box2d_x2 = x2;
+    }
+    else if ( x1 == x2 )
+    {
+      cout<< "Enter correct box!"<<endl;
+    }
+    else
+    {
+      m_box2d_x1 = x2;
+      m_box2d_x2 = x1;
+    }
+    if ( y2 > y1 )
+    {
+      m_box2d_y1 = y1;
+      m_box2d_y2 = y2;
+    }
+    else if ( y1 == y2 )
+    {
+      cout<< "Enter correct box!"<<endl;
+    }
+    else
+    {
+      m_box2d_y1 = y2;
+      m_box2d_y2 = y1;
+    }
+  }
 
   Box2D( const Box2D & obj)    // Конструктор копирования.
     : m_box2d_x1(obj.m_box2d_x1)
@@ -44,16 +67,55 @@ public:
     auto it = lst.begin();
     for (int i = 0; i < count && it != lst.end(); i++, ++it)
       *vals[i] = *it;
+    if ( m_box2d_x1 > m_box2d_x2 && m_box2d_y1 > m_box2d_y2)
+    {
+      float * vals[] = { &m_box2d_x2, &m_box2d_y2, &m_box2d_x1, &m_box2d_y1 };
+      int const count = sizeof(vals) / sizeof(vals[0]);
+      auto it = lst.begin();
+      for (int i = 0; i < count && it != lst.end(); i++, ++it)
+        *vals[i] = *it;
+    }
+    if ( m_box2d_x1 > m_box2d_x2 && m_box2d_y1 < m_box2d_y2)
+    {
+      float * vals[] = { &m_box2d_x2, &m_box2d_y1, &m_box2d_x1, &m_box2d_y2 };
+      int const count = sizeof(vals) / sizeof(vals[0]);
+      auto it = lst.begin();
+      for (int i = 0; i < count && it != lst.end(); i++, ++it)
+        *vals[i] = *it;
+    }
+    if ( m_box2d_x1 < m_box2d_x2 && m_box2d_y1 > m_box2d_y2)
+    {
+      float * vals[] = { &m_box2d_x1, &m_box2d_y2, &m_box2d_x2, &m_box2d_y1 };
+      int const count = sizeof(vals) / sizeof(vals[0]);
+      auto it = lst.begin();
+      for (int i = 0; i < count && it != lst.end(); i++, ++it)
+        *vals[i] = *it;
+    }
   }
-
 
   Box2D & operator = (Box2D const & obj)     // Оператор присваивания.
   {
     if (this == &obj) return *this;
-    m_box2d_x1 = obj.m_box2d_x1;
-    m_box2d_y1 = obj.m_box2d_y1;
-    m_box2d_x2 = obj.m_box2d_x2;
-    m_box2d_y2 = obj.m_box2d_y2;
+    if (obj.m_box2d_x1 < obj.m_box2d_x2)
+    {
+      m_box2d_x1 = obj.m_box2d_x1;
+      m_box2d_x2 = obj.m_box2d_x2;
+    }
+    else
+    {
+      m_box2d_x2 = obj.m_box2d_x1;
+      m_box2d_x1 = obj.m_box2d_x2;
+    }
+    if (obj.m_box2d_y1 < obj.m_box2d_y2)
+    {
+      m_box2d_y1 = obj.m_box2d_y1;
+      m_box2d_y2 = obj.m_box2d_y2;
+    }
+    else
+    {
+      m_box2d_y2 = obj.m_box2d_y1;
+      m_box2d_y1 = obj.m_box2d_y2;
+    }
     return *this;
   }
 
@@ -72,7 +134,7 @@ public:
     m_box2d_height = fabs(m_box2d_y2 - m_box2d_y1);
  }
 
-  void boxCrossing( Box2D&obj1, Box2D&obj2 )
+  int boxCrossing( Box2D&obj1, Box2D&obj2 )
   {
     obj1.boxGeometry();
     obj2.boxGeometry();
@@ -87,11 +149,11 @@ public:
 
     if  (m_rho_x > m_l && m_rho_y > m_h)
     {
-      cout<< " NOT Crossing" <<  endl;
+      return 0;
     }
     else
     {
-      cout<< " Crossing" << endl;
+      return 1;
     }
   }
 
@@ -167,6 +229,12 @@ public:
       return *this;
     }
   }
+
+
+  float & x1() { return m_box2d_x1; }
+  float & y1() { return m_box2d_y1; }
+  float & x2() { return m_box2d_x2; }
+  float & y2() { return m_box2d_y2; }
 
   ~Box2D()
   {}
