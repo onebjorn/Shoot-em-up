@@ -6,12 +6,12 @@ project(Shoot-em-up)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
 
 # Set up the main source folder.
-set(SOURCE_ROOT src )
+set(SOURCE_ROOT src)
 # Scan source folder to find all sources and put the result to SRC_LIST.
 aux_source_directory(${SOURCE_ROOT} SRC_LIST)
 
 # Create executable by SRC_LIST.
-add_executable(${PROJECT_NAME} ${SRC_LIST} "src/box2d.h" "src/ray2d.h" )
+add_executable(${PROJECT_NAME} ${SRC_LIST} "src/point2d.h" "src/box2d.h" "src/ray2d.h" )
 
 # Add subdirectory with Google Test Library.
 add_subdirectory(3party/googletest)
@@ -32,4 +32,5 @@ add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
 target_link_libraries(${PROJECT_TEST_NAME} gtest gtest_main)
 # Finish tests setting up.
 add_test(test ${PROJECT_TEST_NAME})
+
 

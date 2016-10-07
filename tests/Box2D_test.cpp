@@ -12,15 +12,15 @@ TEST(Box2D_test, test_construction)
   EXPECT_EQ(p1.x2(), 0.0);
   EXPECT_EQ(p1.y2(), 0.0);
 
-  Box2D p2(1.9f, 10, 1.2f, 1);
-  EXPECT_EQ(p2.x1(), 1.2f);
-  EXPECT_EQ(p2.x2(), 1.9f);
-  EXPECT_EQ(p2.y1(), 1.0f);
-  EXPECT_EQ(p2.y2(), 10.0f);
+  Box2D p2(1.0f, 2.0f, 3.0f, 4.0f);
+  EXPECT_EQ(p2.x1(), 1.0f);
+  EXPECT_EQ(p2.x2(), 3.0f);
+  EXPECT_EQ(p2.y1(), 2.0f);
+  EXPECT_EQ(p2.y2(), 4.0f);
 
-  Box2D p3 = {1.9f, 10, 1.2f, 100};
+  Box2D p3 = {2.0f, 10, 1.2f, 100};
   EXPECT_EQ(p3.x1(), 1.2f);
-  EXPECT_EQ(p3.x2(), 1.9f);
+  EXPECT_EQ(p3.x2(), 2.0f);
   EXPECT_EQ(p3.y1(), 10.0f);
   EXPECT_EQ(p3.y2(), 100.0f);
 
@@ -30,12 +30,14 @@ TEST(Box2D_test, test_construction)
 
 TEST(Box2D_test, test_initializer_list)
 {
-  Box2D p1 = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f};
-  EXPECT_EQ(p1.x1(), 1.0f);
-  EXPECT_EQ(p1.y1(), 2.0f);
-  Box2D p2 = { 1.0f };
-  EXPECT_EQ(p2.x1(), 1.0f);
-  EXPECT_EQ(p2.y1(), 0.0f);
+  Box2D b1 = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f};
+  EXPECT_EQ(b1.x1(), 1.0f);
+  EXPECT_EQ(b1.y1(), 2.0f);
+  Point2D p3 = {1.0, 2.3};
+  Point2D p2 = {2.0, 1.3};
+  Box2D b2 = { p2, p3};
+  EXPECT_EQ(b2.x1(), 1.0f);
+  EXPECT_EQ(b2.x2(), 2.0f);
 }
 
 TEST(Box2D_test, test_assignment)

@@ -1,5 +1,4 @@
 #pragma once
-
 #include <cmath>
 #include <iostream>
 #include <functional>
@@ -10,7 +9,6 @@
 using namespace std;
 
 float const pi = 3.14159265;
-float const kEps=1e-5f;
 
 class Ray
 {
@@ -20,7 +18,7 @@ public:
 
   Ray(Ray const & obj)
   {
-    m_origin = Point(obj.m_origin);
+    m_origin = Point2D(obj.m_origin);
     m_direct[0]=obj.m_direct[0];
     m_direct[1]=obj.m_direct[1];
   }
@@ -28,13 +26,13 @@ public:
   Ray(float x_0, float y_0, float phi)
   {
     if (phi<0.0) phi= 2*3.14 - phi;
-    m_origin = Point(x_0,y_0);
+    m_origin = Point2D(x_0,y_0);
     SetDir_1param(phi);
   }
 
   Ray(float x_0, float y_0, float x_1, float y_1)
   {
-    m_origin = Point(x_0,y_0);
+    m_origin = Point2D(x_0,y_0);
     float sq=sqrt((x_1-x_0)*(x_1-x_0) + (y_1-y_0)*(y_1-y_0));
     try
     {
@@ -288,7 +286,7 @@ public:
     }
 
 private:
-  Point m_origin = Point();
+  Point2D m_origin = Point2D();
   float m_direct[2]={0.0f, 0.0f};
 
   void const SetDir_1param(float x)

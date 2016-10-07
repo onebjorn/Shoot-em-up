@@ -1,5 +1,6 @@
 #include <iostream>
 #pragma once
+#include "point2d.h"
 #include <functional>
 #include <cmath>
 
@@ -7,231 +8,163 @@ using namespace std;
 
 float const Eps = 1e-5f;
 
-
 /* Класс двумерного прямоугольника Box2d*/
-/*  */
 class Box2D
 {
 public:
 
   Box2D() = default;
 
-  float m_xCenter = 0.0f;  // Иницилизация координат центра
-  float m_yCenter = 0.0f;
-  float m_lenght = 0.0f;    // Длина и высота
-  float m_height = 0.0f;
-
-  Box2D(float x1, float y1, float x2, float y2) // Обычный конструктор с параметрами и проверкой на корректность.
-  {
-    if ( x2 > x1 )
-    {
-      m_x1 = x1;
-      m_x2 = x2;
-    }
-    else if ( x1 == x2 )
-    {
-      cout<< "Enter correct box!"<<endl;
-    }
-    else
-    {
-      m_x1 = x2;
-      m_x2 = x1;
-    }
-    if ( y2 > y1 )
-    {
-      m_y1 = y1;
-      m_y2 = y2;
-    }
-    else if ( y1 == y2 )
-    {
-      cout<< "Enter correct box!"<<endl;
-    }
-    else
-    {
-      m_y1 = y2;
-      m_y2 = y1;
-    }
-  }
-
-  Box2D( const Box2D & obj)    // Конструктор копирования.
-    : m_x1(obj.m_x1)
-    , m_y1(obj.m_y1)
-    , m_x2(obj.m_x2)
-    , m_y2(obj.m_y2)
+  Box2D(float x1, float y1, float x2, float y2)
+    : m_p1(min(x1,x2), min(y1,y2))
+    , m_p2(max(x1,x2), max(y1,y2))
   {}
 
-  Box2D(std::initializer_list<float> const & lst)     // Конструктор со списком инициализации.
+  Box2D ( Point2D const & p1, Point2D const & p2)
   {
-    float * vals[] = { &m_x1, &m_y1, &m_x2, &m_y2 };
-    int const count = sizeof(vals) / sizeof(vals[0]);
+    m_p1 = {min(p1.x(), p2.x()), min(p1.y(), p2.y())};
+    m_p2 = {max(p1.x(), p2.x()), max(p1.y(), p2.y())};
+  }
+
+  Box2D (Box2D const  & obj)    // Конструктор копирования.
+    : m_p1(obj.m_p1)
+    , m_p2(obj.m_p2)
+  {}
+
+  Box2D(std::initializer_list<Point2D> const & lst)     // Конструктор со списком инициализации.
+  {
+    Point2D * arr[] = { & m_p1, & m_p2 };
+    int const count = sizeof(arr) / sizeof(arr[0]);
     auto it = lst.begin();
     for (int i = 0; i < count && it != lst.end(); i++, ++it)
-      *vals[i] = *it;
-    if ( m_x1 > m_x2 && m_y1 > m_y2)
     {
-      float * vals[] = { &m_x2, &m_y2, &m_x1, &m_y1 };
-      int const count = sizeof(vals) / sizeof(vals[0]);
-      auto it = lst.begin();
-      for (int i = 0; i < count && it != lst.end(); i++, ++it)
-        *vals[i] = *it;
+      *arr[i] = *it;
     }
-    if ( m_x1 > m_x2 && m_y1 < m_y2)
+    checkBox2D();
+  }
+
+  Box2D(std::initializer_list<float> const & lst)
+  {
+    float * arr[] = { & m_p1.x(), & m_p1.y(), & m_p2.x(), & m_p2.y() };
+    int const count = sizeof(arr) / sizeof(arr[0]);
+    auto it = lst.begin();
+    for (int i = 0; i < count && it != lst.end(); i++, ++it)
     {
-      float * vals[] = { &m_x2, &m_y1, &m_x1, &m_y2 };
-      int const count = sizeof(vals) / sizeof(vals[0]);
-      auto it = lst.begin();
-      for (int i = 0; i < count && it != lst.end(); i++, ++it)
-        *vals[i] = *it;
+      *arr[i] = *it;
     }
-    if ( m_x1 < m_x2 && m_y1 > m_y2)
-    {
-      float * vals[] = { &m_x1, &m_y2, &m_x2, &m_y1 };
-      int const count = sizeof(vals) / sizeof(vals[0]);
-      auto it = lst.begin();
-      for (int i = 0; i < count && it != lst.end(); i++, ++it)
-        *vals[i] = *it;
-    }
+    checkBox2D();
   }
 
   Box2D & operator = (Box2D const & obj)     // Оператор присваивания.
   {
     if (this == &obj) return *this;
-    if (obj.m_x1 < obj.m_x2)
-    {
-      m_x1 = obj.m_x1;
-      m_x2 = obj.m_x2;
-    }
-    else
-    {
-      m_x2 = obj.m_x1;
-      m_x1 = obj.m_x2;
-    }
-    if (obj.m_y1 < obj.m_y2)
-    {
-      m_y1 = obj.m_y1;
-      m_y2 = obj.m_y2;
-    }
-    else
-    {
-      m_y2 = obj.m_y1;
-      m_y1 = obj.m_y2;
-    }
+    m_p1.x() = min(obj.m_p1.x(), obj.m_p2.x());
+    m_p1.y() = min(obj.m_p1.y(), obj.m_p2.y());
+    m_p2.x() = max(obj.m_p1.x(), obj.m_p2.x());
+    m_p2.y() = max(obj.m_p1.y(), obj.m_p2.y());
     return *this;
   }
 
   bool operator == (Box2D const & obj) const        // Оператор логического равенства.
   {
-    return EqualWithEps(m_x1, obj.m_x1) && EqualWithEps(m_y1, obj.m_y1)
-        && EqualWithEps(m_x2, obj.m_x2) && EqualWithEps(m_y2, obj.m_y2);
+    return EqualWithEps(m_p1.x(), obj.m_p1.x()) && EqualWithEps(m_p1.y(), obj.m_p1.y())
+        && EqualWithEps(m_p2.x(), obj.m_p2.x()) && EqualWithEps(m_p2.y(), obj.m_p2.y());
   }
-
-  void boxGeometry()
-  {
-    m_xCenter = (m_x2 + m_x1) / 2.0f;
-    m_yCenter = (m_y2 + m_y1) / 2.0f;
-    m_lenght = fabs(m_x2 - m_x1);
-    m_height = fabs(m_y2 - m_y1);
- }
 
   Box2D operator + (Box2D const & obj) const  // Сложение.
   {
-    return { m_x1 + obj.m_x1, m_y1 + obj.m_y1,
-          m_x2 + obj.m_x2, m_y2 + obj.m_y2 };
+    return { m_p1.x() + obj.m_p1.x(), m_p1.y() + obj.m_p1.y(),
+          m_p2.x() + obj.m_p2.x(), m_p2.y() + obj.m_p2.y() };
   }
   Box2D operator - (Box2D const & obj) const // Сложение.
   {
-    return { m_x1 - obj.m_x1, m_y1 - obj.m_y1,
-          m_x2 - obj.m_x2, m_y2 - obj.m_y2 };
+    return { m_p1.x() - obj.m_p1.x(), m_p1.y() - obj.m_p1.y(),
+          m_p2.x() - obj.m_p2.x(), m_p2.y() - obj.m_p2.y() };
   }
   Box2D operator * (float scale) const // Умножение на число.
   {
-    return { m_x1 * scale, m_y1 * scale, m_x2 * scale, m_y2 * scale};
+    return { m_p1.x() * scale, m_p1.y() * scale, m_p2.x() * scale, m_p2.y() * scale};
   }
-  Box2D operator / (float scale) const // Умножение на число.
+  Box2D operator / (float scale) const // Деление на число.
   {
-    if ( scale != 0.0f )
-    {
-      return { m_x1 / scale, m_y1 / scale, m_x2 / scale, m_y2 / scale};
-    }
-    else
-    {
-      return { m_x1, m_y1, m_x2, m_y2};
-    }
+    return { m_p1.x() / scale, m_p1.y() / scale, m_p2.x() / scale, m_p2.y() / scale};
   }
 
   Box2D & operator += (Box2D const & obj)
   {
-    m_x1 += obj.m_x1;
-    m_y1 += obj.m_y1;
-    m_x2 += obj.m_x2;
-    m_y2 += obj.m_y2;
+    m_p1.x() += obj.m_p1.x();
+    m_p1.y() += obj.m_p1.y();
+    m_p2.x() += obj.m_p2.x();
+    m_p2.y() += obj.m_p2.y();
     return *this;
   }
 
   Box2D & operator -= (Box2D const & obj)
   {
-    m_x1 -= obj.m_x1;
-    m_y1 -= obj.m_y1;
-    m_x2 -= obj.m_x2;
-    m_y2 -= obj.m_y2;
+    m_p1.x() -= obj.m_p1.x();
+    m_p1.y() -= obj.m_p1.y();
+    m_p2.x() -= obj.m_p2.x();
+    m_p2.y() -= obj.m_p2.y();
     return *this;
   }
 
   Box2D & operator *= ( float scale)
   {
-    m_x1 *= scale;
-    m_y1 *= scale;
-    m_x2 *= scale;
-    m_y2 *= scale;
+    m_p1.x() *= scale;
+    m_p1.y() *= scale;
+    m_p2.x() *= scale;
+    m_p2.y() *= scale;
     return *this;
   }
 
   Box2D & operator /= ( float scale)
   {
-    if( scale != 0.0f)
-    {
-      m_x1 /= scale;
-      m_y1 /= scale;
-      m_x2 /= scale;
-      m_y2 /= scale;
-      return *this;
-    }
-    else
-    {
-      m_x1 /= 1.0f;
-      m_y1 /= 1.0f;
-      m_x2 /= 1.0f;
-      m_y2 /= 1.0f;
-      return *this;
-    }
+    m_p1.x() /= scale;
+    m_p1.y() /= scale;
+    m_p2.x() /= scale;
+    m_p2.y() /= scale;
+    return *this;
   }
 
+  float & x1() { return m_p1.x(); }
+  float & y1() { return m_p1.y(); }
+  float & x2() { return m_p2.x(); }
+  float & y2() { return m_p2.y(); }
 
-  float & x1() { return m_x1; }
-  float & y1() { return m_y1; }
-  float & x2() { return m_x2; }
-  float & y2() { return m_y2; }
-
-  int BoxesIntersect(const Box2D &a, const Box2D &b)
+  int BoxesIntersect( Box2D const & a, Box2D const & b)
   {
-      if (a.m_x2 < b.m_x1) return 0; // a is left of b
-      if (a.m_x1 > b.m_x2) return 0; // a is right of b
-      if (a.m_y2 < b.m_y1) return 0; // a is above b
-      if (a.m_y1 > b.m_y2) return 0; // a is below b
-      return 1; // boxes overlap
+    if (a.m_p2.x() < b.m_p1.x()) return 0; // a is left of b
+    if (a.m_p1.x() > b.m_p2.x()) return 0; // a is right of b
+    if (a.m_p2.y() < b.m_p1.y()) return 0; // a is above b
+    if (a.m_p1.y() > b.m_p2.y()) return 0; // a is below b
+    return 1; // boxes overlap
   }
 
   ~Box2D()
   {}
 
 private:
-  float m_x1 = 0.0;     // Инициализация координат прямоугольника
-  float m_y1 = 0.0;
-  float m_x2 = 0.0;
-  float m_y2 = 0.0;
+  Point2D m_p1 = { 0.0f, 0.0f };
+  Point2D m_p2 = { 0.0f, 0.0f };
+  //Проверка положения точек
+  void checkBox2D()
+  {
+    if (m_p1.x() > m_p2.x())
+    {
+      m_p1.x() += m_p2.x();
+      m_p2.x() = m_p1.x() - m_p2.x();
+      m_p1.x() -= m_p2.x();
+    }
+    if (m_p1.y() > m_p2.y())
+    {
+      m_p1.y() += m_p2.y();
+      m_p2.y() = m_p1.y() - m_p2.y();
+      m_p1.y() -= m_p2.y();
+    }
+  }
 
-bool EqualWithEps(float v1, float v2) const
-{
-return fabs(v1 - v2) < Eps;
-}
+  bool EqualWithEps(float v1, float v2) const
+  {
+    return fabs(v1 - v2) < Eps;
+  }
 };
