@@ -16,24 +16,24 @@ public:
   Box2D() = default;
 
   Box2D(float x1, float y1, float x2, float y2)
-    : m_p1(min(x1,x2), min(y1,y2))
-    , m_p2(max(x1,x2), max(y1,y2))
+    : m_boxMin(min(x1,x2), min(y1,y2))
+    , m_boxMax(max(x1,x2), max(y1,y2))
   {}
 
-  Box2D ( Point2D const & p1, Point2D const & p2)
+  Box2D (Point2D const & p1, Point2D const & p2)
   {
-    m_p1 = {min(p1.x(), p2.x()), min(p1.y(), p2.y())};
-    m_p2 = {max(p1.x(), p2.x()), max(p1.y(), p2.y())};
+    m_boxMin = { min(p1.x(), p2.x()), min(p1.y(), p2.y()) };
+    m_boxMax = { max(p1.x(), p2.x()), max(p1.y(), p2.y()) };
   }
 
   Box2D (Box2D const  & obj)    // Конструктор копирования.
-    : m_p1(obj.m_p1)
-    , m_p2(obj.m_p2)
+    : m_boxMin(obj.m_boxMin)
+    , m_boxMax(obj.m_boxMax)
   {}
 
   Box2D(std::initializer_list<Point2D> const & lst)     // Конструктор со списком инициализации.
   {
-    Point2D * arr[] = { & m_p1, & m_p2 };
+    Point2D * arr[] = { & m_boxMin, & m_boxMax };
     int const count = sizeof(arr) / sizeof(arr[0]);
     auto it = lst.begin();
     for (int i = 0; i < count && it != lst.end(); i++, ++it)
@@ -45,7 +45,7 @@ public:
 
   Box2D(std::initializer_list<float> const & lst)
   {
-    float * arr[] = { & m_p1.x(), & m_p1.y(), & m_p2.x(), & m_p2.y() };
+    float * arr[] = { & m_boxMin.x(), & m_boxMin.y(), & m_boxMax.x(), & m_boxMax.y() };
     int const count = sizeof(arr) / sizeof(arr[0]);
     auto it = lst.begin();
     for (int i = 0; i < count && it != lst.end(); i++, ++it)
@@ -58,109 +58,97 @@ public:
   Box2D & operator = (Box2D const & obj)     // Оператор присваивания.
   {
     if (this == &obj) return *this;
-    m_p1.x() = min(obj.m_p1.x(), obj.m_p2.x());
-    m_p1.y() = min(obj.m_p1.y(), obj.m_p2.y());
-    m_p2.x() = max(obj.m_p1.x(), obj.m_p2.x());
-    m_p2.y() = max(obj.m_p1.y(), obj.m_p2.y());
+    m_boxMin = obj.m_boxMin;
+    m_boxMax = obj.m_boxMax;
     return *this;
   }
 
   bool operator == (Box2D const & obj) const        // Оператор логического равенства.
   {
-    return EqualWithEps(m_p1.x(), obj.m_p1.x()) && EqualWithEps(m_p1.y(), obj.m_p1.y())
-        && EqualWithEps(m_p2.x(), obj.m_p2.x()) && EqualWithEps(m_p2.y(), obj.m_p2.y());
+    return EqualWithEps(m_boxMin.x(), obj.m_boxMin.x()) && EqualWithEps(m_boxMin.y(), obj.m_boxMin.y())
+        && EqualWithEps(m_boxMax.x(), obj.m_boxMax.x()) && EqualWithEps(m_boxMax.y(), obj.m_boxMax.y());
   }
 
   Box2D operator + (Box2D const & obj) const  // Сложение.
   {
-    return { m_p1.x() + obj.m_p1.x(), m_p1.y() + obj.m_p1.y(),
-          m_p2.x() + obj.m_p2.x(), m_p2.y() + obj.m_p2.y() };
+    return { m_boxMin.x() + obj.m_boxMin.x(), m_boxMin.y() + obj.m_boxMin.y(),
+          m_boxMax.x() + obj.m_boxMax.x(), m_boxMax.y() + obj.m_boxMax.y() };
   }
   Box2D operator - (Box2D const & obj) const // Сложение.
   {
-    return { m_p1.x() - obj.m_p1.x(), m_p1.y() - obj.m_p1.y(),
-          m_p2.x() - obj.m_p2.x(), m_p2.y() - obj.m_p2.y() };
+    return { m_boxMin.x() - obj.m_boxMin.x(), m_boxMin.y() - obj.m_boxMin.y(),
+          m_boxMax.x() - obj.m_boxMax.x(), m_boxMax.y() - obj.m_boxMax.y() };
   }
   Box2D operator * (float scale) const // Умножение на число.
   {
-    return { m_p1.x() * scale, m_p1.y() * scale, m_p2.x() * scale, m_p2.y() * scale};
+    return { m_boxMin.x() * scale, m_boxMin.y() * scale, m_boxMax.x() * scale, m_boxMax.y() * scale};
   }
   Box2D operator / (float scale) const // Деление на число.
   {
-    return { m_p1.x() / scale, m_p1.y() / scale, m_p2.x() / scale, m_p2.y() / scale};
+    return { m_boxMin.x() / scale, m_boxMin.y() / scale, m_boxMax.x() / scale, m_boxMax.y() / scale};
   }
 
   Box2D & operator += (Box2D const & obj)
   {
-    m_p1.x() += obj.m_p1.x();
-    m_p1.y() += obj.m_p1.y();
-    m_p2.x() += obj.m_p2.x();
-    m_p2.y() += obj.m_p2.y();
+    m_boxMin.x() += obj.m_boxMin.x();
+    m_boxMin.y() += obj.m_boxMin.y();
+    m_boxMax.x() += obj.m_boxMax.x();
+    m_boxMax.y() += obj.m_boxMax.y();
     return *this;
   }
 
   Box2D & operator -= (Box2D const & obj)
   {
-    m_p1.x() -= obj.m_p1.x();
-    m_p1.y() -= obj.m_p1.y();
-    m_p2.x() -= obj.m_p2.x();
-    m_p2.y() -= obj.m_p2.y();
+    m_boxMin.x() -= obj.m_boxMin.x();
+    m_boxMin.y() -= obj.m_boxMin.y();
+    m_boxMax.x() -= obj.m_boxMax.x();
+    m_boxMax.y() -= obj.m_boxMax.y();
     return *this;
   }
 
   Box2D & operator *= ( float scale)
   {
-    m_p1.x() *= scale;
-    m_p1.y() *= scale;
-    m_p2.x() *= scale;
-    m_p2.y() *= scale;
+    m_boxMin.x() *= scale;
+    m_boxMin.y() *= scale;
+    m_boxMax.x() *= scale;
+    m_boxMax.y() *= scale;
     return *this;
   }
 
   Box2D & operator /= ( float scale)
   {
-    m_p1.x() /= scale;
-    m_p1.y() /= scale;
-    m_p2.x() /= scale;
-    m_p2.y() /= scale;
+    m_boxMin.x() /= scale;
+    m_boxMin.y() /= scale;
+    m_boxMax.x() /= scale;
+    m_boxMax.y() /= scale;
     return *this;
   }
 
-  float & x1() { return m_p1.x(); }
-  float & y1() { return m_p1.y(); }
-  float & x2() { return m_p2.x(); }
-  float & y2() { return m_p2.y(); }
+  float const & x1() const { return m_boxMin.x(); }
+  float const & y1() const { return m_boxMin.y(); }
+  float const & x2() const { return m_boxMax.x(); }
+  float const & y2() const { return m_boxMax.y(); }
 
-  int BoxesIntersect( Box2D const & a, Box2D const & b)
+  bool BoxesIntersect( Box2D const & a, Box2D const & b)
   {
-    if (a.m_p2.x() < b.m_p1.x()) return 0; // a is left of b
-    if (a.m_p1.x() > b.m_p2.x()) return 0; // a is right of b
-    if (a.m_p2.y() < b.m_p1.y()) return 0; // a is above b
-    if (a.m_p1.y() > b.m_p2.y()) return 0; // a is below b
-    return 1; // boxes overlap
+    if (a.m_boxMax.x() < b.m_boxMin.x()) return false; // a is left of b
+    if (a.m_boxMin.x() > b.m_boxMax.x()) return false; // a is right of b
+    if (a.m_boxMax.y() < b.m_boxMin.y()) return false; // a is above b
+    if (a.m_boxMin.y() > b.m_boxMax.y()) return false; // a is below b
+    return true; // boxes overlap
   }
 
   ~Box2D()
   {}
 
 private:
-  Point2D m_p1 = { 0.0f, 0.0f };
-  Point2D m_p2 = { 0.0f, 0.0f };
+  Point2D m_boxMin = { 0.0f, 0.0f };
+  Point2D m_boxMax = { 0.0f, 0.0f };
   //Проверка положения точек
   void checkBox2D()
   {
-    if (m_p1.x() > m_p2.x())
-    {
-      m_p1.x() += m_p2.x();
-      m_p2.x() = m_p1.x() - m_p2.x();
-      m_p1.x() -= m_p2.x();
-    }
-    if (m_p1.y() > m_p2.y())
-    {
-      m_p1.y() += m_p2.y();
-      m_p2.y() = m_p1.y() - m_p2.y();
-      m_p1.y() -= m_p2.y();
-    }
+    if (m_boxMin.x() > m_boxMax.x()) std::swap(m_boxMax.x(), m_boxMin.x());
+    if (m_boxMin.y() > m_boxMax.y()) std::swap(m_boxMin.y(), m_boxMax.y());
   }
 
   bool EqualWithEps(float v1, float v2) const
