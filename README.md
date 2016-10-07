@@ -1,2 +1,2 @@
 # Shoot-em-up
-Станислав Романихин, Александр Кобелев ( github.com/randomNaN). 
+Станислав Романихин, Александр Кобелев (github.com/randomNaN). 
