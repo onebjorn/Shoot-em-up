@@ -4,7 +4,7 @@
 #include <iostream>
 #include <functional>
 #include <initializer_list>
-#include <Box2D.h>
+#include <box2d.h>
 #include <point2d.h>
 
 using namespace std;

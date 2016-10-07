@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "ray2d_maybe.h"
+#include "ray2d.h"
 #include <sstream>
 #include <unordered_set>
 

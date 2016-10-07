@@ -11,7 +11,7 @@ set(SOURCE_ROOT src )
 aux_source_directory(${SOURCE_ROOT} SRC_LIST)
 
 # Create executable by SRC_LIST.
-add_executable(${PROJECT_NAME} ${SRC_LIST} "src/Box2D.h" "src/ray2d_maybe.h" )
+add_executable(${PROJECT_NAME} ${SRC_LIST} "src/box2d.h" "src/ray2d.h" )
 
 # Add subdirectory with Google Test Library.
 add_subdirectory(3party/googletest)
