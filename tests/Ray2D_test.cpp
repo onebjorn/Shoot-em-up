@@ -14,7 +14,7 @@ TEST(test_ray, test_construction)
 
 
   //Create the ray with angle parametrization
-  Ray2D r2(1.0f, 2.0f, M_PI/2.0f);
+  Ray2D r2(1.0f, 2.0f, pi()/2.0f);
   EXPECT_EQ(r2.x0(), 1.0f);
   EXPECT_EQ(r2.y0(), 2.0f);
   EXPECT_EQ(r2.GetDirect(0), 0.0f);
@@ -39,11 +39,11 @@ TEST(test_ray, test_initializer_list)
   EXPECT_EQ(r5.GetDirect(0), 0.6f);
   EXPECT_EQ(r5.GetDirect(1), 0.8f);
 
-  Ray2D r6={1.0f, 2.0f, M_PI/2.0f};
+  Ray2D r6={1.0f, 2.0f, pi()/3.0f};
   EXPECT_EQ(r6.x0(), 1.0f);
   EXPECT_EQ(r6.y0(), 2.0f);
-  EXPECT_EQ(r6.GetDirect(0), 0.0f);
-  EXPECT_EQ(r6.GetDirect(1), 1.0f);
+  EXPECT_EQ(r6.GetDirect(0), 0.5f);
+  EXPECT_EQ(r6.GetDirect(1), 0.866f);
 
   Ray2D r7={1.0f, 2.0f};
   EXPECT_EQ(r7.x0(), 1.0f);
