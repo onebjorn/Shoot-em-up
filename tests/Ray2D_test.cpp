@@ -60,5 +60,14 @@ TEST(test_ray, test_movement)
   EXPECT_EQ(r9.y0(), 2.0f);
   EXPECT_EQ(r9.GetDirect(0), 0.0f);
   EXPECT_EQ(r9.GetDirect(1), 1.0f);
+
+  Ray2D r11;
+  Ray2D r10(1.0f, 2.0f, 4.0f, 6.0f);
+  r11.Moving(std::move(r10));
+  EXPECT_EQ(r10.x0(), 0.0f);
+  EXPECT_EQ(r10.y0(), 0.0f);
+  EXPECT_EQ(r10.GetDirect(0), 0.0f);
+  EXPECT_EQ(r10.GetDirect(1), 0.0f);
+
 }
 
