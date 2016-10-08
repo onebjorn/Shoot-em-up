@@ -63,6 +63,13 @@ public:
    }
   }
 
+  Ray2D & operator = (Ray2D && obj)
+  {
+    std::swap(m_origin, obj.m_origin);
+    std::swap(m_direct, obj.m_direct);
+    return *this;
+  }
+
   float & GetDirect(int i)
   {
     return m_direct[i];
