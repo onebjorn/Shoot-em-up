@@ -1,9 +1,9 @@
 #pragma once
-
+/*
 #ifndef M_PI
 #define M_PI           3.14159265358979323846f
 #endif
-
+*/
 #include <cmath>
 #include <iostream>
 #include <functional>
@@ -13,6 +13,7 @@
 
 
 using namespace std;
+float constexpr pi() { return acos(-1.0);}
 class Ray2D
 {
 public:
@@ -28,7 +29,7 @@ public:
 
   Ray2D(float x0, float y0, float phi)
   {
-    if (phi < 0.0) phi = 2*M_PI - fabs(phi);
+    if (phi < 0.0) phi = 2*pi() - fabs(phi);
     m_origin = Point2D(x0,y0);
     SetDirAngleParam(phi);
   }
@@ -129,8 +130,8 @@ private:
 
   void const SetDirAngleParam(float x)
   {
-    m_direct[0] = cos(x) - cos(M_PI/2.0f);
-    m_direct[1] = sin(x);
+    m_direct[0] = Round(cos(x));
+    m_direct[1] = Round(sin(x));
   }
 
   void Normalize(float x0, float y0, float x1, float y1)
@@ -174,6 +175,11 @@ private:
   bool EqualWithEps(float v1, float v2) const
   {
     return fabs(v1 - v2) < Eps;
+  }
+
+  float Round(float f)
+  {
+    return roundf(f * 1000.0) / 1000.0;
   }
 
 };
