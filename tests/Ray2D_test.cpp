@@ -50,8 +50,15 @@ TEST(test_ray, test_initializer_list)
   EXPECT_EQ(r7.y0(), 2.0f);
   EXPECT_EQ(r7.GetDirect(0), 0.0f);
   EXPECT_EQ(r7.GetDirect(1), 0.0f);
+}
 
-
-
+TEST(test_ray, test_movement)
+{
+  Ray2D r8(1.0f, 2.0f, pi()/2.0f);
+  Ray2D r9(std::move(r8));
+  EXPECT_EQ(r9.x0(), 1.0f);
+  EXPECT_EQ(r9.y0(), 2.0f);
+  EXPECT_EQ(r9.GetDirect(0), 0.0f);
+  EXPECT_EQ(r9.GetDirect(1), 1.0f);
 }
 
