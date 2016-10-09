@@ -31,7 +31,7 @@ public:
     , m_boxMax(obj.m_boxMax)
   {}
 
-  Box2D(std::initializer_list<Point2D> const & lst)     // Конструктор со списком инициализации.
+  Box2D(initializer_list<Point2D> const & lst)     // Конструктор со списком инициализации из точек.
   {
     Point2D * arr[] = { & m_boxMin, & m_boxMax };
     int const count = sizeof(arr) / sizeof(arr[0]);
@@ -43,7 +43,7 @@ public:
     checkBox2D();
   }
 
-  Box2D(std::initializer_list<float> const & lst)
+  Box2D(initializer_list<float> const & lst)    // Конструктор со списком инициализации из координат.
   {
     float * arr[] = { & m_boxMin.x(), & m_boxMin.y(), & m_boxMax.x(), & m_boxMax.y() };
     int const count = sizeof(arr) / sizeof(arr[0]);
@@ -55,11 +55,25 @@ public:
     checkBox2D();
   }
 
+  Box2D(Box2D && obj) // Конструктор перемещения
+  {
+    m_boxMin = move(obj.m_boxMin);
+    m_boxMax =move(obj.m_boxMax);
+}
+
   Box2D & operator = (Box2D const & obj)     // Оператор присваивания.
   {
     if (this == &obj) return *this;
     m_boxMin = obj.m_boxMin;
     m_boxMax = obj.m_boxMax;
+    return *this;
+  }
+
+  Box2D & operator = (Box2D && obj) //  Оператор перемещения
+  {
+    if (this == &obj) return *this;
+    m_boxMin = std::move(obj.m_boxMin);
+    m_boxMax = std::move(obj.m_boxMax);
     return *this;
   }
 
@@ -69,21 +83,21 @@ public:
         && EqualWithEps(m_boxMax.x(), obj.m_boxMax.x()) && EqualWithEps(m_boxMax.y(), obj.m_boxMax.y());
   }
 
-  Box2D operator + (Box2D const & obj) const  // Сложение.
+  Box2D operator + (Box2D const & obj) const
   {
     return { m_boxMin.x() + obj.m_boxMin.x(), m_boxMin.y() + obj.m_boxMin.y(),
           m_boxMax.x() + obj.m_boxMax.x(), m_boxMax.y() + obj.m_boxMax.y() };
   }
-  Box2D operator - (Box2D const & obj) const // Сложение.
+  Box2D operator - (Box2D const & obj) const
   {
     return { m_boxMin.x() - obj.m_boxMin.x(), m_boxMin.y() - obj.m_boxMin.y(),
           m_boxMax.x() - obj.m_boxMax.x(), m_boxMax.y() - obj.m_boxMax.y() };
   }
-  Box2D operator * (float scale) const // Умножение на число.
+  Box2D operator * (float scale) const
   {
     return { m_boxMin.x() * scale, m_boxMin.y() * scale, m_boxMax.x() * scale, m_boxMax.y() * scale};
   }
-  Box2D operator / (float scale) const // Деление на число.
+  Box2D operator / (float scale) const
   {
     return { m_boxMin.x() / scale, m_boxMin.y() / scale, m_boxMax.x() / scale, m_boxMax.y() / scale};
   }
@@ -131,11 +145,11 @@ public:
 
   bool BoxesIntersect( Box2D const & a, Box2D const & b)
   {
-    if (a.m_boxMax.x() < b.m_boxMin.x()) return false; // a is left of b
-    if (a.m_boxMin.x() > b.m_boxMax.x()) return false; // a is right of b
-    if (a.m_boxMax.y() < b.m_boxMin.y()) return false; // a is above b
-    if (a.m_boxMin.y() > b.m_boxMax.y()) return false; // a is below b
-    return true; // boxes overlap
+    if (a.m_boxMax.x() < b.m_boxMin.x()) return false;
+    if (a.m_boxMin.x() > b.m_boxMax.x()) return false;
+    if (a.m_boxMax.y() < b.m_boxMin.y()) return false;
+    if (a.m_boxMin.y() > b.m_boxMax.y()) return false;
+    return true;
   }
 
   ~Box2D()
@@ -144,11 +158,11 @@ public:
 private:
   Point2D m_boxMin = { 0.0f, 0.0f };
   Point2D m_boxMax = { 0.0f, 0.0f };
-  //Проверка положения точек
-  void checkBox2D()
+
+  void checkBox2D()   //Проверка положения точек
   {
-    if (m_boxMin.x() > m_boxMax.x()) std::swap(m_boxMax.x(), m_boxMin.x());
-    if (m_boxMin.y() > m_boxMax.y()) std::swap(m_boxMin.y(), m_boxMax.y());
+    if (m_boxMin.x() > m_boxMax.x()) swap(m_boxMax.x(), m_boxMin.x());
+    if (m_boxMin.y() > m_boxMax.y()) swap(m_boxMin.y(), m_boxMax.y());
   }
 
   bool EqualWithEps(float v1, float v2) const

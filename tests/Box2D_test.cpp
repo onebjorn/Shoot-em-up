@@ -19,7 +19,6 @@ TEST(Box2D_test, test_construction)
   EXPECT_EQ(p2.y2(), 4.0f);
 
   Box2D p3 = {2.0f, 10, 1.2f, 100};
-  cout<<p3.x1()<<"   "<< p3.y1()<< "  "<< p3.x2() << "  "<< p3.y2()<<endl;
   EXPECT_EQ(p3.x1(), 1.2f);
   EXPECT_EQ(p3.x2(), 2.0f);
   EXPECT_EQ(p3.y1(), 10.0f);
@@ -34,8 +33,8 @@ TEST(Box2D_test, test_initializer_list)
   Box2D b1 = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f};
   EXPECT_EQ(b1.x1(), 1.0f);
   EXPECT_EQ(b1.y1(), 2.0f);
-  Point2D p3 = {1.0, 2.3};
-  Point2D p2 = {2.0, 1.3};
+  Point2D p3 = {1.0f, 2.3f};
+  Point2D p2 = {2.0f, 1.3f};
   Box2D b2 = { p2, p3};
   EXPECT_EQ(b2.x1(), 1.0f);
   EXPECT_EQ(b2.x2(), 2.0f);
@@ -55,7 +54,7 @@ TEST(Box2D_test, test_assignment)
   EXPECT_EQ(p2, Box2D(3.0, 1.0, 4.0, 2.0));
 
   Box2D p3;
-  p3 = { };
+  p3 = {};
   EXPECT_EQ(p3, Box2D(0.0, 0.0, 0.0, 0.0));
 
 }
