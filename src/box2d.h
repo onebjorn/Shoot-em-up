@@ -15,7 +15,7 @@ public:
 
   Box2D() = default;
 
-  Box2D(float x1, float y1, float x2, float y2)
+  Box2D(float const x1, float const y1, float const x2, float const y2)
     : m_boxMin(min(x1,x2), min(y1,y2))
     , m_boxMax(max(x1,x2), max(y1,y2))
   {}
@@ -57,9 +57,9 @@ public:
 
   Box2D(Box2D && obj) // Конструктор перемещения
   {
-    m_boxMin = move(obj.m_boxMin);
-    m_boxMax =move(obj.m_boxMax);
-}
+    swap(m_boxMin, obj.m_boxMin);
+    swap(m_boxMax, obj.m_boxMax);
+  }
 
   Box2D & operator = (Box2D const & obj)     // Оператор присваивания.
   {
@@ -72,8 +72,10 @@ public:
   Box2D & operator = (Box2D && obj) //  Оператор перемещения
   {
     if (this == &obj) return *this;
-    m_boxMin = std::move(obj.m_boxMin);
-    m_boxMax = std::move(obj.m_boxMax);
+   // swap(m_boxMin, obj.m_boxMin);
+    //swap(m_boxMax, obj.m_boxMax);
+    m_boxMin = move(obj.m_boxMin);
+    m_boxMax = move(obj.m_boxMax);
     return *this;
   }
 
@@ -151,6 +153,11 @@ public:
     if (a.m_boxMin.y() > b.m_boxMax.y()) return false;
     return true;
   }
+  void Moving(Box2D && obj1)
+  {
+      Box2D obj = std::move(obj1);
+  }
+
 
   ~Box2D()
   {}

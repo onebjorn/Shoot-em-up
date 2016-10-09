@@ -68,6 +68,5 @@ TEST(test_ray, test_movement)
   EXPECT_EQ(r10.y0(), 0.0f);
   EXPECT_EQ(r10.GetDirect(0), 0.0f);
   EXPECT_EQ(r10.GetDirect(1), 0.0f);
-
 }
 
