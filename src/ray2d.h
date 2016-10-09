@@ -63,15 +63,19 @@ public:
    }
   }
 
-  void Moving(Ray2D && obj)
-  {
-    Ray2D g = std::move(obj);
-  }
-
   Ray2D(Ray2D && obj)
   {
     std::swap(m_origin, obj.m_origin);
     std::swap(m_direct, obj.m_direct);
+  }
+
+  Ray2D & operator = (Ray2D && obj)
+  {
+    if (this == &obj) return *this;
+    m_origin = std::move(obj.m_origin);
+    m_direct[0] = std::move(obj.m_direct[0]);
+    m_direct[1] = std::move(obj.m_direct[1]);
+    return *this;
   }
 
   float & GetDirect(int i)
@@ -92,36 +96,59 @@ public:
 
   bool Intersection(Box2D const & b, Ray2D const & a)
   {
+    bool part1 = ((a.x0() < b.x1())&&(a.y0() < b.y2())&&(a.y0() > b.y1()));
+    bool part2 = ((a.x0() < b.x2())&&(a.y0() < b.y1())&&(a.x0() > b.x1()));
+    bool part3 = ((a.x0() > b.x2())&&(a.y0() < b.y2())&&(a.y0() > b.y1()));
+    bool part4 = ((a.x0() < b.x2())&&(a.y0() > b.y2())&&(a.x0() > b.x1()));
+    bool sign = ((a.GetDirect(0) < 0.0f) || (a.GetDirect(1) < 0.0f));
     float tmin, tmax, tymin, tymax;
-
-    if (a.GetDirect(0) >= 0.0f)
-      {
-        tmin = (b.x1() - a.x0()) / a.GetDirect(0);
-        tmax = (b.x2() - a.x0()) / a.GetDirect(0);
-      }
+    try
+    {
+      if ((a.GetDirect(0)==0.0f)||(a.GetDirect(1)==0.0f)) throw (sign==1) ? 1 : 0;
       else
-      {
-        tmin = (b.x2() - a.x0()) / a.GetDirect(0);
-        tmax = (b.x1() - a.x0()) / a.GetDirect(0);
-      }
-      if (a.GetDirect(1) >= 0.0f)
-      {
-        tymin = (b.y1() - a.y0()) / a.GetDirect(1);
-        tymax = (b.y2() - a.y0()) / a.GetDirect(1);
-      }
-      else
-      {
-        tymin = (b.y2() - a.y0()) / a.GetDirect(1);
-        tymax = (b.y1() - a.y0()) / a.GetDirect(1);
-      }
+        {
+        if (a.GetDirect(0) > 0.0f)
+        {
+          tmin = (b.x1() - a.x0()) / a.GetDirect(0);
+          tmax = (b.x2() - a.x0()) / a.GetDirect(0);
+        }
+        else
+        {
+          tmin = (b.x2() - a.x0()) / a.GetDirect(0);
+          tmax = (b.x1() - a.x0()) / a.GetDirect(0);
+        }
+        if (a.GetDirect(1) > 0.0f)
+        {
+          tymin = (b.y1() - a.y0()) / a.GetDirect(1);
+          tymax = (b.y2() - a.y0()) / a.GetDirect(1);
+        }
+        else
+        {
+          tymin = (b.y2() - a.y0()) / a.GetDirect(1);
+          tymax = (b.y1() - a.y0()) / a.GetDirect(1);
+        }
 
-    if ((tmin > tymax) || (tymin > tmax)) { return false; }
-    if (tymin > tmin) { tmin = tymin; }
-    if (tymax < tmax) { tmax = tymax; }
+        if ((tmin > tymax) || (tymin > tmax)) { return false; }
+        if (tymin > tmin) { tmin = tymin; }
+        if (tymax < tmax) { tmax = tymax; }
 
+        }
+    }
+    catch(int & p)
+    {
+      if (p==0)
+        {
+           if (part1 || part2) return true;
+           else return false;
+        }
+      if (p==1)
+        {
+          if (part3 || part4) return true;
+          else return false;
+        }
+    }
     return true;
-
-   }
+  }
 
   void Out(Box2D const & b, Ray2D const & a)
   {
@@ -161,6 +188,11 @@ private:
     {
       m_direct[0] = 0.0f;
       m_direct[1] = 0.0f;
+    }
+    if ((x1==0.0f)&&(y1==0.0f))
+    {
+        m_direct[0]=0.0f;
+        m_direct[1]=0.0f;
     }
   }
 
