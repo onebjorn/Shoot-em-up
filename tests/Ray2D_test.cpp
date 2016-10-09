@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "ray2d.h"
+#include "box2d.h"
 #include <sstream>
 #include <unordered_set>
 
@@ -61,12 +62,29 @@ TEST(test_ray, test_movement)
   EXPECT_EQ(r9.GetDirect(0), 0.0f);
   EXPECT_EQ(r9.GetDirect(1), 1.0f);
 
-  Ray2D r11;
   Ray2D r10(1.0f, 2.0f, 4.0f, 6.0f);
-  r11.Moving(std::move(r10));
+  Ray2D r11 = std::move(r10);
   EXPECT_EQ(r10.x0(), 0.0f);
   EXPECT_EQ(r10.y0(), 0.0f);
   EXPECT_EQ(r10.GetDirect(0), 0.0f);
   EXPECT_EQ(r10.GetDirect(1), 0.0f);
+  EXPECT_EQ(r11.x0(), 1.0f);
+  EXPECT_EQ(r11.y0(), 2.0f);
+  EXPECT_EQ(r11.GetDirect(0), 0.6f);
+  EXPECT_EQ(r11.GetDirect(1), 0.8f);
 }
 
+TEST(test_ray, test_intersection)
+{
+  Ray2D r12(1.0f, 1.0f, pi()/4.0f);
+  Box2D b1(3.0f, 3.0f, 4.0f, 4.0f);
+  Ray2D r13(6.0f, 6.0f, -3.0f*pi()/4.0f);
+  Ray2D r14(1.0f, 1.0f, -pi()/4.0f);
+  Ray2D r15(1.0f, 3.5f, 0.0f);
+  Ray2D r16(5.0f, 3.5f, pi());
+  EXPECT_EQ(r12.Intersection(b1, r12), 1);
+  EXPECT_EQ(r13.Intersection(b1, r13), 1);
+  EXPECT_EQ(r14.Intersection(b1, r14), 0);
+  EXPECT_EQ(r15.Intersection(b1, r15), 1);
+  EXPECT_EQ(r16.Intersection(b1, r16), 1);
+}
