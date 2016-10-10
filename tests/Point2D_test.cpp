@@ -34,14 +34,13 @@ TEST(point2d_test, test_initializer_list)
 
 TEST(point2d_test, test_move)
 {
-    Point2D p1 = { 1.0f, 2.0f };
-    Point2D p2 = move(p1);
-    Point2D p3;
-    EXPECT_EQ(p2, Point2D(1.0f, 2.0f));
-    EXPECT_EQ(p1, Point2D(0.0f, 0.0f));
-    // move
-    p3 = move(p2);
-    EXPECT_EQ(p3, Point2D(1.0f, 2.0f));
-    EXPECT_EQ(p2, Point2D(0.0f, 0.0f));
+  Point2D p1 = { 1.0f, 2.0f };
+  Point2D p2 = move(p1);
+  Point2D p3;
+  EXPECT_EQ(p2, Point2D(1.0f, 2.0f));
+  EXPECT_EQ(p1, Point2D(0.0f, 0.0f));
+  p3 = move(p2);
+  EXPECT_EQ(p3, Point2D(1.0f, 2.0f));
+  EXPECT_EQ(p2, Point2D(0.0f, 0.0f));
 }
 
