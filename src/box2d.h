@@ -33,7 +33,7 @@ public:
 
   Box2D(initializer_list<Point2D> const & lst)     // Конструктор со списком инициализации из точек.
   {
-    Point2D * arr[] = { & m_boxMin, & m_boxMax };
+    Point2D * arr[] = { &m_boxMin, &m_boxMax };
     int const count = sizeof(arr) / sizeof(arr[0]);
     auto it = lst.begin();
     for (int i = 0; i < count && it != lst.end(); i++, ++it)
@@ -72,8 +72,6 @@ public:
   Box2D & operator = (Box2D && obj) //  Оператор перемещения
   {
     if (this == &obj) return *this;
-   // swap(m_boxMin, obj.m_boxMin);
-    //swap(m_boxMax, obj.m_boxMax);
     m_boxMin = move(obj.m_boxMin);
     m_boxMax = move(obj.m_boxMax);
     return *this;
@@ -153,14 +151,6 @@ public:
     if (a.m_boxMin.y() > b.m_boxMax.y()) return false;
     return true;
   }
-  void Moving(Box2D && obj1)
-  {
-      Box2D obj = std::move(obj1);
-  }
-
-
-  ~Box2D()
-  {}
 
 private:
   Point2D m_boxMin = { 0.0f, 0.0f };

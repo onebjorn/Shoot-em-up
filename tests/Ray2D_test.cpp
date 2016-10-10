@@ -76,12 +76,13 @@ TEST(test_ray, test_movement)
 
 TEST(test_ray, test_intersection)
 {
-  Ray2D r12(1.0f, 1.0f, pi()/4.0f);
+  Ray2D r12(10.0f, 10.0f, -3.0*pi()/4.0f);
+  cout<< r12.GetDirect(0)<< "    "<<r12.GetDirect(1)<<endl;
   Box2D b1(3.0f, 3.0f, 4.0f, 4.0f);
   Ray2D r13(6.0f, 6.0f, -3.0f*pi()/4.0f);
   Ray2D r14(1.0f, 1.0f, -pi()/4.0f);
   Ray2D r15(1.0f, 3.5f, 0.0f);
-  Ray2D r16(5.0f, 3.5f, pi());
+  Ray2D r16(3.5f, 10.0f, -pi()/2.0);
   EXPECT_EQ(r12.Intersection(b1, r12), 1);
   EXPECT_EQ(r13.Intersection(b1, r13), 1);
   EXPECT_EQ(r14.Intersection(b1, r14), 0);

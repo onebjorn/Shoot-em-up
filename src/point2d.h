@@ -6,6 +6,7 @@
 
 float const kEps = 1e-5;
 
+using namespace std;
 
 class Point2D
 {
@@ -30,12 +31,28 @@ public:
       *vals[i] = *it;
   }
 
+  // Конструктор перемещения
+  Point2D(Point2D && obj)
+  {
+    swap(m_x, obj.x());
+    swap(m_y, obj.y());
+  }
+
   // Оператор присваивания.
   Point2D & operator = (Point2D const & obj)
   {
     if (this == &obj) return *this;
     m_x = obj.m_x;
     m_y = obj.m_y;
+    return *this;
+  }
+
+  // Оператор перемещения
+  Point2D & operator = (Point2D && obj)
+  {
+    if (this == &obj) return *this;
+    swap(m_x, obj.x());
+    swap(m_y, obj.y());
     return *this;
   }
 
