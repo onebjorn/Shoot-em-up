@@ -15,7 +15,7 @@ TEST(test_ray, test_construction)
 
 
   //Create the ray with angle parametrization
-  Ray2D r2(1.0f, 2.0f, pi()/2.0f);
+  Ray2D r2(1.0f, 2.0f, pi() / 2.0f);
   EXPECT_EQ(r2.x0(), 1.0f);
   EXPECT_EQ(r2.y0(), 2.0f);
   EXPECT_EQ(r2.GetDirect(0), 0.0f);
@@ -28,7 +28,7 @@ TEST(test_ray, test_construction)
   EXPECT_EQ(r3.GetDirect(0), 0.6f);
   EXPECT_EQ(r3.GetDirect(1), 0.8f);
 
-  Ray2D r4=r3;
+  Ray2D r4 = r3;
   EXPECT_EQ(r4, r3);
 }
 
@@ -40,7 +40,7 @@ TEST(test_ray, test_initializer_list)
   EXPECT_EQ(r5.GetDirect(0), 0.6f);
   EXPECT_EQ(r5.GetDirect(1), 0.8f);
 
-  Ray2D r6={1.0f, 2.0f, pi()/3.0f};
+  Ray2D r6={1.0f, 2.0f, pi() / 3.0f};
   EXPECT_EQ(r6.x0(), 1.0f);
   EXPECT_EQ(r6.y0(), 2.0f);
   EXPECT_EQ(r6.GetDirect(0), 0.5f);
@@ -55,7 +55,7 @@ TEST(test_ray, test_initializer_list)
 
 TEST(test_ray, test_movement)
 {
-  Ray2D r8(1.0f, 2.0f, pi()/2.0f);
+  Ray2D r8(1.0f, 2.0f, pi() / 2.0f);
   Ray2D r9(std::move(r8));
   EXPECT_EQ(r9.x0(), 1.0f);
   EXPECT_EQ(r9.y0(), 2.0f);
@@ -76,13 +76,13 @@ TEST(test_ray, test_movement)
 
 TEST(test_ray, test_intersection)
 {
-  Ray2D r12(10.0f, 10.0f, -3.0*pi()/4.0f);
-  cout<< r12.GetDirect(0)<< "    "<<r12.GetDirect(1)<<endl;
+  Ray2D r12(10.0f, 10.0f, -3.0 * pi() / 4.0f);
+  cout<< r12.GetDirect(0) << "    "<< r12.GetDirect(1) <<endl;
   Box2D b1(3.0f, 3.0f, 4.0f, 4.0f);
-  Ray2D r13(6.0f, 6.0f, -3.0f*pi()/4.0f);
-  Ray2D r14(1.0f, 1.0f, -pi()/4.0f);
+  Ray2D r13(6.0f, 6.0f, -3.0f * pi() / 4.0f);
+  Ray2D r14(1.0f, 1.0f, -pi() / 4.0f);
   Ray2D r15(1.0f, 3.5f, 0.0f);
-  Ray2D r16(3.5f, 10.0f, -pi()/2.0);
+  Ray2D r16(3.5f, 10.0f, -pi() / 2.0);
   EXPECT_EQ(r12.Intersection(b1, r12), 1);
   EXPECT_EQ(r13.Intersection(b1, r13), 1);
   EXPECT_EQ(r14.Intersection(b1, r14), 0);
