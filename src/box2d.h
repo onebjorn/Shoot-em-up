@@ -69,6 +69,12 @@ public:
     return *this;
   }
 
+  Point2D GetCenter() const
+  {
+    Point2D m_center = {(m_boxMin.x() + m_boxMax.x()) / 2 , (m_boxMin.y() + m_boxMax.y()) / 2 };
+    return m_center;
+  }
+
   Box2D & operator = (Box2D && obj) //  Оператор перемещения
   {
     if (this == &obj) return *this;

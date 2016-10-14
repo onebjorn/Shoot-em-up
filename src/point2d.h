@@ -126,14 +126,14 @@ public:
     return *this;
   }
 
-  float & x() {return m_x;}
-  float & y() {return m_y;}
+  float & x() { return m_x; }
+  float & y() { return m_y; }
 
-  float const & x() const {return m_x;}
-  float const & y() const {return m_y;}
+  float const & x() const { return m_x; }
+  float const & y() const { return m_y; }
 
 private:
-  float m_x=0.0, m_y=0.0;
+  float m_x = 0.0, m_y = 0.0;
 
   bool EqualWithEps(float v1, float v2) const
   {
