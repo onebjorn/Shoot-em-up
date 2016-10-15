@@ -2,7 +2,7 @@
 #include "../include/config_stat.h"
 #include "box2d.h"
 
-class Gun2D
+class Gun2D : public Box2D
 {
 public:
   Gun2D() = default;
