@@ -33,7 +33,7 @@ public:
   {}
 
   Bullet(initializer_list<float> const & lst)
-    : Box2D( lst )
+    : Box2D(lst)
     , m_bulletSpeed(BulletSpeed)
     , m_bulletDam(BulletDamage)
   {}
