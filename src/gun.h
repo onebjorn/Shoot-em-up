@@ -1,6 +1,7 @@
 #pragma once
 #include "../include/config_stat.h"
 #include "box2d.h"
+#include "bullet.h"
 
 class Gun2D : public Box2D
 {
@@ -48,9 +49,17 @@ public:
   void SpeedLoss(const float loss) { m_gunspeed -= loss;}
   void SpeedUp(const float nitro) { m_gunspeed += nitro;}
 
-  //TODO: SHOT, BulletManager
+  //TODO: update SHOT
+  void Shot()
+  {
+    if (m_ammo > 0)
+      {
+        Bullet2D bul();
+        m_ammo--;
+      }
+    else m_ammo=10;
 
-
+  }
 
 private:
   float m_gunhealth = 0.0f;
