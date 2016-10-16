@@ -1,6 +1,7 @@
 #pragma once
 #include "../include/config_stat.h"
 #include "box2d.h"
+#include "bullet.h"
 
 class Alien : public Box2D
 {
@@ -39,15 +40,15 @@ public:
     , m_alienSpeed(AlienSpeed)
   {}
 
-  /* Перемещается, если в него попадает пуля*/
-
-  /* Теряет здоровье, при попадании*/
+  Bullet AlienShot( Alien const & obj)
+  {
+     return { obj.x1() + AlienSizeX / 2, obj.y1() + BulletSizeY / 2, - BulletSpeed };
+  }
 
 
   float const & GetHealth() const { return m_alienHealth; }
   float const & GetSpeed() const { return m_alienSpeed; }
 
-/* TODO delta from CONFIG_STAT.h*/
   void SetAlienHealth(const float newHelth) { m_alienHealth = newHelth; }
   void SetAlienSpeed( const float newSpeed) { m_alienSpeed = newSpeed; }
   void RemoveAlienHealth(const float deltaHelth) { m_alienHealth -= deltaHelth; }
@@ -57,5 +58,3 @@ private:
   float m_alienHealth = 0.0f;
   float m_alienSpeed = 0.0f;
 };
-
-

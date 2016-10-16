@@ -67,5 +67,5 @@ TEST(Alien_test, test_move)
 
   Alien a3(1.0f, 2.0f);
   a2 = move(a3);
-  EXPECT_EQ(a2.x1(), 0.5f);
+  EXPECT_EQ(a2.x1(), -1.0f);
 }
