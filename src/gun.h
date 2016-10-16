@@ -57,7 +57,7 @@ public:
         Bullet2D bul();
         m_ammo--;
       }
-    else m_ammo=10;
+    else m_ammo = 10;
 
   }
 

@@ -8,7 +8,7 @@ public:
   Bullet2D() = default;
 
   Bullet2D(float const x0, float const y0, float const x1, float const y1)
-    : Box2D( x0 ,y0 ,x1 ,y1 )
+    : Box2D( x0, y0, x1, y1 )
     , m_bulletSpeed(BulletSpeed)
     , m_bulletDam(BulletDamage)
   {}
