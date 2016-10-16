@@ -5,28 +5,25 @@
 #pragma once
 
 
-class Space2D : public Box2D
+class Space : public Box2D
 {
 public:
 
-  Space2D() = default;
+  Space() = default;
 
-  Space2D(float const x1, float const y1, float const x2, float const y2)
+  Space(float const x1, float const y1, float const x2, float const y2)
     : Box2D (x1, y1, x2, y2)
   {}
 
-  Space2D(Point2D const & leftBottom, Point2D const & rightTop)
+  Space(Point2D const & leftBottom, Point2D const & rightTop)
       :Box2D(leftBottom, rightTop)
   {}
 
-  Space2D( Box2D const & spaceBox)
+  Space( Box2D const & spaceBox)
     : Box2D(spaceBox.x1(), spaceBox.y1(), spaceBox.x2(),spaceBox.y2())
   {}
 
-  void GetGameStat()
-  {
 
-  }
 
 
 

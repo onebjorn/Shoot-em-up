@@ -2,24 +2,24 @@
 #include "../include/config_stat.h"
 #include "box2d.h"
 
-class Bullet2D : public Box2D
+class Bullet : public Box2D
 {
 public:
-  Bullet2D() = default;
+  Bullet() = default;
 
-  Bullet2D(float const x0, float const y0, float const x1, float const y1)
-    : Box2D( x0, y0, x1, y1 )
+  Bullet(float const x0, float const y0, float const x1, float const y1)
+    : Box2D (x0, y0, x1, y1)
     , m_bulletSpeed(BulletSpeed)
     , m_bulletDam(BulletDamage)
   {}
 
-  Bullet2D(Box2D const & bullobj)
-    : Box2D( bullobj )
+  Bullet(Box2D const & bullobj)
+    : Box2D(bullobj)
     , m_bulletSpeed(BulletSpeed)
     , m_bulletDam(BulletDamage)
   {}
 
-  Bullet2D(initializer_list<float> const & lst)
+  Bullet(initializer_list<float> const & lst)
     : Box2D( lst )
     , m_bulletSpeed(BulletSpeed)
     , m_bulletDam(BulletDamage)

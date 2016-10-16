@@ -54,7 +54,6 @@ TEST(Box2D_test, test_assignment)
   EXPECT_EQ(p2, Box2D(3.0, 1.0, 4.0, 2.0));
 
   Box2D p3;
-  p3 = {};
   EXPECT_EQ(p3, Box2D(0.0, 0.0, 0.0, 0.0));
 
 }
@@ -94,8 +93,8 @@ TEST(Box2D_test, test_cross)
 
 TEST(Box2D_test, test_movement)
 {
-  Box2D p1(1.0f, 2.0f, 3.0f, 4.0f);
-  Box2D p2(2.0f, 3.0f, 4.0f, 1.0f);
+  Box2D p1 = { 1.0f, 2.0f, 3.0f, 4.0f };
+  Box2D p2 = { 2.0f, 3.0f, 4.0f, 1.0f };
   p2 = move(p1);
   EXPECT_EQ(p2.x1(), 1.0f);
   EXPECT_EQ(p2.y1(), 2.0f);

@@ -3,12 +3,12 @@
 #include "box2d.h"
 #include "bullet.h"
 
-class Gun2D : public Box2D
+class Gun : public Box2D
 {
 public:
-  Gun2D() = default;
+  Gun() = default;
 
-  Gun2D(float const x1, float const y1, float const x2, float const y2)
+  Gun(float const x1, float const y1, float const x2, float const y2)
     : Box2D(x1, y1, x2, y2)
     , m_gunhealth(GunHealth)
     , m_gunspeed(GunSpeed)
@@ -16,7 +16,7 @@ public:
     , m_ammo(GunAmmo)
   {}
 
-  Gun2D(Point2D const & leftBottom, Point2D const & rightTop)
+  Gun(Point2D const & leftBottom, Point2D const & rightTop)
     : Box2D(leftBottom, rightTop)
     , m_gunhealth(GunHealth)
     , m_gunspeed(GunSpeed)
@@ -24,7 +24,7 @@ public:
     , m_ammo(GunAmmo)
   {}
 
-  Gun2D(Box2D const & gunobj)
+  Gun(Box2D const & gunobj)
     : Box2D(gunobj)
     , m_gunhealth(GunHealth)
     , m_gunspeed(GunSpeed)
@@ -32,7 +32,7 @@ public:
     , m_ammo(GunAmmo)
   {}
 
-  Gun2D(initializer_list<float> const & lst)
+  Gun(initializer_list<float> const & lst)
     : Box2D(lst)
     , m_gunhealth(GunHealth)
     , m_gunspeed(GunSpeed)
@@ -54,7 +54,7 @@ public:
   {
     if (m_ammo > 0)
       {
-        Bullet2D bul();
+        Bullet bul();
         m_ammo--;
       }
     else m_ammo = 10;
@@ -65,6 +65,6 @@ private:
   float m_gunhealth = 0.0f;
   float m_gunspeed = 0.0f;
   float m_gunpower = 0.0f;
-  unsigned int m_ammo = 0;
+  int m_ammo = 0;
 
 };
