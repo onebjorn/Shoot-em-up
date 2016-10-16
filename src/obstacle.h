@@ -43,8 +43,5 @@ public:
 
 
 private:
-
-  /* TODO vector of coordinates*/
   float m_obstacleHealth = 0.0f;
-
 };

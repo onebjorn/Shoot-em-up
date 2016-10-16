@@ -27,5 +27,3 @@ TEST(Obstacle_test, test_move)
   EXPECT_EQ(o2.x1(), 1.0f);
   EXPECT_EQ(o1.x1(), 0.0f);
 }
-
-

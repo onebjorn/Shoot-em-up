@@ -43,4 +43,3 @@ TEST(point2d_test, test_move)
   EXPECT_EQ(p3, Point2D(1.0f, 2.0f));
   EXPECT_EQ(p2, Point2D(0.0f, 0.0f));
 }
-

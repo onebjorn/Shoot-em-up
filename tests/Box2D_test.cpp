@@ -112,5 +112,3 @@ TEST(Box2D_test, test_movement)
   EXPECT_EQ(p3.x2(), 0.0f);
   EXPECT_EQ(p3.y2(), 0.0f);
 }
-
-

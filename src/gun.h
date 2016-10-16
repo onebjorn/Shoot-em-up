@@ -60,10 +60,8 @@ public:
   }
 
 private:
-
   float m_gunhealth = 0.0f;
   float m_gunspeed = 0.0f;
   float m_gunpower = 0.0f;
   int m_ammo = 0;
-
 };

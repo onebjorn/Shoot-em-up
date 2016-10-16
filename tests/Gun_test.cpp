@@ -41,9 +41,3 @@ TEST(gun_test, test_construction)
   EXPECT_EQ(a3.GimmeHealth(), GunHealth);
   EXPECT_EQ(a3.GimmeRate(), GunPower);
 }
-
-TEST(Gun_test, test_shot)
-{
-  Gun gun(0.0f, 0.0f, 4.0f, 4.0f);
-  gun.Shot(gun);
-}
