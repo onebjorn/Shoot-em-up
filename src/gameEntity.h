@@ -10,15 +10,11 @@ public:
 
   virtual ~GameEntity() = default;
 
-  virtual Point2D GetCenter() const = 0;
+  Point2D const & GetBox() const { return m_box; }
+  Point2D const & GetDir() const { return m_ray; }
 
-  virtual float const & x1() = 0; // Объявление чистого виртуального метода.
-  virtual float const & x2() = 0; // Объявление чистого виртуального метода.
-  virtual float const & y1() = 0; // Объявление чистого виртуального метода.
-  virtual float const & y2() = 0; // Объявление чистого виртуального метода.
+protected:
 
-private:
-
-  Box2D m_object = { 0.0f, 0.0f, 0.0f, 0.0f };
-
+  Box2D m_box = { 0.0f, 0.0f, 0.0f, 0.0f };
+  Ray2D m_ray = { 0.0f, 0.0f, 0.0f, 0.0f };
 };
