@@ -1,6 +1,5 @@
 #pragma once
 #include "../include/config_stat.h"
-#include "box2d.h"
 #include "gameEntity.h"
 #include "bullet.h"
 
