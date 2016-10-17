@@ -51,7 +51,6 @@ public:
   ~Bullet() {}
 
 private:
-
   Box2D m_bullet = { 0.0f, 0.0f, 0.0f, 0.0f };
 
   float m_bulletSpeed = 0.0f;
