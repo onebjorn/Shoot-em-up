@@ -34,3 +34,19 @@ TEST(bullet_test, test_construction)
   EXPECT_EQ(a1.GetDamage(), BulletDamage);
 }
 
+TEST(Bullet_test, test_move)
+{
+  Point2D p1 = { 1.0f, 1.0f };
+  Box2D b1 = { 1.5f, 1.5f, 0.5f, 2.5f };
+
+  Bullet bullet1(p1);
+  Bullet bullet2(1.5f, 1.5f, 2.5f, 2.5f);
+  Bullet bullet3(b1);
+
+  bullet3 = move(bullet2);
+  EXPECT_EQ(bullet3.GetBox().x1(), 1.5f);
+  Bullet bullet4 = move(bullet1);
+  EXPECT_EQ(bullet4.GetBox().x1(), 1.0f - BulletSizeX / 2);
+  Bullet bullet5 = move(b1);
+  EXPECT_EQ(bullet5.GetBox().x2(), 1.5f);
+}

@@ -46,3 +46,21 @@ TEST(Alien_test, test_cross)
   EXPECT_EQ(a3.ObjectsIntersect(a1,a3), true);
   EXPECT_EQ(a2.ObjectsIntersect(a2,a3), true);
 }
+
+TEST(Alien_test, test_move)
+{
+  Point2D p1 = { 1.0f, 1.0f };
+  Point2D p2 = { 2.0f, 2.0f };
+  Box2D b1 = { 1.5f, 1.5f, 0.5f, 2.5f };
+
+  Alien a1(p1, p2, 0.0f, 0.0f );
+  Alien a2(1.5f, 1.5f, 2.5f, 2.5f);
+  Alien a3(b1);
+
+  a3 = move(a2);
+  EXPECT_EQ(a3.GetBox().x1(), 1.5f);
+  Alien a4 = move(a3);
+  EXPECT_EQ(a4.GetBox().x1(), 1.5f);
+  Alien a5 = move(b1);
+  EXPECT_EQ(a5.GetBox().x2(), 1.5f);
+}

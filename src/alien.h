@@ -6,9 +6,8 @@
 class Alien : public GameEntity
 {
 public:
-  Alien() = default;
 
-  /* Добавить константы в конфиг*/
+  Alien() = default;
 
   Alien(float const x1, float const y1, float const x2, float const y2)
     : m_alien(x1, y1, x2, y2)
@@ -58,16 +57,12 @@ public:
     return true;
   }
 
-  Point2D GetCenter() const override
-  {
-    return { (m_alien.x1() + m_alien.x2()) / 2.0f, (m_alien.y1() + m_alien.y2()) / 2.0f  };
-  }
+  Point2D GetCenter() const override { return { (m_alien.x1() + m_alien.x2()) / 2.0f, (m_alien.y1() + m_alien.y2()) / 2.0f  }; }
 
   Box2D const & GetBox() const override { return m_alien; }
 
-  ~Alien() override {}
-
 private:
+
   Box2D m_alien = { 0.0f, 0.0f, 0.0f, 0.0f };
 
   float m_alienHealth = 0.0f;

@@ -24,6 +24,14 @@ public:
     , m_ammo(GunAmmo)
   {}
 
+  Gun(float const x, float const y)
+    : m_gun(x - GunSizeX / 2, y - GunSizeY / 2 , x + GunSizeX / 2, y + GunSizeY / 2)
+    , m_gunhealth(GunHealth)
+    , m_gunspeed(GunSpeed)
+    , m_gunpower(GunPower)
+    , m_ammo(GunAmmo)
+  {}
+
   Gun(Box2D const & gunobj)
     : m_gun(gunobj)
     , m_gunhealth(GunHealth)
@@ -49,14 +57,10 @@ public:
   void SpeedLoss(const float loss) { m_gunspeed -= loss;}
   void SpeedUp(const float nitro) { m_gunspeed += nitro;}
 
-  void Shot(Gun const & obj)
+  Bullet Shot()
   {
-    if (m_ammo > 0)
-    {
-      Bullet bullet(obj.m_gun.x1() + GunSizeX, obj.m_gun.y2() + BulletSizeY, BulletSpeed);
       m_ammo--;
-    }
-    else m_ammo = 10;
+      return { m_gun.x1() + GunSizeX /2, m_gun.y2() + BulletSizeY, BulletSpeed };
   }
 
   Point2D GetCenter() const override
@@ -70,6 +74,7 @@ public:
 
 private:
   Box2D m_gun = { 0.0f, 0.0f, 0.0f, 0.0f };
+
   float m_gunhealth = 0.0f;
   float m_gunspeed = 0.0f;
   float m_gunpower = 0.0f;

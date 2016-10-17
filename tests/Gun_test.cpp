@@ -41,3 +41,27 @@ TEST(gun_test, test_construction)
   EXPECT_EQ(a3.GetHealth(), GunHealth);
   EXPECT_EQ(a3.GetRate(), GunPower);
 }
+
+TEST(Gun_test, test_move)
+{
+  Point2D p1 = { 1.0f, 1.0f };
+  Point2D p2 = { 2.0f, 2.0f };
+  Box2D b1 = { 1.5f, 1.5f, 0.5f, 2.5f };
+
+  Gun a1(p1, p2);
+  Gun a2(2.5f, 1.5f, 1.5f, 2.5f);
+  Gun a3(b1);
+
+  a3 = move(a2);
+  EXPECT_EQ(a3.GetCenter().x(), 2.0f);
+  Gun a4 = move(a3);
+  EXPECT_EQ(a4.GetBox().x1(), 1.5f);
+  Gun a5 = move(b1);
+  EXPECT_EQ(a5.GetBox().x2(), 1.5f);
+}
+
+TEST(Gun_test, test_shot)
+{
+  Gun a2(2.0f, 2.0f);
+  EXPECT_EQ(a2.Shot().GetBox().x1(), 2.0f);
+}
