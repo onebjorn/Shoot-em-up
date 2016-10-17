@@ -1,15 +1,15 @@
 #pragma once
 #include "../include/config_stat.h"
-#include "box2d.h"
+#include "gameEntity.h"
 #include "bullet.h"
 
-class Gun : public Box2D
+class Gun : public GameEntity
 {
 public:
   Gun() = default;
 
   Gun(float const x1, float const y1, float const x2, float const y2)
-    : Box2D(x1, y1, x2, y2)
+    : m_gun(x1, y1, x2, y2)
     , m_gunhealth(GunHealth)
     , m_gunspeed(GunSpeed)
     , m_gunpower(GunPower)
@@ -17,7 +17,7 @@ public:
   {}
 
   Gun(Point2D const & leftBottom, Point2D const & rightTop)
-    : Box2D(leftBottom, rightTop)
+    : m_gun(leftBottom, rightTop)
     , m_gunhealth(GunHealth)
     , m_gunspeed(GunSpeed)
     , m_gunpower(GunPower)
@@ -25,7 +25,7 @@ public:
   {}
 
   Gun(Box2D const & gunobj)
-    : Box2D(gunobj)
+    : m_gun(gunobj)
     , m_gunhealth(GunHealth)
     , m_gunspeed(GunSpeed)
     , m_gunpower(GunPower)
@@ -33,7 +33,7 @@ public:
   {}
 
   Gun(initializer_list<float> const & lst)
-    : Box2D(lst)
+    : m_gun(lst)
     , m_gunhealth(GunHealth)
     , m_gunspeed(GunSpeed)
     , m_gunpower(GunPower)
@@ -49,17 +49,30 @@ public:
   void SpeedLoss(const float loss) { m_gunspeed -= loss;}
   void SpeedUp(const float nitro) { m_gunspeed += nitro;}
 
-  void Shot( Gun const & obj)
+  void Shot(Gun const & obj)
   {
     if (m_ammo > 0)
     {
-      Bullet bullet(obj.x1() + GunSizeX, obj.y2() + BulletSizeY, BulletSpeed);
+      Bullet bullet(obj.m_gun.x1() + GunSizeX, obj.m_gun.y2() + BulletSizeY, BulletSpeed);
       m_ammo--;
     }
     else m_ammo = 10;
   }
 
+  Point2D GetCenter() const override
+  {
+    return { (m_gun.x1() + m_gun.x2()) / 2.0f, (m_gun.y1() + m_gun.y2()) / 2.0f  };
+  }
+
+  float const & x1() override { return m_gun.x1(); }
+  float const & y1() override { return m_gun.y1(); }
+  float const & x2() override { return m_gun.x2(); }
+  float const & y2() override { return m_gun.y2(); }
+
+  ~Gun() override {}
+
 private:
+  Box2D m_gun = { 0.0f, 0.0f, 0.0f, 0.0f };
   float m_gunhealth = 0.0f;
   float m_gunspeed = 0.0f;
   float m_gunpower = 0.0f;

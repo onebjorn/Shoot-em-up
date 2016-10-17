@@ -34,10 +34,3 @@ TEST(bullet_test, test_construction)
   EXPECT_EQ(a1.GetDamage(), BulletDamage);
 }
 
-TEST(bullet_test, test_move)
-{
-  Bullet bul1(1.0f, 2.0f, 3.0f, 4.0f);
-  Bullet bul2 = move(bul1);
-  EXPECT_EQ(bul2.x1(), 1.0f);
-  EXPECT_EQ(bul1.x1(), 0.0f);
-}

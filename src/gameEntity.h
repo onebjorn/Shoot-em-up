@@ -2,6 +2,7 @@
 #include "box2d.h"
 #include "ray2d.h"
 #include "../include/config_stat.h"
+#pragma once
 
 class GameEntity
 {
