@@ -16,28 +16,28 @@ TEST(gun_test, test_construction)
   EXPECT_EQ(a1.y2(), 5.0f);
   EXPECT_EQ(a1.x1(), 2.0f);
   EXPECT_EQ(a1.y1(), 3.0f);
-  EXPECT_EQ(a1.GimmeSpeed(), GunSpeed);
-  EXPECT_EQ(a1.GimmeAmmo(), GunAmmo);
-  EXPECT_EQ(a1.GimmeHealth(), GunHealth);
-  EXPECT_EQ(a1.GimmeRate(), GunPower);
+  EXPECT_EQ(a1.GetSpeed(), GunSpeed);
+  EXPECT_EQ(a1.GetAmmo(), GunAmmo);
+  EXPECT_EQ(a1.GetHealth(), GunHealth);
+  EXPECT_EQ(a1.GetRate(), GunPower);
 
   Gun a2(1.5f, 1.0f, 2.5f, 5.0f);
   EXPECT_EQ(a2.x1(), 1.5f);
   EXPECT_EQ(a2.x2(), 2.5f);
   EXPECT_EQ(a2.y1(), 1.0f);
   EXPECT_EQ(a2.y2(), 5.0f);
-  EXPECT_EQ(a2.GimmeSpeed(), GunSpeed);
-  EXPECT_EQ(a2.GimmeAmmo(), GunAmmo);
-  EXPECT_EQ(a2.GimmeHealth(), GunHealth);
-  EXPECT_EQ(a2.GimmeRate(), GunPower);
+  EXPECT_EQ(a2.GetSpeed(), GunSpeed);
+  EXPECT_EQ(a2.GetAmmo(), GunAmmo);
+  EXPECT_EQ(a2.GetHealth(), GunHealth);
+  EXPECT_EQ(a2.GetRate(), GunPower);
 
   Gun a3(b1);
   EXPECT_EQ(a3.x1(), 1.5f);
   EXPECT_EQ(a3.y1(), 3.0f);
   EXPECT_EQ(a3.x2(), 5.5f);
   EXPECT_EQ(a3.y2(), 12.5f);
-  EXPECT_EQ(a3.GimmeSpeed(), GunSpeed);
-  EXPECT_EQ(a3.GimmeAmmo(), GunAmmo);
-  EXPECT_EQ(a3.GimmeHealth(), GunHealth);
-  EXPECT_EQ(a3.GimmeRate(), GunPower);
+  EXPECT_EQ(a3.GetSpeed(), GunSpeed);
+  EXPECT_EQ(a3.GetAmmo(), GunAmmo);
+  EXPECT_EQ(a3.GetHealth(), GunHealth);
+  EXPECT_EQ(a3.GetRate(), GunPower);
 }

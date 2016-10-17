@@ -14,24 +14,24 @@ TEST(bullet_test, test_construction)
   EXPECT_EQ(a1.y1(), 5.0f);
   EXPECT_EQ(a1.x2(), 10.0f);
   EXPECT_EQ(a1.y2(), 10.0f);
-  EXPECT_EQ(a1.GimmeSpeed(), BulletSpeed);
-  EXPECT_EQ(a1.GimmeDamage(), BulletDamage);
+  EXPECT_EQ(a1.GetSpeed(), BulletSpeed);
+  EXPECT_EQ(a1.GetDamage(), BulletDamage);
 
   Bullet a2(1.0f, 1.0f, 4.0f, 5.0f);
   EXPECT_EQ(a2.x1(), 1.0f);
   EXPECT_EQ(a2.y1(), 1.0f);
   EXPECT_EQ(a2.x2(), 4.0f);
   EXPECT_EQ(a2.y2(), 5.0f);
-  EXPECT_EQ(a1.GimmeSpeed(), BulletSpeed);
-  EXPECT_EQ(a1.GimmeDamage(), BulletDamage);
+  EXPECT_EQ(a1.GetSpeed(), BulletSpeed);
+  EXPECT_EQ(a1.GetDamage(), BulletDamage);
 
   Bullet a3 = { 1.0f, 1.0f, 4.0f, 5.0f };
   EXPECT_EQ(a3.x1(), 1.0f);
   EXPECT_EQ(a3.y1(), 1.0f);
   EXPECT_EQ(a3.x2(), 4.0f);
   EXPECT_EQ(a3.y2(), 5.0f);
-  EXPECT_EQ(a1.GimmeSpeed(), BulletSpeed);
-  EXPECT_EQ(a1.GimmeDamage(), BulletDamage);
+  EXPECT_EQ(a1.GetSpeed(), BulletSpeed);
+  EXPECT_EQ(a1.GetDamage(), BulletDamage);
 }
 
 TEST(bullet_test, test_move)

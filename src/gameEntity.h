@@ -16,8 +16,6 @@ public:
   virtual float const & y1() = 0; // Объявление чистого виртуального метода.
   virtual float const & y2() = 0; // Объявление чистого виртуального метода.
 
-
-
 private:
 
   Box2D m_object = { 0.0f, 0.0f, 0.0f, 0.0f };

@@ -71,7 +71,6 @@ public:
   ~Alien() override {}
 
 private:
-
   Box2D m_alien = { 0.0f, 0.0f, 0.0f, 0.0f };
 
   float m_alienHealth = 0.0f;
