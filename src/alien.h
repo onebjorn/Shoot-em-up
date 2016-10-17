@@ -1,9 +1,10 @@
 #pragma once
 #include "../include/config_stat.h"
 #include "box2d.h"
+#include "gameEntity.h"
 #include "bullet.h"
 
-class Alien : public Box2D
+class Alien : public GameEntity, public Box2D
 {
 public:
   Alien() = default;
@@ -11,7 +12,7 @@ public:
   /* Добавить константы в конфиг*/
 
   Alien(float const x1, float const y1, float const x2, float const y2)
-    : Box2D (x1, y1, x2, y2)
+    : Box2D(x1, y1, x2, y2)
     , m_alienHealth(AlienHealth)
     , m_alienSpeed(AlienSpeed)
   {}
@@ -40,11 +41,6 @@ public:
     , m_alienSpeed(AlienSpeed)
   {}
 
-  Bullet AlienShot( Alien const & obj)
-  {
-     return { obj.x1() + AlienSizeX / 2, obj.y1() + BulletSizeY / 2, - BulletSpeed };
-  }
-
 
   float const & GetHealth() const { return m_alienHealth; }
   float const & GetSpeed() const { return m_alienSpeed; }
@@ -54,7 +50,11 @@ public:
   void RemoveAlienHealth(const float deltaHelth) { m_alienHealth -= deltaHelth; }
   void AddAlienSpeed( const float deltaSpeed) { m_alienSpeed += deltaSpeed; }
 
+  ~Alien()
+  {}
+
 private:
+
   float m_alienHealth = 0.0f;
   float m_alienSpeed = 0.0f;
 };

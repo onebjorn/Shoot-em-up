@@ -1,21 +1,23 @@
 /* Различные константы игры: здоровье, скорость, начальные координаты, всякая всячина типа урона*/
-#define AlienSizeX  (4.0f)
-#define AlienSizeY  (4.0f)
-#define AlienHealth (100.0f)
-#define AlienSpeed (10.0f)
+#pragma once
 
-#define ObstacleSizeX  (4.0f)
-#define ObstacleSizeY  (0.5f)
-#define ObstacleHealth (10.0f)
+const float AlienSizeX = 4.0f;
+const float AlienSizeY =  4.0f;
+const float AlienHealth = 100.0f;
+const float AlienSpeed = 10.0f;
 
-#define GunSizeX (4.0f)
-#define GunSizeY (4.0f)
-#define GunHealth (100.0f)
-#define GunSpeed (8.0f)
-#define GunPower (3.0f)
-#define GunAmmo (10)
+const float ObstacleSizeX  = 4.0f;
+const float ObstacleSizeY  = 0.5f;
+const float ObstacleHealth = 10.0f;
 
-#define BulletSizeX (1.0f)
-#define BulletSizeY (1.0f)
-#define BulletSpeed (200.0f)
-#define BulletDamage (100.0f)
+const float GunSizeX = 4.0f;
+const float GunSizeY = 4.0f;
+const float GunHealth = 100.0f;
+const float GunSpeed = 8.0f;
+const float GunPower = 3.0f;
+const int GunAmmo = 10;
+
+const float BulletSizeX = 1.0f;
+const float BulletSizeY = 1.0f;
+const float BulletSpeed = 200.0f;
+const float BulletDamage = 100.0f;
