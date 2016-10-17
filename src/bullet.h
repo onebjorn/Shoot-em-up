@@ -38,8 +38,8 @@ public:
     , m_bulletDam(BulletDamage)
   {}
 
-  float const & GimmeDamage() const { return m_bulletDam; }
-  float const & GimmeSpeed() const { return m_bulletSpeed; }
+  float const & GetDamage() const { return m_bulletDam; }
+  float const & GetSpeed() const { return m_bulletSpeed; }
 
   //TODO:Hit the object
 
