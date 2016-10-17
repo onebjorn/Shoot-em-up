@@ -64,10 +64,7 @@ public:
     return { (m_gun.x1() + m_gun.x2()) / 2.0f, (m_gun.y1() + m_gun.y2()) / 2.0f  };
   }
 
-  float const & x1() override { return m_gun.x1(); }
-  float const & y1() override { return m_gun.y1(); }
-  float const & x2() override { return m_gun.x2(); }
-  float const & y2() override { return m_gun.y2(); }
+  Box2D const & GetBox() const override { return m_gun; }
 
   ~Gun() override {}
 

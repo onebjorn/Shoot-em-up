@@ -13,22 +13,23 @@ TEST(Alien_test, test_construction)
   Box2D b1 = { 0.5f, 1.5f, 1.5f, 2.5f };
 
   Alien a1(p1, p2, 0.0f, 0.0f );
-  Alien a2( 1.5f, 1.5f, 2.5f, 2.5f);
+  Alien a2(1.5f, 1.5f, 2.5f, 2.5f);
   Alien a3(b1);
 
 
   EXPECT_EQ(a1.GetCenter(), p3);
   EXPECT_EQ(a1.GetHealth(), 0.0f);
-  EXPECT_EQ(a1.x1(), 1.0f);
-  EXPECT_EQ(a1.y1(), 1.0f);
-  EXPECT_EQ(a1.x2(), 2.0f);
-  EXPECT_EQ(a1.y2(), 2.0f);
+
+  EXPECT_EQ(a1.GetBox().x1(), 1.0f);
+  EXPECT_EQ(a1.GetBox().y1(), 1.0f);
+  EXPECT_EQ(a1.GetBox().x2(), 2.0f);
+  EXPECT_EQ(a1.GetBox().y2(), 2.0f);
 
 
   EXPECT_EQ(a2.GetHealth(), 100.0f);
   EXPECT_EQ(a2.GetSpeed(), AlienSpeed);
-  EXPECT_EQ(a2.x2(), 2.5f);
-  EXPECT_EQ(a2.x1(), 1.5f);
+  EXPECT_EQ(a2.GetBox().x2(), 2.5f);
+  EXPECT_EQ(a2.GetBox().x1(), 1.5f);
 }
 
 TEST(Alien_test, test_cross)

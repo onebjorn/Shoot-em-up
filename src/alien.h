@@ -49,11 +49,6 @@ public:
   void RemoveAlienHealth(const float deltaHelth) { m_alienHealth -= deltaHelth; }
   void AddAlienSpeed( const float deltaSpeed) { m_alienSpeed += deltaSpeed; }
 
-  float const & x1() override { return m_alien.x1(); }
-  float const & y1() override { return m_alien.y1(); }
-  float const & x2() override { return m_alien.x2(); }
-  float const & y2() override { return m_alien.y2(); }
-
   bool ObjectsIntersect( Alien const & a, Alien const & b)
   {
     if (a.m_alien.x2() < b.m_alien.x1()) return false;
@@ -67,6 +62,8 @@ public:
   {
     return { (m_alien.x1() + m_alien.x2()) / 2.0f, (m_alien.y1() + m_alien.y2()) / 2.0f  };
   }
+
+  Box2D const & GetBox() const override { return m_alien; }
 
   ~Alien() override {}
 

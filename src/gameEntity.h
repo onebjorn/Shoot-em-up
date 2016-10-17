@@ -12,13 +12,10 @@ public:
 
   virtual Point2D GetCenter() const = 0;
 
-  virtual float const & x1() = 0; // Объявление чистого виртуального метода.
-  virtual float const & x2() = 0; // Объявление чистого виртуального метода.
-  virtual float const & y1() = 0; // Объявление чистого виртуального метода.
-  virtual float const & y2() = 0; // Объявление чистого виртуального метода.
+  virtual Box2D const & GetBox() const = 0;
 
-private:
+protected:
 
-  Box2D m_object = { 0.0f, 0.0f, 0.0f, 0.0f };
+  Box2D m_box = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 };
