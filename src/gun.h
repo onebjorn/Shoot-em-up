@@ -40,10 +40,10 @@ public:
     , m_ammo(GunAmmo)
   {}
 
-  float const & GimmeHealth() const { return m_gunhealth; }
-  float const & GimmeSpeed() const { return m_gunspeed; }
-  float const & GimmeRate() const { return m_gunpower; }
-  int const & GimmeAmmo() const { return m_ammo; }
+  float const & GetHealth() const { return m_gunhealth; }
+  float const & GetSpeed() const { return m_gunspeed; }
+  float const & GetRate() const { return m_gunpower; }
+  int const & GetAmmo() const { return m_ammo; }
 
   void HealthLoss(const float loss) { m_gunhealth -= loss; }
   void SpeedLoss(const float loss) { m_gunspeed -= loss;}
