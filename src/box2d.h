@@ -5,7 +5,6 @@
 #include <cmath>
 
 using namespace std;
-
 float const Eps = 1e-5f;
 
 /* Класс двумерного прямоугольника Box2d*/
@@ -67,6 +66,12 @@ public:
     m_boxMin = obj.m_boxMin;
     m_boxMax = obj.m_boxMax;
     return *this;
+  }
+
+  Point2D GetCenter() const
+  {
+    Point2D m_center = {(m_boxMin.x() + m_boxMax.x()) / 2 , (m_boxMin.y() + m_boxMax.y()) / 2 };
+    return m_center;
   }
 
   Box2D & operator = (Box2D && obj) //  Оператор перемещения
