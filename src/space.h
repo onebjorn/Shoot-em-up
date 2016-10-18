@@ -24,5 +24,7 @@ public:
   Box2D const & GetBox() const override { return m_space; }
 
 private:
+
   Box2D m_space = { 0.0f, 0.0f, 0.0f, 0.0f };
+
 };

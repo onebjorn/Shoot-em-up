@@ -12,7 +12,7 @@ class Point2D
 public:
   Point2D()=default;
 
-  Point2D ( Point2D  const & obj)
+  Point2D(Point2D const & obj)
     : m_x(obj.m_x), m_y(obj.m_y)
   {}
 
