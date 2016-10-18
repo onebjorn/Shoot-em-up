@@ -10,8 +10,6 @@ public:
 
   virtual ~GameEntity() = default;
 
-  virtual Point2D GetCenter() const = 0;
-
   virtual Box2D const & GetBox() const = 0;
 
 protected:
