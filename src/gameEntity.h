@@ -7,7 +7,6 @@
 class GameEntity
 {
 public:
-
   virtual ~GameEntity() = default;
 
   virtual Box2D const & GetBox() const = 0;

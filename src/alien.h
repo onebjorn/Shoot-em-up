@@ -6,7 +6,6 @@
 class Alien : public GameEntity
 {
 public:
-
   Alien() = default;
 
   Alien(float const x1, float const y1, float const x2, float const y2)
@@ -38,7 +37,6 @@ public:
     , m_alienHealth(AlienHealth)
     , m_alienSpeed(AlienSpeed)
   {}
-
 
   float const & GetHealth() const { return m_alienHealth; }
   float const & GetSpeed() const { return m_alienSpeed; }

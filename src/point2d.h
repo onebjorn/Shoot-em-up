@@ -7,7 +7,6 @@
 float const kEps = 1e-5;
 
 using namespace std;
-
 class Point2D
 {
 public:

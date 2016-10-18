@@ -5,7 +5,6 @@
 #include <cmath>
 
 using namespace std;
-
 float const Eps = 1e-5f;
 
 /* Класс двумерного прямоугольника Box2d*/

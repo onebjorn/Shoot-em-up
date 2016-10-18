@@ -17,7 +17,6 @@ float constexpr pi() { return acos(-1.0f);}
 class Ray2D
 {
 public:
-
   Ray2D() = default;
 
   Ray2D(Ray2D const & obj)
@@ -36,8 +35,8 @@ public:
 
   Ray2D(float x0, float y0, float x1, float y1)
   {
-    m_origin = Point2D(x0,y0);
-    Normalize(x0,y0,x1,y1);
+    m_origin = Point2D(x0, y0);
+    Normalize(x0, y0, x1, y1);
     }
 
   Ray2D(std::initializer_list<float> const & lst)
@@ -78,15 +77,8 @@ public:
     return *this;
   }
 
-  float & GetDirect(int i)
-  {
-    return m_direct[i];
-  }
-
-  float const & GetDirect(int i) const
-  {
-    return m_direct[i];
-  }
+  float & GetDirect(int i) { return m_direct[i]; }
+  float const & GetDirect(int i) const { return m_direct[i]; }
 
   float & x0() { return m_origin.x(); }
   float & y0() { return m_origin.y(); }
@@ -96,15 +88,15 @@ public:
 
   bool Intersection(Box2D const & b, Ray2D const & a)
   {
-    bool part1 = ((a.x0() < b.x1())&&(a.y0() < b.y2())&&(a.y0() > b.y1()));
-    bool part2 = ((a.x0() < b.x2())&&(a.y0() < b.y1())&&(a.x0() > b.x1()));
-    bool part3 = ((a.x0() > b.x2())&&(a.y0() < b.y2())&&(a.y0() > b.y1()));
-    bool part4 = ((a.x0() < b.x2())&&(a.y0() > b.y2())&&(a.x0() > b.x1()));
+    bool part1 = ((a.x0() < b.x1()) && (a.y0() < b.y2()) && (a.y0() > b.y1()));
+    bool part2 = ((a.x0() < b.x2()) && (a.y0() < b.y1()) && (a.x0() > b.x1()));
+    bool part3 = ((a.x0() > b.x2()) && (a.y0() < b.y2()) && (a.y0() > b.y1()));
+    bool part4 = ((a.x0() < b.x2()) && (a.y0() > b.y2()) && (a.x0() > b.x1()));
     bool sign = ((a.GetDirect(0) < 0.0f) || (a.GetDirect(1) < 0.0f));
     float tmin, tmax, tymin, tymax;
     try
     {
-      if ((a.GetDirect(0)==0.0f)||(a.GetDirect(1)==0.0f)) throw (sign==1) ? 1 : 0;
+      if ((a.GetDirect(0) == 0.0f)||(a.GetDirect(1) == 0.0f)) throw (sign == 1) ? 1 : 0;
       else
         {
         if (a.GetDirect(0) > 0.0f)
@@ -136,12 +128,12 @@ public:
     }
     catch(int & p)
     {
-      if (p==0)
+      if (p == 0)
         {
            if (part1 || part2) return true;
            else return false;
         }
-      if (p==1)
+      if (p == 1)
         {
           if (part3 || part4) return true;
           else return false;
@@ -174,14 +166,14 @@ private:
 
   void Normalize(float x0, float y0, float x1, float y1)
   {
-    float sq = sqrt((x1-x0)*(x1-x0) + (y1-y0)*(y1-y0));
+    float sq = sqrt((x1 - x0)*(x1 - x0) + (y1 - y0)*(y1 - y0));
     try
     {
       if (sq < 1.0f) { throw invalid_argument("Invalid way to create direction"); }
       else
         {
-          m_direct[0] = (x1-x0) / sq;
-          m_direct[1] = (y1-y0) / sq;
+          m_direct[0] = (x1 - x0) / sq;
+          m_direct[1] = (y1 - y0) / sq;
         }
     }
     catch(invalid_argument & p)
@@ -189,23 +181,23 @@ private:
       m_direct[0] = 0.0f;
       m_direct[1] = 0.0f;
     }
-    if ((x1==0.0f)&&(y1==0.0f))
+    if ((x1 == 0.0f)&&(y1 == 0.0f))
     {
-        m_direct[0]=0.0f;
-        m_direct[1]=0.0f;
+        m_direct[0] = 0.0f;
+        m_direct[1] = 0.0f;
     }
   }
 
   void NormalizeArr(float * arr)
   {
-    float sq = sqrt((arr[2]-arr[0])*(arr[2]-arr[0]) + (arr[3]-arr[1])*(arr[3]-arr[1]));
+    float sq = sqrt((arr[2] - arr[0])*(arr[2] - arr[0]) + (arr[3] - arr[1])*(arr[3] - arr[1]));
     try
     {
       if (sq < 1.0f) { throw invalid_argument("Invalid way to create direction"); }
       else
         {
-          m_direct[0] = (arr[2]-arr[0]) / sq;
-          m_direct[1] = (arr[3]-arr[1]) / sq;
+          m_direct[0] = (arr[2] - arr[0]) / sq;
+          m_direct[1] = (arr[3] - arr[1]) / sq;
         }
     }
     catch(invalid_argument & p)

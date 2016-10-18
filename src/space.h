@@ -7,7 +7,6 @@
 class Space : public GameEntity
 {
 public:
-
   Space() = default;
 
   Space(float const x1, float const y1, float const x2, float const y2)
