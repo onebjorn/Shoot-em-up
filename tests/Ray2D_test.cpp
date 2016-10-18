@@ -13,7 +13,6 @@ TEST(test_ray, test_construction)
   EXPECT_EQ(r1.GetDirect(0), 0.0f);
   EXPECT_EQ(r1.GetDirect(1), 0.0f);
 
-
   //Create the ray with angle parametrization
   Ray2D r2(1.0f, 2.0f, pi() / 2.0f);
   EXPECT_EQ(r2.x0(), 1.0f);

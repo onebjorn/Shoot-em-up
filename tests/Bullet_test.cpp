@@ -8,7 +8,6 @@
 TEST(bullet_test, test_construction)
 {
   Box2D p1 = { 5.0f, 5.0f, 10.0f, 10.0f};
-
   Bullet a1(p1);
   EXPECT_EQ(a1.GetBox().x1(), 5.0f);
   EXPECT_EQ(a1.GetBox().y1(), 5.0f);
