@@ -11,10 +11,10 @@ TEST(Obstacle_test, test_construction)
   Obstacle o1 = { p1, p2 };
 
   EXPECT_EQ(o1.GetHealth(), ObstacleHealth);
-  EXPECT_EQ(o1.x1(), 1.0f);
-  EXPECT_EQ(o1.x2(), 2.0f);
-  EXPECT_EQ(o1.y1(), 1.0f);
-  EXPECT_EQ(o1.y2(), 2.0f);
+  EXPECT_EQ(o1.GetBox().x1(), 1.0f);
+  EXPECT_EQ(o1.GetBox().x2(), 2.0f);
+  EXPECT_EQ(o1.GetBox().y1(), 1.0f);
+  EXPECT_EQ(o1.GetBox().y2(), 2.0f);
 }
 
 TEST(Obstacle_test, test_move)
@@ -24,6 +24,6 @@ TEST(Obstacle_test, test_move)
   Obstacle o1 = { p1, p2 };
 
   Obstacle o2 = move(o1);
-  EXPECT_EQ(o2.x1(), 1.0f);
-  EXPECT_EQ(o1.x1(), 0.0f);
+  EXPECT_EQ(o2.GetBox().x1(), 1.0f);
+  EXPECT_EQ(o1.GetBox().x1(), 0.0f);
 }

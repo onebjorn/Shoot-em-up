@@ -53,7 +53,7 @@ TEST(Alien_test, test_move)
   Point2D p2 = { 2.0f, 2.0f };
   Box2D b1 = { 1.5f, 1.5f, 0.5f, 2.5f };
 
-  Alien a1(p1, p2, 0.0f, 0.0f );
+  Alien a1(p1, p2, 0.0f, 0.0f);
   Alien a2(1.5f, 1.5f, 2.5f, 2.5f);
   Alien a3(b1);
 
