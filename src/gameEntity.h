@@ -13,7 +13,5 @@ public:
   virtual Box2D const & GetBox() const = 0;
 
 protected:
-
   Box2D m_box = { 0.0f, 0.0f, 0.0f, 0.0f };
-
 };

@@ -41,11 +41,6 @@ public:
   float const & GetDamage() const { return m_bulletDam; }
   float const & GetSpeed() const { return m_bulletSpeed; }
 
-  Point2D GetCenter() const override
-  {
-    return { (m_bullet.x1() + m_bullet.x2()) / 2.0f, (m_bullet.y1() + m_bullet.y2()) / 2.0f  };
-  }
-
   Box2D const & GetBox() const override { return m_bullet; }
 
   ~Bullet() {}

@@ -17,7 +17,7 @@ TEST(Alien_test, test_construction)
   Alien a3(b1);
 
 
-  EXPECT_EQ(a1.GetCenter(), p3);
+  EXPECT_EQ(a1.GetBox().GetCenter(), p3);
   EXPECT_EQ(a1.GetHealth(), 0.0f);
 
   EXPECT_EQ(a1.GetBox().x1(), 1.0f);

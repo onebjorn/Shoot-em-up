@@ -59,13 +59,8 @@ public:
 
   Bullet Shot()
   {
-      m_ammo--;
-      return { m_gun.x1() + GunSizeX /2, m_gun.y2() + BulletSizeY, BulletSpeed };
-  }
-
-  Point2D GetCenter() const override
-  {
-    return { (m_gun.x1() + m_gun.x2()) / 2.0f, (m_gun.y1() + m_gun.y2()) / 2.0f  };
+    m_ammo--;
+    return { m_gun.x1() + GunSizeX /2, m_gun.y2() + BulletSizeY, BulletSpeed };
   }
 
   Box2D const & GetBox() const override { return m_gun; }

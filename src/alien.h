@@ -57,8 +57,6 @@ public:
     return true;
   }
 
-  Point2D GetCenter() const override { return { (m_alien.x1() + m_alien.x2()) / 2.0f, (m_alien.y1() + m_alien.y2()) / 2.0f  }; }
-
   Box2D const & GetBox() const override { return m_alien; }
 
 private:

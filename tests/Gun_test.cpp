@@ -53,7 +53,7 @@ TEST(Gun_test, test_move)
   Gun a3(b1);
 
   a3 = move(a2);
-  EXPECT_EQ(a3.GetCenter().x(), 2.0f);
+  EXPECT_EQ(a3.GetBox().GetCenter().x(), 2.0f);
   Gun a4 = move(a3);
   EXPECT_EQ(a4.GetBox().x1(), 1.5f);
   Gun a5 = move(b1);
