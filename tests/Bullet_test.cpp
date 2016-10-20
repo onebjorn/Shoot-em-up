@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "../include/config_stat.h"
 #include "bullet.h"
+#include "gun.h"
+#include "bulletsManager.h"
 #include <sstream>
 #include <iostream>
 #include <unordered_set>
@@ -48,4 +50,12 @@ TEST(Bullet_test, test_move)
   EXPECT_EQ(bullet4.GetBox().x1(), 1.0f - BulletSizeX / 2);
   Bullet bullet5 = move(b1);
   EXPECT_EQ(bullet5.GetBox().x2(), 1.5f);
+}
+
+TEST(Bullet_test, test_vector)
+{
+  Gun g;
+  BulletsManager Bm;
+  Bm.AddBullet(g.Shot());
+  EXPECT_EQ(Bm.getBullets().back().GetBox().x1(), 2.0f);
 }
