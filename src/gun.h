@@ -49,6 +49,12 @@ public:
   float const & GetRate() const { return m_gunpower; }
   int const & GetAmmo() const { return m_ammo; }
 
+  void SetPower(float const power)
+  {
+    if (power < 0.0f) throw invalid_argument("Negative power");
+    m_gunpower = power;
+  }
+
   void SetHealth(float const health)
   {
     if ((health > 100.0f) || (health < 0.0f)) throw invalid_argument("Health must be in range 0..100");

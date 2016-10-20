@@ -74,4 +74,7 @@ TEST(Gun_test, test_exceptions)
   EXPECT_THROW(gun1.HealthLoss(101.0f), invalid_argument);
   EXPECT_THROW(gun1.SpeedLoss(20.0f), invalid_argument);
   EXPECT_THROW(gun1.SetHealth(-101.0f), invalid_argument);
+  EXPECT_THROW(gun1.SetPower(-10.0f), invalid_argument);
+
+  EXPECT_NO_THROW(gun1.SetHealth(20.0f));
 }
