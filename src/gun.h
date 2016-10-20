@@ -49,8 +49,22 @@ public:
   float const & GetRate() const { return m_gunpower; }
   int const & GetAmmo() const { return m_ammo; }
 
-  void HealthLoss(const float loss) { m_gunhealth -= loss; }
-  void SpeedLoss(const float loss) { m_gunspeed -= loss;}
+  void SetHealth(float const health)
+  {
+    if ((health > 100.0f) || (health < 0.0f)) throw invalid_argument("Health must be in range 0..100");
+    m_gunhealth = health;
+  }
+
+  void HealthLoss(float const loss)
+  {
+    if (m_gunhealth < loss) throw invalid_argument("Negative health");
+    m_gunhealth -= loss;
+  }
+  void SpeedLoss(const float loss)
+  {
+    if (m_gunspeed < loss) throw invalid_argument("Negative speed");
+    m_gunspeed -= loss;
+  }
   void SpeedUp(const float nitro) { m_gunspeed += nitro;}
 
   Bullet Shot()

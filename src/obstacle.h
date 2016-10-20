@@ -45,7 +45,11 @@ public:
 
   float const & GetHealth() const { return m_obstacleHealth; }
 
-  void RemoveObstacleHealth(const float deltaHealth) { m_obstacleHealth -= deltaHealth; }
+  void RemoveObstacleHealth(const float deltaHealth)
+  {
+    if (m_obstacleHealth < deltaHealth) throw invalid_argument("Negative health");
+    m_obstacleHealth -= deltaHealth;
+  }
 
 private:
   float m_obstacleHealth = 0.0f;

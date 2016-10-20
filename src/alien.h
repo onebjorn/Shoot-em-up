@@ -46,9 +46,17 @@ public:
   float const & GetHealth() const { return m_alienHealth; }
   float const & GetSpeed() const { return m_alienSpeed; }
 
-  void SetAlienHealth(const float newHelth) { m_alienHealth = newHelth; }
+  void SetAlienHealth(const float newHelth)
+  {
+      if ((newHelth < 0.0f) || (newHelth > 100.0f)) throw invalid_argument("Health must be in range 0..100");
+      m_alienHealth = newHelth;
+  }
   void SetAlienSpeed( const float newSpeed) { m_alienSpeed = newSpeed; }
-  void RemoveAlienHealth(const float deltaHelth) { m_alienHealth -= deltaHelth; }
+  void RemoveAlienHealth(const float deltaHelth)
+  {
+      if (m_alienHealth < deltaHelth) throw invalid_argument("Negative health");
+      m_alienHealth -= deltaHelth;
+  }
   void AddAlienSpeed( const float deltaSpeed) { m_alienSpeed += deltaSpeed; }
 
 private:
