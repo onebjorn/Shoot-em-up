@@ -65,3 +65,13 @@ TEST(Gun_test, test_shot)
   Gun a2(2.0f, 2.0f);
   EXPECT_EQ(a2.Shot().GetBox().x1(), 2.0f);
 }
+
+TEST(Gun_test, test_exceptions)
+{
+  Point2D p1 = {1.0f, 2.0f};
+  Point2D p2 = {3.0f, 4.0f};
+  Gun gun1(p1, p2);
+  EXPECT_THROW(gun1.HealthLoss(101.0f), invalid_argument);
+  EXPECT_THROW(gun1.SpeedLoss(20.0f), invalid_argument);
+  EXPECT_THROW(gun1.SetHealth(-101.0f), invalid_argument);
+}

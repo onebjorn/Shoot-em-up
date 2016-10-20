@@ -27,3 +27,12 @@ TEST(Obstacle_test, test_move)
   EXPECT_EQ(o2.GetBox().x1(), 1.0f);
   EXPECT_EQ(o1.GetBox().x1(), 0.0f);
 }
+
+TEST(Obstacle_test, test_exception)
+{
+  Point2D p1 = {3.0f, 3.0f};
+  Point2D p2 = {4.0f, 4.0f};
+  Obstacle o3 = {p1, p2};
+
+  EXPECT_THROW(o3.RemoveObstacleHealth(101), invalid_argument);
+}

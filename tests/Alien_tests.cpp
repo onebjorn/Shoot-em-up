@@ -64,3 +64,12 @@ TEST(Alien_test, test_move)
   Alien a5 = move(b1);
   EXPECT_EQ(a5.GetBox().x2(), 1.5f);
 }
+
+TEST(Alien_test, test_exception)
+{
+  Box2D b1 = {1.0f, 2.0f, 3.0f, 4.0f};
+  Alien a6(b1);
+
+  EXPECT_THROW(a6.RemoveAlienHealth(101.0f), invalid_argument);
+  EXPECT_THROW(a6.SetAlienHealth(101.0f), invalid_argument);
+}
