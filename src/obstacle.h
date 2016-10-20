@@ -47,10 +47,6 @@ public:
 
   void RemoveObstacleHealth(const float deltaHealth) { m_obstacleHealth -= deltaHealth; }
 
-
-  ~Obstacle()
-  {}
-
 private:
   float m_obstacleHealth = 0.0f;
 };
