@@ -19,6 +19,8 @@ public:
     return true;
   }
 
+  virtual ~GameEntity() = default;
+
 protected:
   Box2D m_box;
 };

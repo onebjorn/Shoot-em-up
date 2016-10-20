@@ -18,14 +18,14 @@ public:
     : m_bulletSpeed(speed)
     , m_bulletDam(BulletDamage)
   {
-     m_box = Box2D(x - BulletSizeX / 2, y - BulletSizeY / 2 , x + BulletSizeX / 2, y + BulletSizeY / 2);
+    m_box = Box2D(x - BulletSizeX / 2, y - BulletSizeY / 2 , x + BulletSizeX / 2, y + BulletSizeY / 2);
   }
 
   Bullet(Point2D const & center)
     : m_bulletSpeed(BulletSpeed)
     , m_bulletDam(BulletDamage)
   {
-     m_box = Box2D(center.x() - BulletSizeX / 2, center.y() - BulletSizeY / 2, center.x() + BulletSizeX / 2, center.y() + BulletSizeY / 2);
+    m_box = Box2D(center.x() - BulletSizeX / 2, center.y() - BulletSizeY / 2, center.x() + BulletSizeX / 2, center.y() + BulletSizeY / 2);
   }
 
 

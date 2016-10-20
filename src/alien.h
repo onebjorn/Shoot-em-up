@@ -26,7 +26,7 @@ public:
     : m_alienHealth(AlienHealth)
     , m_alienSpeed(AlienSpeed)
   {
-     m_box = Box2D(center.x() - AlienSizeX / 2, center.y() - AlienSizeY / 2, center.x() + AlienSizeX / 2, center.y() + AlienSizeY / 2);
+    m_box = Box2D(center.x() - AlienSizeX / 2, center.y() - AlienSizeY / 2, center.x() + AlienSizeX / 2, center.y() + AlienSizeY / 2);
   }
 
   Alien(Point2D const & leftBottom, Point2D const & rightTop, float const health, float const speed)
@@ -40,7 +40,7 @@ public:
     : m_alienHealth(AlienHealth)
     , m_alienSpeed(AlienSpeed)
   {
-     m_box = Box2D(alienBox.x1(), alienBox.y1(), alienBox.x2(), alienBox.y2());
+    m_box = Box2D(alienBox.x1(), alienBox.y1(), alienBox.x2(), alienBox.y2());
   }
 
   float const & GetHealth() const { return m_alienHealth; }
@@ -48,15 +48,18 @@ public:
 
   void SetAlienHealth(const float newHelth)
   {
-      if ((newHelth < 0.0f) || (newHelth > 100.0f)) throw invalid_argument("Health must be in range 0..100");
-      m_alienHealth = newHelth;
+    if ((newHelth < 0.0f) || (newHelth > 100.0f)) throw invalid_argument("Health must be in range 0..100");
+    m_alienHealth = newHelth;
   }
+
   void SetAlienSpeed( const float newSpeed) { m_alienSpeed = newSpeed; }
+
   void RemoveAlienHealth(const float deltaHelth)
   {
-      if (m_alienHealth < deltaHelth) throw invalid_argument("Negative health");
-      m_alienHealth -= deltaHelth;
+    if (m_alienHealth < deltaHelth) throw invalid_argument("Negative health");
+    m_alienHealth -= deltaHelth;
   }
+
   void AddAlienSpeed( const float deltaSpeed) { m_alienSpeed += deltaSpeed; }
 
 private:

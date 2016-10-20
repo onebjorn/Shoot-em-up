@@ -7,6 +7,7 @@
 class Space : public GameEntity
 {
 public:
+
   Space() = default;
 
   Space(float const x1, float const y1, float const x2, float const y2)
@@ -16,7 +17,7 @@ public:
 
   Space(Point2D const & leftBottom, Point2D const & rightTop)
   {
-     m_box = Box2D(leftBottom, rightTop);
+    m_box = Box2D(leftBottom, rightTop);
   }
 
   Space( Box2D const & spaceBox)

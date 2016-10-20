@@ -11,7 +11,7 @@ set(SOURCE_ROOT src)
 aux_source_directory(${SOURCE_ROOT} SRC_LIST)
 
 # Create executable by SRC_LIST.
-add_executable(${PROJECT_NAME} ${SRC_LIST} "src/point2d.h" "src/box2d.h" "src/ray2d.h" "src/space.h" "src/alien.h" "src/obstacle.h" "include/config_stat.h" "src/gun.h" "src/bullet.h" "src/gameEntity.h")
+add_executable(${PROJECT_NAME} ${SRC_LIST} "src/point2d.h" "src/box2d.h" "src/ray2d.h" "src/space.h" "src/alien.h" "src/obstacle.h" "include/config_stat.h" "src/gun.h" "src/bullet.h" "src/gameEntity.h" "src/aliensManager.h")
 
 # Add subdirectory with Google Test Library.
 add_subdirectory(3party/googletest)

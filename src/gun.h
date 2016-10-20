@@ -60,12 +60,14 @@ public:
     if (m_gunhealth < loss) throw invalid_argument("Negative health");
     m_gunhealth -= loss;
   }
+
   void SpeedLoss(const float loss)
   {
     if (m_gunspeed < loss) throw invalid_argument("Negative speed");
     m_gunspeed -= loss;
   }
-  void SpeedUp(const float nitro) { m_gunspeed += nitro;}
+
+  void SpeedUp(const float nitro) { m_gunspeed += nitro; }
 
   Bullet Shot()
   {

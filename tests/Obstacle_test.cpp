@@ -17,22 +17,11 @@ TEST(Obstacle_test, test_construction)
   EXPECT_EQ(o1.GetBox().y2(), 2.0f);
 }
 
-TEST(Obstacle_test, test_move)
-{
-  Point2D p1 = { 1.0f, 1.0f };
-  Point2D p2 = { 2.0f, 2.0f };
-  Obstacle o1 = { p1, p2 };
-
-  Obstacle o2 = move(o1);
-  EXPECT_EQ(o2.GetBox().x1(), 1.0f);
-  EXPECT_EQ(o1.GetBox().x1(), 0.0f);
-}
-
 TEST(Obstacle_test, test_exception)
 {
-  Point2D p1 = {3.0f, 3.0f};
-  Point2D p2 = {4.0f, 4.0f};
-  Obstacle o3 = {p1, p2};
+  Point2D p1 = { 3.0f, 3.0f };
+  Point2D p2 = { 4.0f, 4.0f };
+  Obstacle o3 = { p1, p2 };
 
-  EXPECT_THROW(o3.RemoveObstacleHealth(101), invalid_argument);
+  EXPECT_THROW(o3.RemoveObstacleHealth(101.0f), invalid_argument);
 }
