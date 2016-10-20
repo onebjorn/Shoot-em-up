@@ -28,7 +28,6 @@ public:
     m_box = Box2D(center.x() - BulletSizeX / 2, center.y() - BulletSizeY / 2, center.x() + BulletSizeX / 2, center.y() + BulletSizeY / 2);
   }
 
-
   Bullet(Box2D const & bullobj)
     : m_bulletSpeed(BulletSpeed)
     , m_bulletDam(BulletDamage)
