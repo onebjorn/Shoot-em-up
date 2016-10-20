@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "../include/config_stat.h"
 #include "alien.h"
+#include "aliensManager.h"
 #include <sstream>
 #include <iostream>
 #include <unordered_set>
@@ -63,4 +64,13 @@ TEST(Alien_test, test_move)
   EXPECT_EQ(a4.GetBox().x1(), 1.5f);
   Alien a5 = move(b1);
   EXPECT_EQ(a5.GetBox().x2(), 1.5f);
+}
+
+TEST(Alien_test, Aliens_manager)
+{
+  AliensManager As;
+
+  EXPECT_EQ(As.GetAliens().size(), AliensNumber);
+  EXPECT_EQ(As.GetAliens().front().GetHealth(), AlienHealth);
+  EXPECT_EQ(As.GetAliens().front().GetBox().x1(), 29.25f);
 }

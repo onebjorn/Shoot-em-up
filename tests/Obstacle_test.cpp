@@ -25,5 +25,4 @@ TEST(Obstacle_test, test_move)
 
   Obstacle o2 = move(o1);
   EXPECT_EQ(o2.GetBox().x1(), 1.0f);
-  EXPECT_EQ(o1.GetBox().x1(), 0.0f);
 }

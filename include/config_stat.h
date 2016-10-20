@@ -21,3 +21,11 @@ const float BulletSizeX = 1.0f;
 const float BulletSizeY = 1.0f;
 const float BulletSpeed = 200.0f;
 const float BulletDamage = 100.0f;
+
+const float SpaceSizeX = 1000.0f;
+const float SpaceSizeY = 1000.0f;
+
+const int AliensNumber = 50;
+const int AliensNumberRow = 5;
+const int AliensNumberColumn = 10;
+
