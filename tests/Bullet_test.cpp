@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "../include/config_stat.h"
 #include "bullet.h"
+#include "gun.h"
+#include "bulletsManager.h"
 #include <sstream>
 #include <iostream>
 #include <unordered_set>
@@ -13,24 +15,24 @@ TEST(bullet_test, test_construction)
   EXPECT_EQ(a1.GetBox().y1(), 5.0f);
   EXPECT_EQ(a1.GetBox().x2(), 10.0f);
   EXPECT_EQ(a1.GetBox().y2(), 10.0f);
-  EXPECT_EQ(a1.GetSpeed(), BulletSpeed);
-  EXPECT_EQ(a1.GetDamage(), BulletDamage);
+  EXPECT_EQ(a1.GetSpeed(), kBulletSpeed);
+  EXPECT_EQ(a1.GetDamage(), kBulletDamage);
 
   Bullet a2(1.0f, 1.0f, 4.0f, 5.0f);
   EXPECT_EQ(a2.GetBox().x1(), 1.0f);
   EXPECT_EQ(a2.GetBox().y1(), 1.0f);
   EXPECT_EQ(a2.GetBox().x2(), 4.0f);
   EXPECT_EQ(a2.GetBox().y2(), 5.0f);
-  EXPECT_EQ(a1.GetSpeed(), BulletSpeed);
-  EXPECT_EQ(a1.GetDamage(), BulletDamage);
+  EXPECT_EQ(a1.GetSpeed(), kBulletSpeed);
+  EXPECT_EQ(a1.GetDamage(), kBulletDamage);
 
   Bullet a3 = { 1.0f, 1.0f, 4.0f, 5.0f };
   EXPECT_EQ(a3.GetBox().x1(), 1.0f);
   EXPECT_EQ(a3.GetBox().y1(), 1.0f);
   EXPECT_EQ(a3.GetBox().x2(), 4.0f);
   EXPECT_EQ(a3.GetBox().y2(), 5.0f);
-  EXPECT_EQ(a1.GetSpeed(), BulletSpeed);
-  EXPECT_EQ(a1.GetDamage(), BulletDamage);
+  EXPECT_EQ(a1.GetSpeed(), kBulletSpeed);
+  EXPECT_EQ(a1.GetDamage(), kBulletDamage);
 }
 
 TEST(Bullet_test, test_move)
@@ -45,7 +47,15 @@ TEST(Bullet_test, test_move)
   bullet3 = move(bullet2);
   EXPECT_EQ(bullet3.GetBox().x1(), 1.5f);
   Bullet bullet4 = move(bullet1);
-  EXPECT_EQ(bullet4.GetBox().x1(), 1.0f - BulletSizeX / 2);
+  EXPECT_EQ(bullet4.GetBox().x1(), 1.0f - kBulletSizeX / 2);
   Bullet bullet5 = move(b1);
   EXPECT_EQ(bullet5.GetBox().x2(), 1.5f);
+}
+
+TEST(Bullet_test, test_vector)
+{
+  Gun g;
+  BulletsManager Bm;
+  Bm.AddBullet(g.Shot());
+  EXPECT_EQ(Bm.getBullets().back().GetBox().x1(), 2.0f);
 }

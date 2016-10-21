@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "../include/config_stat.h"
 #include "alien.h"
+#include "aliensManager.h"
 #include <sstream>
 #include <iostream>
 #include <unordered_set>
@@ -27,7 +28,7 @@ TEST(Alien_test, test_construction)
 
 
   EXPECT_EQ(a2.GetHealth(), 100.0f);
-  EXPECT_EQ(a2.GetSpeed(), AlienSpeed);
+  EXPECT_EQ(a2.GetSpeed(), kAlienSpeed);
   EXPECT_EQ(a2.GetBox().x2(), 2.5f);
   EXPECT_EQ(a2.GetBox().x1(), 1.5f);
 }
@@ -53,7 +54,7 @@ TEST(Alien_test, test_move)
   Point2D p2 = { 2.0f, 2.0f };
   Box2D b1 = { 1.5f, 1.5f, 0.5f, 2.5f };
 
-  Alien a1(p1, p2, 0.0f, 0.0f );
+  Alien a1(p1, p2, 0.0f, 0.0f);
   Alien a2(1.5f, 1.5f, 2.5f, 2.5f);
   Alien a3(b1);
 
@@ -63,4 +64,22 @@ TEST(Alien_test, test_move)
   EXPECT_EQ(a4.GetBox().x1(), 1.5f);
   Alien a5 = move(b1);
   EXPECT_EQ(a5.GetBox().x2(), 1.5f);
+}
+
+TEST(Alien_test, test_exception)
+{
+  Box2D b1 = { 1.0f, 2.0f, 3.0f, 4.0f };
+  Alien a6(b1);
+
+  EXPECT_THROW(a6.RemoveAlienHealth(101.0f), invalid_argument);
+  EXPECT_THROW(a6.SetAlienHealth(101.0f), invalid_argument);
+}
+
+TEST(Alien_test, Aliens_manager)
+{
+  AliensManager As;
+
+  EXPECT_EQ(As.GetAliens().size(), kAliensNumber);
+  EXPECT_EQ(As.GetAliens().front().GetHealth(), kAlienHealth);
+  EXPECT_EQ(As.GetAliens().front().GetBox().x1(), 29.25f);
 }
