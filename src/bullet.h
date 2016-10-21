@@ -8,36 +8,36 @@ public:
   Bullet() = default;
 
   Bullet(float const x0, float const y0, float const x1, float const y1)
-    : m_bulletSpeed(BulletSpeed)
-    , m_bulletDam(BulletDamage)
+    : m_bulletSpeed(kBulletSpeed)
+    , m_bulletDam(kBulletDamage)
   {
     m_box = Box2D(x0, y0, x1, y1);
   }
 
   Bullet(float const x, float const y, float speed)
     : m_bulletSpeed(speed)
-    , m_bulletDam(BulletDamage)
+    , m_bulletDam(kBulletDamage)
   {
-    m_box = Box2D(x - BulletSizeX / 2, y - BulletSizeY / 2 , x + BulletSizeX / 2, y + BulletSizeY / 2);
+    m_box = Box2D(x - kBulletSizeX / 2, y - kBulletSizeY / 2 , x + kBulletSizeX / 2, y + kBulletSizeY / 2);
   }
 
   Bullet(Point2D const & center)
-    : m_bulletSpeed(BulletSpeed)
-    , m_bulletDam(BulletDamage)
+    : m_bulletSpeed(kBulletSpeed)
+    , m_bulletDam(kBulletDamage)
   {
-    m_box = Box2D(center.x() - BulletSizeX / 2, center.y() - BulletSizeY / 2, center.x() + BulletSizeX / 2, center.y() + BulletSizeY / 2);
+    m_box = Box2D(center.x() - kBulletSizeX / 2, center.y() - kBulletSizeY / 2, center.x() + kBulletSizeX / 2, center.y() + kBulletSizeY / 2);
   }
 
   Bullet(Box2D const & bullobj)
-    : m_bulletSpeed(BulletSpeed)
-    , m_bulletDam(BulletDamage)
+    : m_bulletSpeed(kBulletSpeed)
+    , m_bulletDam(kBulletDamage)
   {
     m_box = Box2D(bullobj);
   }
 
   Bullet(initializer_list<float> const & lst)
-    : m_bulletSpeed(BulletSpeed)
-    , m_bulletDam(BulletDamage)
+    : m_bulletSpeed(kBulletSpeed)
+    , m_bulletDam(kBulletDamage)
   {
     m_box = Box2D(lst);
   }

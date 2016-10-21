@@ -10,7 +10,7 @@ public:
 
   AliensManager()
   {
-    CreateAliens(AliensNumberRow, AliensNumberColumn);
+    CreateAliens(kAliensNumberRow, kAliensNumberColumn);
   }
 
   AliensManager(float const row, float const column)
@@ -18,15 +18,15 @@ public:
     CreateAliens(row, column);
   }
 
-  Aliens const & GetAliens() { return m_aliens; }
+  Aliens const & GetAliens() const { return m_aliens; }
 
-   ~AliensManager() = default;
+  ~AliensManager() = default;
 
 private:
 
   void CreateAliens(float const row, float const column)
   {
-    float const Delta = SpaceSizeX / (column + 6.0f);
+    float const Delta = kSpaceSizeX / (column + 6.0f);
     for (auto i = 0; i < row; i++)
     {
       for (auto k = 0; k < column; k++)

@@ -10,7 +10,7 @@ TEST(Obstacle_test, test_construction)
   Point2D p2 = { 2.0f, 2.0f };
   Obstacle o1 = { p1, p2 };
 
-  EXPECT_EQ(o1.GetHealth(), ObstacleHealth);
+  EXPECT_EQ(o1.GetHealth(), kObstacleHealth);
   EXPECT_EQ(o1.GetBox().x1(), 1.0f);
   EXPECT_EQ(o1.GetBox().x2(), 2.0f);
   EXPECT_EQ(o1.GetBox().y1(), 1.0f);

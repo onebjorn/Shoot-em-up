@@ -8,13 +8,13 @@ public:
   Obstacle() = default;
 
   Obstacle(float const x, float const y)
-    : m_obstacleHealth(ObstacleHealth)
+    : m_obstacleHealth(kObstacleHealth)
   {
-    m_box = Box2D(x - ObstacleSizeX / 2, y - ObstacleSizeY / 2 , x + ObstacleSizeX / 2, y + ObstacleSizeY / 2);
+    m_box = Box2D(x - kObstacleSizeX / 2, y - kObstacleSizeY / 2 , x + kObstacleSizeX / 2, y + kObstacleSizeY / 2);
   }
 
   Obstacle(float const x1, float const y1, float const x2, float const y2)
-    : m_obstacleHealth(ObstacleHealth)
+    : m_obstacleHealth(kObstacleHealth)
   {
     m_box = Box2D(x1, y1, x2, y2);
   }
@@ -26,19 +26,19 @@ public:
   }
 
   Obstacle(Point2D const & center)
-    : m_obstacleHealth(ObstacleHealth)
+    : m_obstacleHealth(kObstacleHealth)
   {
-    m_box = Box2D(center.x() - ObstacleSizeX / 2, center.y() - ObstacleSizeY / 2, center.x() + ObstacleSizeX / 2, center.y() + ObstacleSizeY / 2);
+    m_box = Box2D(center.x() - kObstacleSizeX / 2, center.y() - kObstacleSizeY / 2, center.x() + kObstacleSizeX / 2, center.y() + kObstacleSizeY / 2);
   }
 
   Obstacle(Point2D const & leftBottom, Point2D const & rightTop)
-    : m_obstacleHealth(ObstacleHealth)
+    : m_obstacleHealth(kObstacleHealth)
   {
     m_box = Box2D(leftBottom, rightTop);
   }
 
   Obstacle( Box2D const & obstacleBox)
-    : m_obstacleHealth(ObstacleHealth)
+    : m_obstacleHealth(kObstacleHealth)
   {
     m_box = Box2D(obstacleBox.x1(), obstacleBox.y1(), obstacleBox.x2(), obstacleBox.y2());
   }

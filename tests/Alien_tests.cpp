@@ -28,7 +28,7 @@ TEST(Alien_test, test_construction)
 
 
   EXPECT_EQ(a2.GetHealth(), 100.0f);
-  EXPECT_EQ(a2.GetSpeed(), AlienSpeed);
+  EXPECT_EQ(a2.GetSpeed(), kAlienSpeed);
   EXPECT_EQ(a2.GetBox().x2(), 2.5f);
   EXPECT_EQ(a2.GetBox().x1(), 1.5f);
 }
@@ -79,7 +79,7 @@ TEST(Alien_test, Aliens_manager)
 {
   AliensManager As;
 
-  EXPECT_EQ(As.GetAliens().size(), AliensNumber);
-  EXPECT_EQ(As.GetAliens().front().GetHealth(), AlienHealth);
+  EXPECT_EQ(As.GetAliens().size(), kAliensNumber);
+  EXPECT_EQ(As.GetAliens().front().GetHealth(), kAlienHealth);
   EXPECT_EQ(As.GetAliens().front().GetBox().x1(), 29.25f);
 }

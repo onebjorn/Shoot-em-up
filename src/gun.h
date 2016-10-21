@@ -9,37 +9,37 @@ public:
   Gun() = default;
 
   Gun(float const x1, float const y1, float const x2, float const y2)
-    : m_gunhealth(GunHealth)
-    , m_gunspeed(GunSpeed)
-    , m_gunpower(GunPower)
-    , m_ammo(GunAmmo)
+    : m_gunhealth(kGunHealth)
+    , m_gunspeed(kGunSpeed)
+    , m_gunpower(kGunPower)
+    , m_ammo(kGunAmmo)
   {
      m_box = Box2D(x1, y1, x2, y2);
   }
 
   Gun(Point2D const & leftBottom, Point2D const & rightTop)
-    : m_gunhealth(GunHealth)
-    , m_gunspeed(GunSpeed)
-    , m_gunpower(GunPower)
-    , m_ammo(GunAmmo)
+    : m_gunhealth(kGunHealth)
+    , m_gunspeed(kGunSpeed)
+    , m_gunpower(kGunPower)
+    , m_ammo(kGunAmmo)
   {
     m_box = Box2D(leftBottom, rightTop);
   }
 
   Gun(float const x, float const y)
-    : m_gunhealth(GunHealth)
-    , m_gunspeed(GunSpeed)
-    , m_gunpower(GunPower)
-    , m_ammo(GunAmmo)
+    : m_gunhealth(kGunHealth)
+    , m_gunspeed(kGunSpeed)
+    , m_gunpower(kGunPower)
+    , m_ammo(kGunAmmo)
   {
-    m_box = Box2D(x - GunSizeX / 2, y - GunSizeY / 2 , x + GunSizeX / 2, y + GunSizeY / 2);
+    m_box = Box2D(x - kGunSizeX / 2, y - kGunSizeY / 2 , x + kGunSizeX / 2, y + kGunSizeY / 2);
   }
 
   Gun(Box2D const & gunobj)
-    : m_gunhealth(GunHealth)
-    , m_gunspeed(GunSpeed)
-    , m_gunpower(GunPower)
-    , m_ammo(GunAmmo)
+    : m_gunhealth(kGunHealth)
+    , m_gunspeed(kGunSpeed)
+    , m_gunpower(kGunPower)
+    , m_ammo(kGunAmmo)
   {
     m_box = Box2D(gunobj);
   }
@@ -78,7 +78,7 @@ public:
   Bullet Shot()
   {
     m_ammo--;
-    return { m_box.x1() + GunSizeX /2, m_box.y2() + BulletSizeY, BulletSpeed };
+    return { m_box.x1() + kGunSizeX /2, m_box.y2() + kBulletSizeY, kBulletSpeed };
   }
 
 private:

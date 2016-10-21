@@ -12,7 +12,7 @@ public:
 
   BulletsManager() = default;
 
-  Bullets const & getBullets() { return m_bullets; }
+  Bullets const & getBullets() const { return m_bullets; }
 
   void AddBullet(Bullet const & obj) { m_bullets.push_back(obj); }
 
