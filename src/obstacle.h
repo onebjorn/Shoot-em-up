@@ -1,6 +1,8 @@
 #pragma once
 #include "gameEntity.h"
 #include "../include/config_stat.h"
+#include <ostream>
+#include <iostream>
 
 class Obstacle : public GameEntity
 {
@@ -54,3 +56,12 @@ public:
 private:
   float m_obstacleHealth = 0.0f;
 };
+
+inline ostream & operator << (ostream & os, Obstacle & obj)
+{
+  os << "Obstacle: " << std::endl
+    << "How large:" << obj.GetBox() << std::endl
+    << "With Health:" << obj.GetHealth() << std::endl
+    << "\n" << std::endl;
+  return os;
+}

@@ -2,6 +2,7 @@
 #include "../include/config_stat.h"
 #include "gameEntity.h"
 #include "bullet.h"
+#include <ostream>
 
 class Gun : public GameEntity
 {
@@ -87,3 +88,14 @@ private:
   float m_gunpower = 0.0f;
   int m_ammo = 0;
 };
+
+inline std::ostream & operator << (std::ostream & os, Gun const & obj)
+{
+  os << "Gun: " << std::endl
+    << "Size:" << obj.GetBox() << std::endl
+    << "Health:" << obj.GetHealth() << std::endl
+    << "Speed:" << obj.GetSpeed() << std::endl
+    << "Ammo:" << obj.GetAmmo() << std::endl
+    << "\n" << std::endl;
+  return os;
+}

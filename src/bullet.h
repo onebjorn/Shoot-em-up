@@ -1,6 +1,8 @@
 #pragma once
 #include "../include/config_stat.h"
 #include "gameEntity.h"
+#include <ostream>
+#include <iostream>
 
 class Bullet : public GameEntity
 {
@@ -49,3 +51,13 @@ private:
   float m_bulletSpeed = 0.0f;
   float m_bulletDam = 0.0f;
 };
+
+inline std::ostream & operator << (std::ostream & os, Bullet & obj)
+{
+  os << "Bullet: " << std::endl
+    << "Where:" << obj.GetBox() << std::endl
+    << "How painful:" << obj.GetDamage() << std::endl
+    << "How fast:" << obj.GetSpeed() << std::endl
+    << "\n" << std::endl;
+  return os;
+}
