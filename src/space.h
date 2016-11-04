@@ -27,10 +27,9 @@ public:
   }
 };
 
-inline std::ostream & operator << (std::ostream & os, Space & obj)
+inline ostream & operator << (ostream & os, Space const & obj)
 {
-  os << "Space: " << std::endl
-     << "How deep:" << obj << std::endl
-     << "\n" << std::endl;
+  os << "Space: " << "Сoordinates center = " << "{ "<< obj.GetBox().GetCenter().x() << ", "
+     << obj.GetBox().GetCenter().y() << " }, " << endl;
   return os;
 }

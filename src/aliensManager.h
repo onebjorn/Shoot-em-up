@@ -1,6 +1,8 @@
 #include "alien.h"
 #include <vector>
+#include "logger.h"
 #include "../include/config_stat.h"
+#pragma once
 
 using Aliens = std::vector<Alien>;
 
@@ -13,19 +15,26 @@ public:
     CreateAliens(kAliensNumberRow, kAliensNumberColumn);
   }
 
-  AliensManager(float const row, float const column)
+  AliensManager(int const row, int const column)
   {
     CreateAliens(row, column);
   }
 
   Aliens const & GetAliens() const { return m_aliens; }
+  int const & GetRow() const { return m_rows; }
+  int const & GetColumn() const { return m_columns; }
 
   ~AliensManager() = default;
 
 private:
 
-  void CreateAliens(float const row, float const column)
+  int m_rows = 0.0f;
+  int m_columns = 0.0f;
+
+  void CreateAliens(int const row, int const column)
   {
+    m_rows = row;
+    m_columns = column;
     float const Delta = kSpaceSizeX / (column + 6.0f);
     for (auto i = 0; i < row; i++)
     {
@@ -38,4 +47,11 @@ private:
 
   std::vector<Alien> m_aliens;
 };
+
+inline ostream & operator << (ostream & os, AliensManager const & obj)
+{
+  os << "Aliens:  " << "Rows = " << obj.GetRow() << ", Columns = " << obj.GetColumn() << endl;
+  Logger::LogList(os, obj.GetAliens());
+  return os;
+}
 

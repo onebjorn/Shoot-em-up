@@ -64,17 +64,16 @@ public:
 
   void AddAlienSpeed(float const deltaSpeed) { m_alienSpeed += deltaSpeed; }
 
+  Bullet AlienShot() { return { m_box.x1() + kAlienSizeX /2, m_box.y2() + kBulletSizeY, - kBulletSpeed }; }
+
 private:
   float m_alienHealth = 0.0f;
   float m_alienSpeed = 0.0f;
 };
 
-inline std::ostream & operator << (std::ostream & os, Alien const & obj)
+inline ostream & operator << (ostream & os, Alien const & obj)
 {
-  os << "Alien: " << std::endl
-    << "Where:" << obj.GetBox()<< std::endl
-    << "His health:" << obj.GetHealth() << std::endl
-    << "How fast:" << obj.GetSpeed() << std::endl
-    << "\n" << std::endl;
+  os << "Alien: " << "  Coordinates center = " <<"{ "<< obj.GetBox().GetCenter().x() << ", "
+     << obj.GetBox().GetCenter().y() << " },  " << "  Health = " << obj.GetHealth() << ",  Speed = " << obj.GetSpeed() << std::endl;
   return os;
 }

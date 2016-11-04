@@ -52,12 +52,9 @@ private:
   float m_bulletDam = 0.0f;
 };
 
-inline std::ostream & operator << (std::ostream & os, Bullet & obj)
+inline ostream & operator << (ostream & os, Bullet const & obj)
 {
-  os << "Bullet: " << std::endl
-    << "Where:" << obj.GetBox() << std::endl
-    << "How painful:" << obj.GetDamage() << std::endl
-    << "How fast:" << obj.GetSpeed() << std::endl
-    << "\n" << std::endl;
+  os << "Bullet: " << "Сoordinates center: " << "{ "<< obj.GetBox().GetCenter().x() << ", "
+     << obj.GetBox().GetCenter().y() << " },  Damage = "<< obj.GetDamage() << ",  Speed = " << obj.GetSpeed() << endl;
   return os;
 }

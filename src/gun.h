@@ -2,7 +2,9 @@
 #include "../include/config_stat.h"
 #include "gameEntity.h"
 #include "bullet.h"
+#include "logger.h"
 #include <ostream>
+#include "bulletsManager.h"
 
 class Gun : public GameEntity
 {
@@ -78,6 +80,7 @@ public:
 
   Bullet Shot()
   {
+    if (m_ammo > 0)
     m_ammo--;
     return { m_box.x1() + kGunSizeX /2, m_box.y2() + kBulletSizeY, kBulletSpeed };
   }
@@ -89,13 +92,9 @@ private:
   int m_ammo = 0;
 };
 
-inline std::ostream & operator << (std::ostream & os, Gun const & obj)
+inline ostream & operator << (ostream & os, Gun const & obj)
 {
-  os << "Gun: " << std::endl
-    << "Size:" << obj.GetBox() << std::endl
-    << "Health:" << obj.GetHealth() << std::endl
-    << "Speed:" << obj.GetSpeed() << std::endl
-    << "Ammo:" << obj.GetAmmo() << std::endl
-    << "\n" << std::endl;
+  os << "Gun: " << "Сoordinates center = " << "{ "<< obj.GetBox().GetCenter().x() << ", "
+     << obj.GetBox().GetCenter().y() << " },  Health = " << obj.GetHealth()  << ", Ammo = " << obj.GetAmmo()  << ", Speed = " << obj.GetSpeed() << endl;
   return os;
 }

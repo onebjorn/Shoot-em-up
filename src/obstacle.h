@@ -57,11 +57,9 @@ private:
   float m_obstacleHealth = 0.0f;
 };
 
-inline ostream & operator << (ostream & os, Obstacle & obj)
+inline ostream & operator << (ostream & os, Obstacle const & obj)
 {
-  os << "Obstacle: " << std::endl
-    << "How large:" << obj.GetBox() << std::endl
-    << "With Health:" << obj.GetHealth() << std::endl
-    << "\n" << std::endl;
+  os << "Obstacle: " << "Сoordinates center = " << "{ "<< obj.GetBox().GetCenter().x() << ", "
+     << obj.GetBox().GetCenter().y() << " },  Health = " << obj.GetHealth() << endl;
   return os;
 }
