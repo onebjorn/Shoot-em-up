@@ -24,3 +24,4 @@ public:
 protected:
   Box2D m_box;
 };
+

@@ -1,8 +1,9 @@
 #include "alien.h"
 #include "obstacle.h"
 #include "gun.h"
+#include <ostream>
+#include <iostream>
 #pragma once
-
 
 class Space : public GameEntity
 {
@@ -24,5 +25,12 @@ public:
   {
     m_box = Box2D(spaceBox);
   }
-
 };
+
+inline std::ostream & operator << (std::ostream & os, Space & obj)
+{
+  os << "Space: " << std::endl
+     << "How deep:" << obj << std::endl
+     << "\n" << std::endl;
+  return os;
+}

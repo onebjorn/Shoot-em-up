@@ -2,6 +2,8 @@
 #include "../include/config_stat.h"
 #include "gameEntity.h"
 #include "bullet.h"
+#include <ostream>
+#include <iostream>
 
 class Alien : public GameEntity
 {
@@ -66,3 +68,13 @@ private:
   float m_alienHealth = 0.0f;
   float m_alienSpeed = 0.0f;
 };
+
+inline std::ostream & operator << (std::ostream & os, Alien const & obj)
+{
+  os << "Alien: " << std::endl
+    << "Where:" << obj.GetBox()<< std::endl
+    << "His health:" << obj.GetHealth() << std::endl
+    << "How fast:" << obj.GetSpeed() << std::endl
+    << "\n" << std::endl;
+  return os;
+}

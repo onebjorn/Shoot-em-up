@@ -3,6 +3,8 @@
 #include "point2d.h"
 #include <functional>
 #include <cmath>
+#include <ostream>
+#include <iostream>
 
 using namespace std;
 
@@ -173,3 +175,13 @@ private:
     return fabs(v1 - v2) < Eps;
   }
 };
+
+inline ostream & operator << (ostream & os, Box2D const & obj)
+{
+  os << "Box2D {" << obj.x1() << " "
+     << obj.y1() << " "
+     << obj.x2() << " "
+     << obj.y2() << "}" << endl;
+  return os;
+}
+
