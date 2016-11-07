@@ -1,5 +1,4 @@
 #include "alien.h"
-#include "gun.h"
 #include "bullet.h"
 #include "logger.h"
 #include <vector>

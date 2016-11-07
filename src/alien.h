@@ -4,6 +4,7 @@
 #include "bullet.h"
 #include <ostream>
 #include <iostream>
+#include "logger.h"
 
 class Alien : public GameEntity
 {
@@ -64,7 +65,10 @@ public:
 
   void AddAlienSpeed(float const deltaSpeed) { m_alienSpeed += deltaSpeed; }
 
-  Bullet AlienShot() { return { m_box.x1() + kAlienSizeX /2, m_box.y2() + kBulletSizeY, - kBulletSpeed }; }
+  Bullet AlienShot()
+  {
+    return  Bullet(m_box.x1() + kAlienSizeX /2, m_box.y1() - kBulletSizeY, - kBulletSpeed);
+  }
 
 private:
   float m_alienHealth = 0.0f;

@@ -73,8 +73,7 @@ public:
 
   Point2D GetCenter() const
   {
-    Point2D m_center = {(m_boxMin.x() + m_boxMax.x()) / 2 , (m_boxMin.y() + m_boxMax.y()) / 2 };
-    return m_center;
+    return Point2D((m_boxMin.x() + m_boxMax.x()) / 2.0f , (m_boxMin.y() + m_boxMax.y()) / 2.0f);
   }
 
   Box2D & operator = (Box2D && obj) //  Оператор перемещения
@@ -175,13 +174,3 @@ private:
     return fabs(v1 - v2) < Eps;
   }
 };
-
-inline ostream & operator << (ostream & os, Box2D const & obj)
-{
-  os << "Box2D {" << obj.x1() << " "
-     << obj.y1() << " "
-     << obj.x2() << " "
-     << obj.y2() << "}" << endl;
-  return os;
-}
-
