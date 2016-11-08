@@ -57,18 +57,16 @@ public:
 
   void SetAlienSpeed( const float newSpeed) { m_alienSpeed = newSpeed; }
 
-  void RemoveAlienHealth(const float deltaHelth)
+  void RemoveAlienHealth(const float deltaHealth)
   {
-    if (m_alienHealth < deltaHelth) throw invalid_argument("Negative health");
-    m_alienHealth -= deltaHelth;
+    if ((deltaHealth < 0.0f) || (deltaHealth > 100.0f)) throw invalid_argument("Negative health");
+    if (m_alienHealth < deltaHealth) m_alienHealth = 0.0f;
+    if (m_alienHealth > deltaHealth) m_alienHealth -= deltaHealth;
   }
 
   void AddAlienSpeed(float const deltaSpeed) { m_alienSpeed += deltaSpeed; }
 
-  Bullet AlienShot()
-  {
-    return  Bullet(m_box.x1() + kAlienSizeX /2, m_box.y1() - kBulletSizeY, - kBulletSpeed);
-  }
+  Bullet AlienShot() { return  Bullet(m_box.x1() + kAlienSizeX /2, m_box.y1() - kBulletSizeY, - kBulletSpeed); }
 
 private:
   float m_alienHealth = 0.0f;

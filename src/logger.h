@@ -28,14 +28,14 @@ class Logger : public Singleton <Logger>
 public:
 
   template <typename T>
-  static ostream & Log(T obj, ostream & os)
+  ostream & Log(T obj, ostream & os)
   {
     os << obj;
     return os;
   }
 
   template<typename T, template<typename, typename...> class C, typename... Args>
-  static ostream & LogList(ostream & os, C<T, Args...> const & objs)
+  ostream & LogList(ostream & os, C<T, Args...> const & objs)
   {
     for (auto const & obj : objs)
     Log(obj, os);
