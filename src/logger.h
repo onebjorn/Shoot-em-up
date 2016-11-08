@@ -5,11 +5,27 @@
 
 using namespace std;
 
-class Logger
+template<typename T> class Singleton
 {
 public:
+  static T & Instance()
+  {
+    static T inst;
+    return inst;
+  }
 
-  Logger() = default;
+protected:
+  Singleton() = default;
+  virtual ~Singleton() = default;
+  Singleton(Singleton const &) = delete;
+  Singleton & operator = (Singleton const &) = delete;
+  Singleton(Singleton &&) = delete;
+  Singleton & operator = (Singleton &&) = delete;
+};
+
+class Logger : public Singleton <Logger>
+{
+public:
 
   template <typename T>
   static ostream & Log(T obj, ostream & os)
@@ -36,5 +52,8 @@ public:
 private:
   bool m_logSwitch = true; /* Переключатель логгера(1 запись, 0 - не запись)*/
   bool m_logSwitchFile = true; /* Перключатель запись в файл */
+
+  friend class Singleton<Logger>;
+  Logger() = default;
 
 };
