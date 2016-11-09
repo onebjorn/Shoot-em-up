@@ -1,8 +1,9 @@
+#pragma once
 #include "alien.h"
 #include <vector>
 #include "logger.h"
 #include "../include/config_stat.h"
-#pragma once
+
 
 using Aliens = std::vector<Alien>;
 
@@ -51,7 +52,7 @@ private:
 inline ostream & operator << (ostream & os, AliensManager const & obj)
 {
   os << "Aliens:  " << "Rows = " << obj.GetRow() << ", Columns = " << obj.GetColumn() << endl;
-  Logger::LogList(os, obj.GetAliens());
+  Logger::Log(os, obj.GetAliens());
   return os;
 }
 

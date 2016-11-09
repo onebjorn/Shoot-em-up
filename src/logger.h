@@ -19,7 +19,7 @@ public:
   }
 
   template<typename T, template<typename, typename...> class C, typename... Args>
-  static ostream & LogList(ostream & os, C<T, Args...> const & objs)
+  static ostream & Log(ostream & os, C<T, Args...> const & objs)
   {
     for (auto const & obj : objs)
     Log(obj, os);

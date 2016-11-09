@@ -1,9 +1,10 @@
+#pragma once
 #include "alien.h"
 #include "obstacle.h"
 #include "gun.h"
 #include <ostream>
 #include <iostream>
-#pragma once
+
 
 class Space : public GameEntity
 {

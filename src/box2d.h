@@ -1,5 +1,5 @@
-#include <iostream>
 #pragma once
+#include <iostream>
 #include "point2d.h"
 #include <functional>
 #include <cmath>

@@ -1,9 +1,10 @@
+#pragma once
 #include "alien.h"
 #include "bullet.h"
 #include "logger.h"
 #include <vector>
 #include "../include/config_stat.h"
-#pragma once
+
 
 using Bullets = std::vector<Bullet>;
 
@@ -26,6 +27,6 @@ private:
 inline ostream & operator << (ostream & os, BulletsManager const & obj)
 {
   os << "Bullets:  " << " Count = " << obj.getBullets().size() << endl;
-  Logger::LogList(os, obj.getBullets());
+  Logger::Log(os, obj.getBullets());
   return os;
 }

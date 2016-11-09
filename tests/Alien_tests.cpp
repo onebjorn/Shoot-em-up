@@ -71,8 +71,8 @@ TEST(Alien_test, test_exception)
   Box2D b1 = { 1.0f, 2.0f, 3.0f, 4.0f };
   Alien a6(b1);
 
-  EXPECT_THROW(a6.RemoveAlienHealth(101.0f), invalid_argument);
-  EXPECT_THROW(a6.SetAlienHealth(101.0f), invalid_argument);
+  EXPECT_THROW(a6.RemoveHealth(101.0f), invalid_argument);
+  EXPECT_THROW(a6.SetHealth(101.0f), invalid_argument);
 }
 
 TEST(Alien_test, Aliens_manager)
