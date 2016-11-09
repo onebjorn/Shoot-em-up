@@ -63,7 +63,7 @@ TEST(Gun_test, test_move)
 TEST(Gun_test, test_shot)
 {
   Gun a2(2.0f, 2.0f);
-  EXPECT_EQ(a2.Shot().GetBox().x1(), 2.0f);
+  EXPECT_EQ(a2.Shot().GetBox().x1(), 1.5f);
 }
 
 TEST(Gun_test, test_exceptions)

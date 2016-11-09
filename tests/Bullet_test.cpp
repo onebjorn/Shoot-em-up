@@ -54,8 +54,8 @@ TEST(Bullet_test, test_move)
 
 TEST(Bullet_test, test_vector)
 {
-  Gun g;
+  Gun g(2.0f, 2.0f);
   BulletsManager Bm;
   Bm.AddBullet(g.Shot());
-  EXPECT_EQ(Bm.getBullets().back().GetBox().x1(), 2.0f);
+  EXPECT_EQ(Bm.getBullets().back().GetBox().x1(), 1.5f);
 }

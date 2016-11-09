@@ -1,7 +1,9 @@
+#pragma once
 #include "alien.h"
 #include "obstacle.h"
 #include "gun.h"
-#pragma once
+#include <ostream>
+#include <iostream>
 
 
 class Space : public GameEntity
@@ -24,5 +26,11 @@ public:
   {
     m_box = Box2D(spaceBox);
   }
-
 };
+
+inline ostream & operator << (ostream & os, Space const & obj)
+{
+  os << "Space: " << "Сoordinates center = " << "{ "<< obj.GetBox().GetCenter().x() << ", "
+     << obj.GetBox().GetCenter().y() << " }, " << endl;
+  return os;
+}

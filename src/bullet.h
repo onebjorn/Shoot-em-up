@@ -1,6 +1,8 @@
 #pragma once
 #include "../include/config_stat.h"
 #include "gameEntity.h"
+#include <ostream>
+#include <iostream>
 
 class Bullet : public GameEntity
 {
@@ -18,14 +20,14 @@ public:
     : m_bulletSpeed(speed)
     , m_bulletDam(kBulletDamage)
   {
-    m_box = Box2D(x - kBulletSizeX / 2, y - kBulletSizeY / 2 , x + kBulletSizeX / 2, y + kBulletSizeY / 2);
+    m_box = Box2D(x - kBulletSizeX / 2.0f, y - kBulletSizeY / 2.0f , x + kBulletSizeX / 2.0f, y + kBulletSizeY / 2.0f);
   }
 
   Bullet(Point2D const & center)
     : m_bulletSpeed(kBulletSpeed)
     , m_bulletDam(kBulletDamage)
   {
-    m_box = Box2D(center.x() - kBulletSizeX / 2, center.y() - kBulletSizeY / 2, center.x() + kBulletSizeX / 2, center.y() + kBulletSizeY / 2);
+    m_box = Box2D(center.x() - kBulletSizeX / 2.0f, center.y() - kBulletSizeY / 2.0f, center.x() + kBulletSizeX / 2.0f, center.y() + kBulletSizeY / 2.0f);
   }
 
   Bullet(Box2D const & bullobj)
@@ -49,3 +51,10 @@ private:
   float m_bulletSpeed = 0.0f;
   float m_bulletDam = 0.0f;
 };
+
+inline ostream & operator << (ostream & os, Bullet const & obj)
+{
+  os << "Bullet: coordinates center: " << " { "<< obj.GetBox().GetCenter().x() << ", "
+     << obj.GetBox().GetCenter().y() << " },  Damage = "<< obj.GetDamage() << ",  Speed = " << obj.GetSpeed() << endl;
+  return os;
+}

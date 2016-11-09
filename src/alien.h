@@ -2,6 +2,9 @@
 #include "../include/config_stat.h"
 #include "gameEntity.h"
 #include "bullet.h"
+#include <ostream>
+#include <iostream>
+#include "logger.h"
 
 class Alien : public GameEntity
 {
@@ -46,23 +49,35 @@ public:
   float const & GetHealth() const { return m_alienHealth; }
   float const & GetSpeed() const { return m_alienSpeed; }
 
-  void SetAlienHealth(const float newHelth)
+  void SetHealth(const float newHelth)
   {
     if ((newHelth < 0.0f) || (newHelth > 100.0f)) throw invalid_argument("Health must be in range 0..100");
     m_alienHealth = newHelth;
   }
 
-  void SetAlienSpeed( const float newSpeed) { m_alienSpeed = newSpeed; }
+  void SetSpeed( const float newSpeed) { m_alienSpeed = newSpeed; }
 
-  void RemoveAlienHealth(const float deltaHelth)
+  void RemoveHealth(const float deltaHelth)
   {
     if (m_alienHealth < deltaHelth) throw invalid_argument("Negative health");
     m_alienHealth -= deltaHelth;
   }
 
-  void AddAlienSpeed(float const deltaSpeed) { m_alienSpeed += deltaSpeed; }
+  void AddSpeed(float const deltaSpeed) { m_alienSpeed += deltaSpeed; }
+
+  Bullet Shot() const
+  {
+    return  Bullet(m_box.x1() + kAlienSizeX /2, m_box.y1() - kBulletSizeY, - kBulletSpeed);
+  }
 
 private:
   float m_alienHealth = 0.0f;
   float m_alienSpeed = 0.0f;
 };
+
+inline ostream & operator << (ostream & os, Alien const & obj)
+{
+  os << "Alien: " << "  Coordinates center = " <<"{ "<< obj.GetBox().GetCenter().x() << ", "
+     << obj.GetBox().GetCenter().y() << " },  " << "  Health = " << obj.GetHealth() << ",  Speed = " << obj.GetSpeed() << std::endl;
+  return os;
+}

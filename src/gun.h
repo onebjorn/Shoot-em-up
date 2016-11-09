@@ -2,6 +2,9 @@
 #include "../include/config_stat.h"
 #include "gameEntity.h"
 #include "bullet.h"
+#include "logger.h"
+#include <ostream>
+#include "bulletsManager.h"
 
 class Gun : public GameEntity
 {
@@ -32,7 +35,7 @@ public:
     , m_gunpower(kGunPower)
     , m_ammo(kGunAmmo)
   {
-    m_box = Box2D(x - kGunSizeX / 2, y - kGunSizeY / 2 , x + kGunSizeX / 2, y + kGunSizeY / 2);
+    m_box = Box2D(x - kGunSizeX / 2.0f, y - kGunSizeY / 2.0f , x + kGunSizeX / 2.0f, y + kGunSizeY / 2.0f);
   }
 
   Gun(Box2D const & gunobj)
@@ -77,8 +80,11 @@ public:
 
   Bullet Shot()
   {
+    if (m_ammo > 0)
     m_ammo--;
-    return { m_box.x1() + kGunSizeX /2, m_box.y2() + kBulletSizeY, kBulletSpeed };
+    Bullet m_bullet = { m_box.GetCenter().x() - kBulletSizeX / 2.0f, m_box.GetCenter().y() + kGunSizeY / 2.0f,
+                        m_box.GetCenter().x() + kBulletSizeX / 2.0f, m_box.GetCenter().y() + kGunSizeY / 2.0f + kBulletSizeY };
+    return m_bullet;
   }
 
 private:
@@ -87,3 +93,10 @@ private:
   float m_gunpower = 0.0f;
   int m_ammo = 0;
 };
+
+inline ostream & operator << (ostream & os, Gun const & obj)
+{
+  os << "Gun: " << " Сoordinates center = " << "{ "<< obj.GetBox().GetCenter().x() << ", "
+     << obj.GetBox().GetCenter().y() << " },  Health = " << obj.GetHealth()  << ", Ammo = " << obj.GetAmmo()  << ", Speed = " << obj.GetSpeed() << endl;
+  return os;
+}

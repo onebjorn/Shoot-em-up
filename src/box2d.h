@@ -1,10 +1,13 @@
-#include <iostream>
 #pragma once
+#include <iostream>
 #include "point2d.h"
 #include <functional>
 #include <cmath>
+#include <ostream>
+#include <iostream>
 
 using namespace std;
+
 float const Eps = 1e-5f;
 
 /* Класс двумерного прямоугольника Box2d*/
@@ -70,8 +73,7 @@ public:
 
   Point2D GetCenter() const
   {
-    Point2D m_center = {(m_boxMin.x() + m_boxMax.x()) / 2 , (m_boxMin.y() + m_boxMax.y()) / 2 };
-    return m_center;
+    return Point2D((m_boxMin.x() + m_boxMax.x()) / 2.0f , (m_boxMin.y() + m_boxMax.y()) / 2.0f);
   }
 
   Box2D & operator = (Box2D && obj) //  Оператор перемещения
