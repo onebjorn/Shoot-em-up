@@ -5,7 +5,6 @@
 #include <ostream>
 #include <iostream>
 
-
 class Space : public GameEntity
 {
 public:

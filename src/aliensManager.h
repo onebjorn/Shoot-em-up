@@ -52,7 +52,7 @@ private:
 inline ostream & operator << (ostream & os, AliensManager const & obj)
 {
   os << "Aliens:  " << "Rows = " << obj.GetRow() << ", Columns = " << obj.GetColumn() << endl;
-  Logger::Log(os, obj.GetAliens());
+  Logger::Instance().Log(os, obj.GetAliens());
   return os;
 }
 

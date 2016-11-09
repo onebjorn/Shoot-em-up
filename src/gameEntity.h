@@ -4,7 +4,6 @@
 #include "ray2d.h"
 #include "../include/config_stat.h"
 
-
 class GameEntity
 {
 public:

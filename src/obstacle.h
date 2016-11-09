@@ -49,7 +49,7 @@ public:
 
   void RemoveObstacleHealth(const float deltaHealth)
   {
-    if (m_obstacleHealth < deltaHealth) throw invalid_argument("Negative health");
+    if ((deltaHealth < 0.0f) || (deltaHealth > 100.0f)) throw invalid_argument("Negative health");
     m_obstacleHealth -= deltaHealth;
   }
 

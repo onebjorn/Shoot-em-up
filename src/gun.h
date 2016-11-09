@@ -66,7 +66,7 @@ public:
 
   void HealthLoss(float const loss)
   {
-    if (m_gunhealth < loss) throw invalid_argument("Negative health");
+    if ((loss < 0.0f) || (loss > 100.0f)) throw invalid_argument("Negative health");
     m_gunhealth -= loss;
   }
 
@@ -80,7 +80,6 @@ public:
 
   Bullet Shot()
   {
-    if (m_ammo > 0)
     m_ammo--;
     Bullet m_bullet = { m_box.GetCenter().x() - kBulletSizeX / 2.0f, m_box.GetCenter().y() + kGunSizeY / 2.0f,
                         m_box.GetCenter().x() + kBulletSizeX / 2.0f, m_box.GetCenter().y() + kGunSizeY / 2.0f + kBulletSizeY };

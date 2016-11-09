@@ -27,6 +27,6 @@ private:
 inline ostream & operator << (ostream & os, BulletsManager const & obj)
 {
   os << "Bullets:  " << " Count = " << obj.getBullets().size() << endl;
-  Logger::Log(os, obj.getBullets());
+  Logger::Instance().Log(os, obj.getBullets());
   return os;
 }
