@@ -32,6 +32,10 @@ TEST(Alien_test, test_construction)
   EXPECT_EQ(a2.GetSpeed(), kAlienSpeed);
   EXPECT_EQ(a2.GetBox().x2(), 2.5f);
   EXPECT_EQ(a2.GetBox().x1(), 1.5f);
+
+  Factory factory;
+  auto aliens = factory.Create<AliensManager>();
+  EXPECT_EQ(aliens->GetAliens().size(), kAliensNumber);
 }
 
 TEST(Alien_test, test_cross)
