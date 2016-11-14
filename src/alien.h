@@ -66,7 +66,7 @@ public:
 
   void AddSpeed(float const deltaSpeed) { m_alienSpeed += deltaSpeed; }
 
-  Bullet Shot() const { return  Bullet(m_box.x1() + kAlienSizeX /2, m_box.y1() - kBulletSizeY, - kBulletSpeed); }
+  Bullet Shot() const { return Bullet(m_box.x1() + kAlienSizeX /2, m_box.y1() - kBulletSizeY, - kBulletSpeed); }
 
 private:
   float m_alienHealth = 0.0f;

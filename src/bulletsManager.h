@@ -6,7 +6,7 @@
 #include "../include/config_stat.h"
 
 
-using Bullets = std::vector<Bullet>;
+using Bullets = vector<Bullet>;
 
 class BulletsManager
 {
@@ -21,7 +21,7 @@ public:
   ~BulletsManager() = default;
 
 private:
-  std::vector<Bullet> m_bullets;
+  vector<Bullet> m_bullets;
 };
 
 inline ostream & operator << (ostream & os, BulletsManager const & obj)

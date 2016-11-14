@@ -10,7 +10,7 @@ public:
 
   Box2D const & GetBox() const { return m_box; }
 
-  bool ObjectsIntersect( GameEntity const & a, GameEntity const & b)
+  bool ObjectsIntersect(GameEntity const & a, GameEntity const & b)
   {
     if (a.GetBox().x2() < b.GetBox().x1()) return false;
     if (a.GetBox().x1() > b.GetBox().x2()) return false;
@@ -22,6 +22,7 @@ public:
   virtual ~GameEntity() = default;
 
 protected:
+
   Box2D m_box;
 };
 

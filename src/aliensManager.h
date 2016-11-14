@@ -5,7 +5,7 @@
 #include "../include/config_stat.h"
 
 
-using Aliens = std::vector<Alien>;
+using Aliens = vector<Alien>;
 
 class AliensManager
 {
@@ -46,7 +46,7 @@ private:
     }
   }
 
-  std::vector<Alien> m_aliens;
+  vector<Alien> m_aliens;
 };
 
 inline ostream & operator << (ostream & os, AliensManager const & obj)
