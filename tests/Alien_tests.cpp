@@ -83,6 +83,10 @@ TEST(Alien_test, Aliens_manager)
   EXPECT_EQ(As.GetAliens().size(), kAliensNumber);
   EXPECT_EQ(As.GetAliens().front().GetHealth(), kAlienHealth);
   EXPECT_EQ(As.GetAliens().front().GetBox().x1(), 29.25f);
+
+  Factory factory;
+  auto aliens = factory.Create<AliensManager>();
+  EXPECT_EQ(aliens->GetAliens().size(), kAliensNumber);
 }
 
 TEST(Alien_test, test_hit)

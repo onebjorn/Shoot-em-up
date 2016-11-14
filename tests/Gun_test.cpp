@@ -44,6 +44,13 @@ TEST(gun_test, test_construction)
   EXPECT_EQ(a3.GetAmmo(), kGunAmmo);
   EXPECT_EQ(a3.GetHealth(), kGunHealth);
   EXPECT_EQ(a3.GetRate(), kGunPower);
+
+  Factory factory;
+  auto gun = factory.Create<Gun>(1.0f, 2.0f, 3.0f, 4.0f);
+  EXPECT_EQ(gun->GetBox().x1(), 1.0f);
+  EXPECT_EQ(gun->GetBox().y1(), 2.0f);
+  EXPECT_EQ(gun->GetBox().x2(), 3.0f);
+  EXPECT_EQ(gun->GetBox().y2(), 4.0f);
 }
 
 TEST(Gun_test, test_move)
