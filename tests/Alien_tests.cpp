@@ -4,6 +4,7 @@
 #include "aliensManager.h"
 #include <sstream>
 #include <iostream>
+#include <ostream>
 #include <unordered_set>
 
 TEST(Alien_test, test_construction)
@@ -82,4 +83,14 @@ TEST(Alien_test, Aliens_manager)
   EXPECT_EQ(As.GetAliens().size(), kAliensNumber);
   EXPECT_EQ(As.GetAliens().front().GetHealth(), kAlienHealth);
   EXPECT_EQ(As.GetAliens().front().GetBox().x1(), 29.25f);
+}
+
+TEST(Alien_test, test_hit)
+{
+  AliensManager As(1,1);
+  BulletsManager Bm;
+  Bullet b1(70.0f, 142.0f, 1.0f);
+  Bm.AddBullet(b1);
+  EXPECT_EQ(b1.ObjectsIntersect(b1, As.GetAliens().front()), true);
+  EXPECT_EQ(As.CheckHit(Bm.getBullets()), true);
 }

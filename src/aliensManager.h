@@ -2,6 +2,7 @@
 #include "alien.h"
 #include <vector>
 #include "logger.h"
+#include "bulletsManager.h"
 #include "../include/config_stat.h"
 
 
@@ -24,6 +25,16 @@ public:
   Aliens const & GetAliens() const { return m_aliens; }
   int const & GetRow() const { return m_rows; }
   int const & GetColumn() const { return m_columns; }
+
+  bool CheckHit(Bullets const & obj)
+  {
+    for(auto itAliens = m_aliens.begin(); itAliens != m_aliens.end(); ++itAliens)
+    {
+      for(auto itBullets = obj.begin(); itBullets != obj.end(); ++itBullets)
+      if (itAliens->ObjectsIntersect(*itAliens, *itBullets)) return true;
+    }
+    return false;
+  }
 
   ~AliensManager() = default;
 

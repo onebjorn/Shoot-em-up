@@ -78,3 +78,13 @@ TEST(Gun_test, test_exceptions)
 
   EXPECT_NO_THROW(gun1.SetHealth(20.0f));
 }
+
+TEST(Gun_test, test_hit)
+{
+  Gun g(70.0f, 140.0f);
+  BulletsManager Bm;
+  Bullet b1(70.0f, 142.0f, 1.0f);
+  Bm.AddBullet(b1);
+  EXPECT_EQ(b1.ObjectsIntersect(b1, g), true);
+  EXPECT_EQ(g.CheckHit(Bm.getBullets()), true);
+}

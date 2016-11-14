@@ -48,9 +48,18 @@ public:
   float const & GetDamage() const { return m_bulletDamage; }
   float const & GetSpeed() const { return m_bulletSpeed; }
 
+  using TOnUpdateHandler = std::function<void(GameEntity const &)>; //
+
+  void SetUpdateHandler(TOnUpdateHandler const & handler)
+  {
+    m_updateHandler = handler;
+  }
+
+
 private:
   float m_bulletSpeed = 0.0f;
   float m_bulletDamage = 0.0f;
+  TOnUpdateHandler m_updateHandler;
 };
 
 inline ostream & operator << (ostream & os, Bullet const & obj)

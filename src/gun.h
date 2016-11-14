@@ -87,6 +87,13 @@ public:
     return m_bullet;
   }
 
+  bool CheckHit(Bullets const & obj)
+  {
+    for(auto itBullets = obj.begin(); itBullets != obj.end(); ++itBullets)
+    if (m_box.BoxesIntersect(m_box, itBullets->GetBox())) return true;
+    return false;
+  }
+
 private:
   float m_gunHealth = 0.0f;
   float m_gunSpeed = 0.0f;

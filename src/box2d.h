@@ -150,7 +150,7 @@ public:
   float const & x2() const { return m_boxMax.x(); }
   float const & y2() const { return m_boxMax.y(); }
 
-  bool BoxesIntersect( Box2D const & a, Box2D const & b)
+  bool BoxesIntersect(Box2D const & a, Box2D const & b)
   {
     if (a.m_boxMax.x() < b.m_boxMin.x()) return false;
     if (a.m_boxMin.x() > b.m_boxMax.x()) return false;
