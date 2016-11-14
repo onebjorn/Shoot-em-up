@@ -4,6 +4,8 @@
 #include <ostream>
 #include <iostream>
 
+using TOnUpdateHandler = function<void(GameEntity const &)>;
+
 class Bullet : public GameEntity
 {
 public:
@@ -48,11 +50,15 @@ public:
   float const & GetDamage() const { return m_bulletDamage; }
   float const & GetSpeed() const { return m_bulletSpeed; }
 
-  using TOnUpdateHandler = std::function<void(GameEntity const &)>; //
-
   void SetUpdateHandler(TOnUpdateHandler const & handler)
   {
     m_updateHandler = handler;
+  }
+
+  void Update(GameEntity const & obj) const
+  {
+    if (m_updateHandler != nullptr)
+      m_updateHandler(obj);
   }
 
 

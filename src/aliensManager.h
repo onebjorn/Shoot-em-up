@@ -31,7 +31,11 @@ public:
     for(auto itAliens = m_aliens.begin(); itAliens != m_aliens.end(); ++itAliens)
     {
       for(auto itBullets = obj.begin(); itBullets != obj.end(); ++itBullets)
-      if (itAliens->ObjectsIntersect(*itAliens, *itBullets)) return true;
+      if (itAliens->ObjectsIntersect(*itAliens, *itBullets))
+      {
+        itBullets->Update(*itAliens);
+        return true;
+      }
     }
     return false;
   }

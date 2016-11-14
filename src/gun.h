@@ -87,10 +87,14 @@ public:
     return m_bullet;
   }
 
-  bool CheckHit(Bullets const & obj)
+  bool CheckHit(Bullets const & obj, Gun const & gun)
   {
     for(auto itBullets = obj.begin(); itBullets != obj.end(); ++itBullets)
-    if (m_box.BoxesIntersect(m_box, itBullets->GetBox())) return true;
+    if (m_box.BoxesIntersect(gun.GetBox(), itBullets->GetBox()))
+    {
+      itBullets->Update(gun);
+      return true;
+    }
     return false;
   }
 

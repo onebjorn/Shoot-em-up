@@ -26,3 +26,9 @@ protected:
   Box2D m_box;
 };
 
+inline ostream & operator << (ostream & os, GameEntity const & obj)
+{
+  os << "GameEntity coordinates center =  {" << obj.GetBox().GetCenter().x() << ", " <<  obj.GetBox().GetCenter().y() << "}";
+  return os;
+}
+
