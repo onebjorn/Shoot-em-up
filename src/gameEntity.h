@@ -5,6 +5,7 @@
 #include "../include/config_stat.h"
 #include <memory>
 
+
 class Factory
 {
 public:

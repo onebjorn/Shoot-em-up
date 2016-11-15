@@ -2,6 +2,7 @@
 #include "../include/config_stat.h"
 #include "gun.h"
 #include "bullet.h"
+#include "gameEntity.h"
 #include "bulletsManager.h"
 #include <sstream>
 #include "logger.h"
@@ -96,7 +97,7 @@ TEST(Gun_test, test_hit)
   BulletsManager Bm;
   Bullet b1(70.0f, 142.0f, 1.0f);
   Bm.AddBullet(b1);
-  b1.SetUpdateHandler( [&](GameEntity const & obj){ cout << "Hit =  " << obj << endl; }  );
+  b1.SetUpdateHandler([&](GameEntity const & obj){ cout << "Hit =  " << obj << endl; });
   EXPECT_EQ(b1.ObjectsIntersect(b1, g), true);
   EXPECT_EQ(g.CheckHit(Bm.getBullets(), g), true);
 }

@@ -20,9 +20,6 @@ public:
 
   Space(Box2D const & spaceBox) { m_box = Box2D(spaceBox); }
 
-  /*TODO hit gun, hit aliens*/
-
-
 private:
 
   vector<Obstacle> m_obstacles;
