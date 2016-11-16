@@ -2,10 +2,11 @@
 #include "alien.h"
 #include <vector>
 #include "logger.h"
+#include "bulletsManager.h"
 #include "../include/config_stat.h"
 
 
-using Aliens = std::vector<Alien>;
+using Aliens = vector<Alien>;
 
 class AliensManager
 {
@@ -24,6 +25,20 @@ public:
   Aliens const & GetAliens() const { return m_aliens; }
   int const & GetRow() const { return m_rows; }
   int const & GetColumn() const { return m_columns; }
+
+  bool CheckHit(Bullets const & obj)
+  {
+    for(auto itAliens = m_aliens.begin(); itAliens != m_aliens.end(); ++itAliens)
+    {
+      for(auto itBullets = obj.begin(); itBullets != obj.end(); ++itBullets)
+      if (itAliens->ObjectsIntersect(*itAliens, *itBullets))
+      {
+        itBullets->Update(*itAliens);
+        return true;
+      }
+    }
+    return false;
+  }
 
   ~AliensManager() = default;
 
@@ -46,13 +61,13 @@ private:
     }
   }
 
-  std::vector<Alien> m_aliens;
+  vector<Alien> m_aliens;
 };
 
 inline ostream & operator << (ostream & os, AliensManager const & obj)
 {
   os << "Aliens:  " << "Rows = " << obj.GetRow() << ", Columns = " << obj.GetColumn() << endl;
-  Logger::Log(os, obj.GetAliens());
+  Logger::Instance().Log(os, obj.GetAliens());
   return os;
 }
 

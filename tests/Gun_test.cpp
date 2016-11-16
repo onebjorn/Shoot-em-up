@@ -1,8 +1,13 @@
 #include "gtest/gtest.h"
 #include "../include/config_stat.h"
 #include "gun.h"
+#include "bullet.h"
+#include "gameEntity.h"
+#include "bulletsManager.h"
 #include <sstream>
+#include "logger.h"
 #include <iostream>
+#include <ostream>
 #include <unordered_set>
 
 TEST(gun_test, test_construction)
@@ -40,6 +45,13 @@ TEST(gun_test, test_construction)
   EXPECT_EQ(a3.GetAmmo(), kGunAmmo);
   EXPECT_EQ(a3.GetHealth(), kGunHealth);
   EXPECT_EQ(a3.GetRate(), kGunPower);
+
+  Factory factory;
+  auto gun = factory.Create<Gun>(1.0f, 2.0f, 3.0f, 4.0f);
+  EXPECT_EQ(gun->GetBox().x1(), 1.0f);
+  EXPECT_EQ(gun->GetBox().y1(), 2.0f);
+  EXPECT_EQ(gun->GetBox().x2(), 3.0f);
+  EXPECT_EQ(gun->GetBox().y2(), 4.0f);
 }
 
 TEST(Gun_test, test_move)
@@ -77,4 +89,15 @@ TEST(Gun_test, test_exceptions)
   EXPECT_THROW(gun1.SetPower(-10.0f), invalid_argument);
 
   EXPECT_NO_THROW(gun1.SetHealth(20.0f));
+}
+
+TEST(Gun_test, test_hit)
+{
+  Gun g(70.0f, 140.0f);
+  BulletsManager Bm;
+  Bullet b1(70.0f, 142.0f, 1.0f);
+  Bm.AddBullet(b1);
+  b1.SetUpdateHandler([&](GameEntity const & obj){ cout << "Hit =  " << obj << endl; });
+  EXPECT_EQ(b1.ObjectsIntersect(b1, g), true);
+  EXPECT_EQ(g.CheckHit(Bm.getBullets(), g), true);
 }
