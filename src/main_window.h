@@ -12,13 +12,14 @@
 #include <QGroupBox>
 #include <QVBoxLayout>
 
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
   MainWindow()
   {
-
     QWidget * centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
     centralWidget->setFixedWidth(600);
@@ -41,26 +42,32 @@ public:
 
     QSlider * slider = new QSlider(Qt::Horizontal, groupBox);
     slider->setRange(0, 10);
-    connect(slider, SIGNAL(valueChanged(int)), this, SLOT(&SliderValueChanged(int)));
+    connect(slider, SIGNAL(valueChanged(int)), this, SLOT(SliderValueChanged(int)));
 
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(slider);
     vbox->addWidget(slider_label);
-    vbox->addStretch(1);
+    vbox->addStretch(0);
     groupBox->setLayout(vbox);
+    groupBox->setFixedHeight(200);
+    groupBox->setFixedWidth(400);
+    groupBox->adjustSize();
 
     QGridLayout * layout = new QGridLayout(centralWidget);
     layout->setMargin(10);
-    layout->addWidget(groupBox, 0, 1);
+    layout->addWidget(groupBox, 0, 0);
     layout->addWidget(comboBox_label, 1, 0);
     layout->addWidget(comboBox, 1, 1);
 
+
   }
+
 public slots:
   void SliderValueChanged(int value)
   {
     slider_label->setText(QString::number(value));
   }
+
 public:
   QLabel * slider_label;
 };
