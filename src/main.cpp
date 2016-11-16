@@ -1,14 +1,22 @@
-#include "logger.h"
-#include "gun.h"
-#include "bulletsManager.h"
-#include "aliensManager.h"
-#include <iostream>
-#include <ostream>
-#include <vector>
+#include <QApplication>
+#include <QMainWindow>
+#include <QSurfaceFormat>
+#include "main_window.h"
 
-using namespace std;
-
-int main()
+int main(int argc, char ** argv)
 {
-  return 0;
+
+  QApplication a(argc, argv);
+
+  QSurfaceFormat format;
+  format.setDepthBufferSize(24);
+  format.setStencilBufferSize(8);
+  QSurfaceFormat::setDefaultFormat(format);
+
+  MainWindow mw;
+  mw.setWindowTitle("Settings");
+  mw.show();
+  return a.exec();
+
+
 }

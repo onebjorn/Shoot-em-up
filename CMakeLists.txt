@@ -5,13 +5,23 @@ project(Shoot-em-up)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
 
+if(POLICY CMP0020)
+cmake_policy(SET CMP0020 OLD)
+endif()
+
+find_package(Qt5Core REQUIRED)
+find_package(Qt5OpenGL REQUIRED)
+
 # Set up the main source folder.
 set(SOURCE_ROOT src)
 # Scan source folder to find all sources and put the result to SRC_LIST.
 aux_source_directory(${SOURCE_ROOT} SRC_LIST)
-
+qt5_wrap_cpp(QT_WRAPPED_SRC ${SRC_LIST})
 # Create executable by SRC_LIST.
-add_executable(${PROJECT_NAME} ${SRC_LIST} "src/point2d.h" "src/box2d.h" "src/ray2d.h" "src/space.h" "src/alien.h" "src/obstacle.h" "include/config_stat.h" "src/gun.h" "src/bullet.h" "src/gameEntity.h" "src/aliensManager.h" "src/bulletsManager.h" "src/logger.h")
+add_executable(${PROJECT_NAME} ${SRC_LIST} ${QT_WRAPPED_SRC} "src/point2d.h" "src/box2d.h" "src/ray2d.h" "src/space.h" "src/alien.h" "src/obstacle.h" "include/config_stat.h" "src/gun.h" "src/bullet.h" "src/gameEntity.h" "src/aliensManager.h" "src/bulletsManager.h" "src/logger.h")
+
+# Qt modules
+qt5_use_modules(${PROJECT_NAME} Widgets OpenGL)
 
 # Add subdirectory with Google Test Library.
 add_subdirectory(3party/googletest)
