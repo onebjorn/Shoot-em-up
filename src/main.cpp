@@ -1,21 +1,23 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <QSurfaceFormat>
+#include "settingsWindow.h"
 #include "main_window.hpp"
-#include "StartDialog.h"
 
 int main(int argc, char ** argv)
 {
-    QApplication app(argc, argv);
+  QApplication app(argc, argv);
 
   QSurfaceFormat format;
   format.setDepthBufferSize(24);
   format.setStencilBufferSize(8);
   QSurfaceFormat::setDefaultFormat(format);
 
-  //MainWindow mw;
-  MainWindow SettingsWindow;
-  SettingsWindow.show();
-  return a.exec();
+  MainWindow mw;
 
+  SettingsWindow SettingsWindow;
+  SettingsWindow.setWindowTitle("Settings");
+  SettingsWindow.show();
+
+  return app.exec();
 }
