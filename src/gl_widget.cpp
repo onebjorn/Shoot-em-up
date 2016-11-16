@@ -41,8 +41,8 @@ bool IsRightButton(QMouseEvent const * const e)
 
 } // namespace
 
-GLWidget::GLWidget(MainWindow * mw, QColor const & background)
-  : m_mainWindow(mw)
+GLWidget::GLWidget(MainWindow * SettingsWindow, QColor const & background)
+  : m_mainWindow(SettingsWindow)
   , m_background(background)
 {
   setMinimumSize(1024, 768);
