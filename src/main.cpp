@@ -5,7 +5,6 @@
 
 int main(int argc, char ** argv)
 {
-
   QApplication a(argc, argv);
 
   QSurfaceFormat format;
@@ -17,6 +16,4 @@ int main(int argc, char ** argv)
   mw.setWindowTitle("Settings");
   mw.show();
   return a.exec();
-
-
 }
