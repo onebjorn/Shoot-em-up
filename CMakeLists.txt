@@ -23,7 +23,7 @@ aux_source_directory(${SOURCE_ROOT} SRC_LIST)
 qt5_wrap_cpp(QT_WRAPPED_SRC ${SRC_LIST})
 
 # Create executable by SRC_LIST.
-add_executable(${PROJECT_NAME} ${SRC_LIST} ${QT_WRAPPED_SRC} "src/point2d.h" "src/box2d.h" "src/ray2d.h" "src/settingsWindow.h" "src/space.h"  "src/alien.h" "src/obstacle.h"  "include/config_stat.h" "src/gun.h" "src/bullet.h" "src/gameEntity.h" "src/aliensManager.h" "src/bulletsManager.h" "src/logger.h" "src/singleton.h" )
+add_executable(${PROJECT_NAME} ${SRC_LIST} ${QT_WRAPPED_SRC} "src/geometry/point2d.h" "src/geometry/box2d.h" "src/geometry/ray2d.h" "src/settingsWindow.h" "src/game/space.h"  "src/game/alien.h" "src/game/obstacle.h"  "include/config_stat.h" "src/game/gun.h" "src/game/bullet.h" "src/game/gameEntity.h" "src/game/aliensManager.h" "src/game/bulletsManager.h" "src/game/logger.h" "src/game/singleton.h" )
 
 # Qt modules
 qt5_use_modules(${PROJECT_NAME} Widgets OpenGL)

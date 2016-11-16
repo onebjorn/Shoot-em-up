@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "ray2d.h"
-#include "box2d.h"
+#include "../src/geometry/ray2d.h"
+#include "../src/geometry/box2d.h"
 #include <sstream>
 #include <unordered_set>
 

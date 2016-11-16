@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
 #include "../include/config_stat.h"
-#include "gun.h"
-#include "bullet.h"
-#include "gameEntity.h"
-#include "bulletsManager.h"
+#include "../src/game/gun.h"
+#include "../src/game/bullet.h"
+#include "../src/game/gameEntity.h"
+#include "../src/game/bulletsManager.h"
 #include <sstream>
-#include "logger.h"
+#include "../src/game/logger.h"
 #include <iostream>
 #include <ostream>
 #include <unordered_set>

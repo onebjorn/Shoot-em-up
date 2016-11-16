@@ -1,7 +1,7 @@
 /* Игровая сущность*/
 #pragma once
-#include "box2d.h"
-#include "ray2d.h"
+#include "../geometry/box2d.h"
+#include "../geometry/ray2d.h"
 #include "../include/config_stat.h"
 #include <memory>
 
