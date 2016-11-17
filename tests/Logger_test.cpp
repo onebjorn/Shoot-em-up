@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
 #include "../include/config_stat.h"
-#include "logger.h"
-#include  "bulletsManager.h"
-#include "aliensManager.h"
-#include "gun.h"
-#include "bullet.h"
-#include "alien.h"
+#include "../src/game/logger.h"
+#include  "../src/game/bulletsManager.h"
+#include "../src/game/aliensManager.h"
+#include "../src/game/gun.h"
+#include "../src/game/bullet.h"
+#include "../src/game/alien.h"
 #include <sstream>
 #include <ostream>
 #include <iostream>

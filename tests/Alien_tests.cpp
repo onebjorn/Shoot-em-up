@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "../include/config_stat.h"
-#include "alien.h"
-#include "aliensManager.h"
+#include "../src/game/alien.h"
+#include "../src/game/aliensManager.h"
 #include <sstream>
 #include <iostream>
 #include <ostream>

@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "obstacle.h"
+#include "../src/game/obstacle.h"
 #include <sstream>
 #include <iostream>
 #include <unordered_set>
