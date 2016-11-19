@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "../include/config_stat.h"
-#include "space.h"
+#include "../src/game/space.h"
 #include <sstream>
 #include <iostream>
 #include <unordered_set>

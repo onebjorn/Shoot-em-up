@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
 #include "../include/config_stat.h"
-#include "bullet.h"
-#include "gun.h"
-#include "bulletsManager.h"
+#include "../src/game/bullet.h"
+#include "../src/game/gun.h"
+#include "../src/game/bulletsManager.h"
 #include <sstream>
 #include <iostream>
 #include <unordered_set>

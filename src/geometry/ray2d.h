@@ -3,8 +3,8 @@
 #include <iostream>
 #include <functional>
 #include <initializer_list>
-#include <box2d.h>
-#include <point2d.h>
+#include <../src/geometry/box2d.h>
+#include <../src/geometry/point2d.h>
 
 
 using namespace std;
