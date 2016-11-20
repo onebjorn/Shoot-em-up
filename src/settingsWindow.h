@@ -125,6 +125,7 @@ public:
     layout->addWidget(groupBoxAliens, 2, 0);
     layout->addWidget(groupBoxSpeed, 3, 0);
     layout->addWidget(buttonExit);
+
   }
 
 public slots:
@@ -139,6 +140,7 @@ public slots:
 
   /*TODO Запись в файл игровых констант значений из настроек, либо задание этих констант в слотах*/
   /*TODO Выбор сложности определеяет задание все настраиваемых величин пропорционально уровню сложности*/
+
 private:
   QLabel * sliderObstaclesLabel = nullptr;
   QLabel * sliderSpeedLabel = nullptr;
