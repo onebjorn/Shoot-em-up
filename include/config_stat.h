@@ -29,3 +29,4 @@ const int kAliensNumber = 50;
 const int kAliensNumberRow = 5;
 const int kAliensNumberColumn = 10;
 
+const int kStars = 100;
