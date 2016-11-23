@@ -17,7 +17,7 @@ int main(int argc, char ** argv)
 
   SettingsWindow SettingsWindow;
   SettingsWindow.setWindowTitle("Settings");
-  SettingsWindow.show();
+  mw.show();
 
   return app.exec();
 }

@@ -6,6 +6,9 @@
 #include "textured_rect.hpp"
 
 #include <array>
+#include <list>
+#include "game/gameEntity.h"
+#include "game/space.h"
 
 class MainWindow;
 
@@ -45,10 +48,10 @@ private:
   QTime m_time;
   QColor m_background;
   QSize m_screenSize;
-
-  QOpenGLTexture * m_texture = nullptr;
   TexturedRect * m_texturedRect = nullptr;
 
   QVector2D m_position = QVector2D(200, 200);
   std::array<bool, 4> m_directions = {{false, false, false, false}};
+  std::list<QOpenGLTexture*> m_texture;
+  Space * space = new Space();
 };
