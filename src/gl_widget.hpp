@@ -53,5 +53,5 @@ private:
   QVector2D m_position = QVector2D(200, 200);
   std::array<bool, 4> m_directions = {{false, false, false, false}};
   std::list<QOpenGLTexture*> m_texture;
-  Space * space = new Space();
+  Space * space = new Space;
 };
