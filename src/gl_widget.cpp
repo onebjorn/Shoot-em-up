@@ -138,15 +138,15 @@ void GLWidget::Update(float elapsedSeconds)
 
 void GLWidget::Render()
 {
-  for (auto it = space->GetAliens().begin(); it != space->GetAliens().end(); ++it )
-    {
-      m_texturedRect->Render(m_texture.front(), QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(64,64), m_screenSize );
-    }
-  for (auto it = space->GetStars().begin(); it != space->GetStars().end(); ++it )
-    {
-      int size = 16 * sinf(m_time.elapsed() - static_cast <float> (rand()));
-      m_texturedRect->Render(m_texture.back(), QVector2D(it->x() * m_screenSize.width(), it->y() * m_screenSize.height()), QSize(size, size), m_screenSize );
-    }
+  for (auto it = space->GetAliens().begin(); it != space->GetAliens().end(); ++it)
+  {
+      m_texturedRect->Render(m_texture.front(), QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(64,64), m_screenSize);
+  }
+  for (auto it = space->GetStars().begin(); it != space->GetStars().end(); ++it)
+  {
+    int size = 16 * sinf(0.31 * m_time.elapsed() - static_cast <float> (rand()));
+    m_texturedRect->Render(m_texture.back(), QVector2D(it->x() * m_screenSize.width(), it->y() * m_screenSize.height()), QSize(size, size), m_screenSize);
+  }
 }
 
 void GLWidget::mousePressEvent(QMouseEvent * e)

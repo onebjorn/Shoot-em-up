@@ -1,8 +1,7 @@
 [submodule "3party/googletest"]
 	path = 3party/googletest
 	url = https://github.com/google/googletest
-[submodule "3party/jsoncpp"]
 	
+[submodule "3party/jsoncpp"]	
 	path = 3party/jsoncpp
-	
 	url = https://github.com/open-source-parsers/jsoncpp.git

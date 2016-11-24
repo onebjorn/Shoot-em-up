@@ -23,9 +23,9 @@ public:
     setTime();
     file.open("Logfile.txt", ios_base::out | ios_base::app);
     if (file.is_open())
-      {
+    {
         file << asctime(m_timeinfo) << "\t" << obj << endl;
-      }
+    }
     else cout << "Unable to open" << endl;
     file.close();
   }
@@ -44,10 +44,10 @@ public:
     setTime();
     file.open("Logfile.txt", ios_base::out | ios_base::app);
     if (file.is_open())
-      {
+    {
         for (auto const & obj: objs)
-          file << asctime(m_timeinfo) << "\t" << obj << endl;
-      }
+        file << asctime(m_timeinfo) << "\t" << obj << endl;
+    }
     else cout << "Unable to open" << endl;
     file.close();
   }
