@@ -140,7 +140,7 @@ void GLWidget::Render()
 {
   for (auto it = space->GetAliens().begin(); it != space->GetAliens().end(); ++it)
   {
-      m_texturedRect->Render(m_texture.front(), QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(64,64), m_screenSize);
+    m_texturedRect->Render(m_texture.front(), QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(64,64), m_screenSize);
   }
   for (auto it = space->GetStars().begin(); it != space->GetStars().end(); ++it)
   {
@@ -169,7 +169,7 @@ void GLWidget::mouseDoubleClickEvent(QMouseEvent * e)
   int const py = L2D(e->y());
   if (IsRightButton(e))
   {
-    // ...
+    // ... 
   }
 }
 
