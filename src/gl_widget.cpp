@@ -70,6 +70,7 @@ void GLWidget::initializeGL()
   m_texture.push_back(new QOpenGLTexture(QImage("data/star.png")));
 
   Space();
+  AliensManager();
   m_time.start();
 }
 
@@ -144,7 +145,7 @@ void GLWidget::Render()
   }
   for (auto it = space->GetStars().begin(); it != space->GetStars().end(); ++it)
   {
-    int size = 16 * sinf(0.31 * m_time.elapsed() - static_cast <float> (rand()));
+    int size = 4 * sinf(100000.0 * m_time.elapsed() - static_cast <float> (rand()));
     m_texturedRect->Render(m_texture.back(), QVector2D(it->x() * m_screenSize.width(), it->y() * m_screenSize.height()), QSize(size, size), m_screenSize);
   }
 }

@@ -14,12 +14,12 @@ public:
 
   AliensManager()
   {
-    CreateAliens(kAliensNumberRow, kAliensNumberColumn);
+    CreateAliens(kAliensNumberRow, kAliensNumberColumn, kSpaceSizeX, kSpaceSizeY);
   }
 
   AliensManager(int const row, int const column)
   {
-    CreateAliens(row, column);
+    CreateAliens(row, column, kSpaceSizeX, kSpaceSizeY);
   }
 
   Aliens const & GetAliens() const { return m_aliens; }
@@ -47,11 +47,16 @@ private:
   int m_rows = 0.0f;
   int m_columns = 0.0f;
 
-  void CreateAliens(int const row, int const column)
+  float m_initX = 0.0f;
+  float m_initY = 0.0f;
+
+  void CreateAliens(int const row, int const column, float const X_size, float const Y_size)
   {
     m_rows = row;
     m_columns = column;
-    float const Delta = kSpaceSizeX / (column + 6.0f);
+
+    float const Delta = X_size / (column + 6.0f);
+    /*TODO построение в центре пересчитать координату init*/
     for (auto i = 0; i < row; i++)
     {
       for (auto k = 0; k < column; k++)

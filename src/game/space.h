@@ -14,12 +14,7 @@ class Space : public GameEntity
 {
 public:
 
-  Space()
-  {
-    AliensManager();
-    Stars();
-    m_box = Box2D(0.0f, 0.0f, kSpaceSizeX, kSpaceSizeY);
-  }
+  Space() = default;
 
   Space(float const x1, float const y1, float const x2, float const y2) { m_box = Box2D(x1, y1, x2, y2); }
 

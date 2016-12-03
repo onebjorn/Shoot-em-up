@@ -5,6 +5,7 @@
 #include <cmath>
 
 using MStars = vector<Point2D>;
+
 class Stars
 {
 public:
