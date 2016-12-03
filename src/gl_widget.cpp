@@ -10,8 +10,9 @@
 #include <cmath>
 
 #include <iostream>
-
 #include "main_window.hpp"
+#include "game/space.h"
+
 
 namespace
 {
@@ -52,8 +53,9 @@ GLWidget::GLWidget(MainWindow * SettingsWindow, QColor const & background)
 GLWidget::~GLWidget()
 {
   makeCurrent();
-  delete m_texture;
   delete m_texturedRect;
+  m_texture.clear();
+  delete space;
   doneCurrent();
 }
 
@@ -64,8 +66,10 @@ void GLWidget::initializeGL()
   m_texturedRect = new TexturedRect();
   m_texturedRect->Initialize(this);
 
-  m_texture = new QOpenGLTexture(QImage("data/alien.png"));
+  m_texture.push_back(new QOpenGLTexture(QImage("data/alien.png")));
+  m_texture.push_back(new QOpenGLTexture(QImage("data/star.png")));
 
+  Space();
   m_time.start();
 }
 
@@ -134,9 +138,15 @@ void GLWidget::Update(float elapsedSeconds)
 
 void GLWidget::Render()
 {
-  m_texturedRect->Render(m_texture, m_position, QSize(128, 128), m_screenSize);
-  m_texturedRect->Render(m_texture, QVector2D(400, 400), QSize(128, 128), m_screenSize);
-  m_texturedRect->Render(m_texture, QVector2D(600, 600), QSize(128, 128), m_screenSize);
+  for (auto it = space->GetAliens().begin(); it != space->GetAliens().end(); ++it)
+  {
+    m_texturedRect->Render(m_texture.front(), QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(64,64), m_screenSize);
+  }
+  for (auto it = space->GetStars().begin(); it != space->GetStars().end(); ++it)
+  {
+    int size = 16 * sinf(0.31 * m_time.elapsed() - static_cast <float> (rand()));
+    m_texturedRect->Render(m_texture.back(), QVector2D(it->x() * m_screenSize.width(), it->y() * m_screenSize.height()), QSize(size, size), m_screenSize);
+  }
 }
 
 void GLWidget::mousePressEvent(QMouseEvent * e)
@@ -159,7 +169,7 @@ void GLWidget::mouseDoubleClickEvent(QMouseEvent * e)
   int const py = L2D(e->y());
   if (IsRightButton(e))
   {
-    // ...
+    // ... 
   }
 }
 

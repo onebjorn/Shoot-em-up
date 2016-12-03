@@ -1,3 +1,10 @@
 [submodule "3party/googletest"]
 	path = 3party/googletest
 	url = https://github.com/google/googletest
+	
+[submodule "3party/jsoncpp"]	
+	path = 3party/jsoncpp
+	url = https://github.com/open-source-parsers/jsoncpp.git
+[submodule "3party/pugixml"]
+	path = 3party/pugixml
+	url = https://github.com/zeux/pugixml.git
