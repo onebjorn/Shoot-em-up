@@ -26,7 +26,7 @@ public:
   int const & GetRow() const { return m_rows; }
   int const & GetColumn() const { return m_columns; }
 
-  bool CheckHit(Bullets const & obj)
+  bool CheckHit(Bullets & obj)
   {
     for(auto itAliens = m_aliens.begin(); itAliens != m_aliens.end(); ++itAliens)
     {
@@ -34,11 +34,33 @@ public:
       if (itAliens->ObjectsIntersect(*itAliens, *itBullets))
       {
         itBullets->Update(*itAliens);
+        if(itAliens->GetHealth() <= kBulletDamage) m_aliens.erase(itAliens);
+        obj.erase(itBullets);
         return true;
       }
     }
     return false;
   }
+
+  void AliensMove(float const deltaX, float const deltaY)
+  {
+    if(m_aliens.back().GetBox().x2() < kSpaceSizeX - 50.0f)
+    {
+      for (auto it = m_aliens.begin(); it != m_aliens.end(); ++it)
+      {
+        it->SetBox({ deltaX, 0.0f, deltaX, 0.0f });
+      }
+    }
+    else
+    {
+      for (auto it = m_aliens.begin(); it != m_aliens.end(); ++it)
+      {
+        it->SetBox({ - kSpaceSizeX + 200.0f, - deltaY, - kSpaceSizeX + 200.0f, - deltaY});
+      }
+    }
+  }
+
+  void clear() { m_aliens.erase(m_aliens.begin(), m_aliens.end()); }
 
   ~AliensManager() = default;
 
@@ -55,13 +77,15 @@ private:
     m_rows = row;
     m_columns = column;
 
-    float const Delta = X_size / (column + 6.0f);
+    float const Delta = X_size / (column + 5.0f);
+    m_initX = X_size / 2.0f - column / 2.0 * Delta;
+    m_initY = Y_size - 2.0f * Delta;
     /*TODO построение в центре пересчитать координату init*/
     for (auto i = 0; i < row; i++)
     {
       for (auto k = 0; k < column; k++)
       {
-        m_aliens.push_back(Alien(Delta / 2.0f + k * Delta, Delta + i * Delta));
+        m_aliens.push_back(Alien(m_initX + k * Delta, m_initY + i * Delta));
       }
     }
   }

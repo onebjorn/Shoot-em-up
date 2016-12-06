@@ -54,7 +54,9 @@ public:
   }
 
 private:
+
   float m_obstacleHealth = 0.0f;
+
 };
 
 inline ostream & operator << (ostream & os, Obstacle const & obj)

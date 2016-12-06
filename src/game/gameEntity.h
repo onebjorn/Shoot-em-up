@@ -21,6 +21,8 @@ public:
 
   Box2D const & GetBox() const { return m_box; }
 
+  void SetBox(Box2D const & newBox) { m_box += newBox; }
+
   bool ObjectsIntersect(GameEntity const & a, GameEntity const & b)
   {
     if (a.GetBox().x2() < b.GetBox().x1()) return false;

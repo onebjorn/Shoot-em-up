@@ -54,8 +54,13 @@ GLWidget::~GLWidget()
 {
   makeCurrent();
   delete m_texturedRect;
+  delete m_alienTexture;
+  delete m_starTexture;
+  delete m_gunTexture;
+  delete m_bulletTexture;
+  delete m_obstacleTexture;
   m_texture.clear();
-  delete space;
+  delete m_space;
   doneCurrent();
 }
 
@@ -66,13 +71,19 @@ void GLWidget::initializeGL()
   m_texturedRect = new TexturedRect();
   m_texturedRect->Initialize(this);
 
-  m_texture.push_back(new QOpenGLTexture(QImage("data/alien.png")));
-  m_texture.push_back(new QOpenGLTexture(QImage("data/star.png")));
+  m_alienTexture = new QOpenGLTexture(QImage("data/alien.png"));
+  m_starTexture = new QOpenGLTexture(QImage("data/star.png"));
+  m_gunTexture = new QOpenGLTexture(QImage("data/alien.png"));
+  m_obstacleTexture= new QOpenGLTexture(QImage("data/alien.png"));
+  m_bulletTexture = new QOpenGLTexture(QImage("data/alien.png"));
 
-  Space();
-  AliensManager();
+
+  m_space = new Space(Point2D{ 0.0, 0.0 }, Point2D{ kSpaceSizeX, kSpaceSizeY });
+
   m_time.start();
 }
+
+
 
 void GLWidget::paintGL()
 {
@@ -123,31 +134,106 @@ void GLWidget::resizeGL(int w, int h)
   m_screenSize.setHeight(h);
 }
 
-void GLWidget::Update(float elapsedSeconds)
+void GLWidget::UpdateGun(float elapsedSeconds)
 {
-  float const kSpeed = 20.0f; // pixels per second.
+  // gun speed
+  float const kSpeed = 10.0f; // pixels per second.
 
-  if (m_directions[kUpDirection])
-    m_position.setY(m_position.y() + kSpeed * elapsedSeconds);
-  if (m_directions[kDownDirection])
-    m_position.setY(m_position.y() - kSpeed * elapsedSeconds);
+  // move gun left
   if (m_directions[kLeftDirection])
-    m_position.setX(m_position.x() - kSpeed * elapsedSeconds);
+  {
+    if (m_space->GetGun().GetBox().x1() > m_space->GetBox().x1())
+    {
+      m_space->ChangeGunPosition(- kSpeed * elapsedSeconds, 0.0f);
+    }
+  }
+  // move gun right
   if (m_directions[kRightDirection])
-    m_position.setX(m_position.x() + kSpeed * elapsedSeconds);
+  {
+    if (m_space->GetGun().GetBox().x2() < m_space->GetBox().x2())
+    {
+      m_space->ChangeGunPosition(kSpeed * elapsedSeconds, 0.0f);
+    }
+  }
+
+  // gun shoot
+  if (m_directions[kUpDirection])
+  {
+    m_space->GunShoot();
+  }
+
+
 }
 
-void GLWidget::Render()
+
+void GLWidget::UpdateAliens(float elapsedSeconds)
 {
-  for (auto it = space->GetAliens().begin(); it != space->GetAliens().end(); ++it)
+  float const kSpeed = 1.0f;
+  m_space->AliensMove(kSpeed * elapsedSeconds, 50.0f);
+}
+
+void GLWidget::UpdateBullets(float elapsedSeconds)
+{
+  float const kSpeed = 1.0f;
+  m_space->BulletsMove(kSpeed * elapsedSeconds);
+}
+
+
+void GLWidget::Update(float elapsedSeconds)
+{ 
+  UpdateGun(elapsedSeconds);
+  UpdateAliens(elapsedSeconds);
+  UpdateBullets(elapsedSeconds);
+  m_space->CheckObstacleHit();
+  m_space->CheckAlienHit();
+}
+
+void GLWidget::RenderAliens()
+{
+    for (auto it = m_space->GetAliens().begin(); it != m_space->GetAliens().end(); ++it)
+    {
+      m_texturedRect->Render(m_alienTexture, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(64, 64), m_screenSize);
+    }
+}
+
+void GLWidget::RenderBullets()
+{
+    for (auto it = m_space->GetBullets().begin(); it != m_space->GetBullets().end(); ++it)
+    {
+      m_texturedRect->Render(m_bulletTexture, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(8, 20), m_screenSize);
+    }
+}
+
+void GLWidget::RenderObstacles()
+{
+  for (auto it = m_space->GetObstacles().begin(); it != m_space->GetObstacles().end(); ++it)
   {
-    m_texturedRect->Render(m_texture.front(), QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(64,64), m_screenSize);
+    m_texturedRect->Render(m_obstacleTexture, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(100, 30), m_screenSize);
   }
-  for (auto it = space->GetStars().begin(); it != space->GetStars().end(); ++it)
+}
+
+void GLWidget::RenderGun()
+{
+    m_texturedRect->Render(m_gunTexture, QVector2D(m_space->GetGun().GetBox().GetCenter().x(), m_space->GetGun().GetBox().GetCenter().y()), QSize(64, 64), m_screenSize);
+}
+
+void GLWidget::RenderStars()
+{
+  for (auto it = m_space->GetStars().begin(); it != m_space->GetStars().end(); ++it)
   {
-    int size = 4 * sinf(100000.0 * m_time.elapsed() - static_cast <float> (rand()));
-    m_texturedRect->Render(m_texture.back(), QVector2D(it->x() * m_screenSize.width(), it->y() * m_screenSize.height()), QSize(size, size), m_screenSize);
+    float size = 6.0f * sinf(0.001f * m_time.elapsed() - 0.001f * static_cast <float> (rand()));
+    m_texturedRect->Render(m_starTexture, QVector2D(it->x() * m_screenSize.width(), it->y() * m_screenSize.height()), QSize(size, size), m_screenSize);
   }
+}
+
+void GLWidget::DeleteSpace()
+{
+  if (m_space != nullptr)
+  {
+    m_space->clear();
+    delete m_space;
+  }
+  m_space = nullptr;
 }
 
 void GLWidget::mousePressEvent(QMouseEvent * e)
@@ -231,3 +317,13 @@ void GLWidget::keyReleaseEvent(QKeyEvent * e)
   else if (e->key() == Qt::Key_Right)
     m_directions[kRightDirection] = false;
 }
+
+void GLWidget::Render()
+{
+  this->RenderAliens();
+  this->RenderStars();
+  this->RenderGun();
+  this->RenderObstacles();
+  this->RenderBullets();
+}
+
