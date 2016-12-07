@@ -2,6 +2,7 @@
 #include "gameEntity.h"
 #include "../include/config_stat.h"
 #include <ostream>
+#include "src/game/bulletsManager.h"
 #include <iostream>
 
 class Obstacle : public GameEntity
@@ -53,8 +54,25 @@ public:
     m_obstacleHealth -= deltaHealth;
   }
 
+  bool CheckHit(Bullets & obj)
+  {
+    for(auto itAliens = m_obstacles.begin(); itAliens != m_obstacles.end(); ++itAliens)
+    {
+      for(auto itBullets = obj.begin(); itBullets != obj.end(); ++itBullets)
+      if (itAliens->ObjectsIntersect(*itAliens, *itBullets))
+      {
+        itBullets->Update(*itAliens);
+        if(itAliens->GetHealth() <= kBulletDamage) m_obstacles.erase(itAliens);
+        obj.erase(itBullets);
+        return true;
+      }
+    }
+    return false;
+  }
+
 private:
 
+  vector<Obstacle> m_obstacles;
   float m_obstacleHealth = 0.0f;
 
 };

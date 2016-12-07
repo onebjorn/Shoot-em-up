@@ -22,6 +22,13 @@ public:
     CreateAliens(row, column, kSpaceSizeX, kSpaceSizeY);
   }
 
+  Bullet AliensShoot()
+  {
+    srand(0);
+    auto it = rand() % m_aliens.size();
+    return m_aliens.at(it).Shot();
+  }
+
   Aliens const & GetAliens() const { return m_aliens; }
   int const & GetRow() const { return m_rows; }
   int const & GetColumn() const { return m_columns; }
@@ -34,8 +41,9 @@ public:
       if (itAliens->ObjectsIntersect(*itAliens, *itBullets))
       {
         itBullets->Update(*itAliens);
-        if(itAliens->GetHealth() <= kBulletDamage) m_aliens.erase(itAliens);
         obj.erase(itBullets);
+        itAliens->RemoveHealth(kBulletDamage);
+        if(itAliens->GetHealth() <= kBulletDamage) m_aliens.erase(itAliens);
         return true;
       }
     }
@@ -44,18 +52,27 @@ public:
 
   void AliensMove(float const deltaX, float const deltaY)
   {
-    if(m_aliens.back().GetBox().x2() < kSpaceSizeX - 50.0f)
+    if(m_aliens.back().GetBox().x2() > kSpaceSizeX - deltaX)
     {
+      m_dir = - 1.0f;
       for (auto it = m_aliens.begin(); it != m_aliens.end(); ++it)
       {
-        it->SetBox({ deltaX, 0.0f, deltaX, 0.0f });
+        it->SetBox({ -deltaX, - deltaY / 2.0f, -deltaX, - deltaY / 2.0f});
+      }
+    }
+    else if (m_aliens.front().GetBox().x1() < deltaX)
+    {
+      m_dir = 1.0f;
+      for (auto it = m_aliens.begin(); it != m_aliens.end(); ++it)
+      {
+        it->SetBox({ deltaX, - deltaY / 2.0f, deltaX, - deltaY / 2.0f});
       }
     }
     else
     {
       for (auto it = m_aliens.begin(); it != m_aliens.end(); ++it)
       {
-        it->SetBox({ - kSpaceSizeX + 200.0f, - deltaY, - kSpaceSizeX + 200.0f, - deltaY});
+        it->SetBox({ deltaX * m_dir, 0.0f, deltaX * m_dir, 0.0f });
       }
     }
   }
@@ -65,6 +82,8 @@ public:
   ~AliensManager() = default;
 
 private:
+
+  float m_dir = 1.0f;
 
   int m_rows = 0.0f;
   int m_columns = 0.0f;
@@ -79,13 +98,13 @@ private:
 
     float const Delta = X_size / (column + 5.0f);
     m_initX = X_size / 2.0f - column / 2.0 * Delta;
-    m_initY = Y_size - 2.0f * Delta;
+    m_initY = Y_size * 0.9f;
     /*TODO построение в центре пересчитать координату init*/
     for (auto i = 0; i < row; i++)
     {
       for (auto k = 0; k < column; k++)
       {
-        m_aliens.push_back(Alien(m_initX + k * Delta, m_initY + i * Delta));
+        m_aliens.push_back(Alien(m_initX + k * kAlienSizeX, m_initY - i * kAlienSizeY));
       }
     }
   }

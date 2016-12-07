@@ -23,11 +23,16 @@ public:
 
   GLWidget(MainWindow * mw, QColor const & background);
   ~GLWidget();
+  void NextLevel(int level);
 
 protected:
   void resizeGL(int w, int h) override;
   void paintGL() override;
   void initializeGL() override;
+
+  void paintGLGameOver();
+  void paintGLGame();
+  void paintGLNextLevel();
 
   void Update(float elapsedSeconds);
   void UpdateGun(float elapsedSeconds);
@@ -41,6 +46,7 @@ protected:
   void RenderBullets();
   void DeleteSpace();
   void RenderObstacles();
+  void RenderInformation();
 
   void mousePressEvent(QMouseEvent * e) override;
   void mouseDoubleClickEvent(QMouseEvent * e) override;
@@ -54,10 +60,20 @@ private:
   int L2D(int px) const { return px * devicePixelRatio(); }
 
   QOpenGLTexture * m_alienTexture = nullptr;
+  QOpenGLTexture * m_heartTexture = nullptr;
   QOpenGLTexture * m_starTexture = nullptr;
   QOpenGLTexture * m_gunTexture = nullptr;
   QOpenGLTexture * m_bulletTexture = nullptr;
+  QOpenGLTexture * m_bulletAlienTexture = nullptr;
   QOpenGLTexture * m_obstacleTexture = nullptr;
+
+  float m_gunTime = 0.0f;
+  float m_alienTime = 0.0f;
+  int m_scores = 0;
+  int m_level = 0;
+
+  bool m_nextLevel = false;
+  bool m_gameOver = false;
 
   MainWindow * m_mainWindow;
 
