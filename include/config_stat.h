@@ -19,7 +19,7 @@ const float kGunSizeX = 60.0f;
 const float kGunSizeY = 60.0f;
 const float kGunHealth = 3.0f;
 const float kGunSpeed = 8.0f;
-const float kDeltaScore = 3.0f;
+const float kDeltaScore = 10.0f;
 const int kGunAmmo = 1000;
 const float kGunReloadTime = 100.0f;
 

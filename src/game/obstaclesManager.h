@@ -64,10 +64,10 @@ private:
     {
       for (auto k = 0; k < column; k++)
       {
-        m_obstacles.push_back(Obstacle(1.0f * X_size / 8.0f - (column / 2.0f - 0.5f) * kObstacleSizeX + k * kObstacleSizeX, Y_size / 30.0f + kGunSizeY - i * kObstacleSizeY));
-        m_obstacles.push_back(Obstacle(3.0f * X_size / 8.0f - (column / 2.0f - 0.5f) * kObstacleSizeX + k * kObstacleSizeX, Y_size / 30.0f + kGunSizeY - i * kObstacleSizeY));
-        m_obstacles.push_back(Obstacle(5.0f * X_size / 8.0f - (column / 2.0f - 0.5f) * kObstacleSizeX + k * kObstacleSizeX, Y_size / 30.0f + kGunSizeY - i * kObstacleSizeY));
-        m_obstacles.push_back(Obstacle(7.0f * X_size / 8.0f - (column / 2.0f - 0.5f) * kObstacleSizeX + k * kObstacleSizeX, Y_size / 30.0f + kGunSizeY - i * kObstacleSizeY));
+        m_obstacles.push_back(Obstacle(1.0f * X_size / 8.0f - (column / 2.0f - 0.5f) * kObstacleSizeX + k * kObstacleSizeX, Y_size / 30.0f + 1.5f * kGunSizeY - i * kObstacleSizeY));
+        m_obstacles.push_back(Obstacle(3.0f * X_size / 8.0f - (column / 2.0f - 0.5f) * kObstacleSizeX + k * kObstacleSizeX, Y_size / 30.0f + 1.5f * kGunSizeY - i * kObstacleSizeY));
+        m_obstacles.push_back(Obstacle(5.0f * X_size / 8.0f - (column / 2.0f - 0.5f) * kObstacleSizeX + k * kObstacleSizeX, Y_size / 30.0f + 1.5f * kGunSizeY - i * kObstacleSizeY));
+        m_obstacles.push_back(Obstacle(7.0f * X_size / 8.0f - (column / 2.0f - 0.5f) * kObstacleSizeX + k * kObstacleSizeX, Y_size / 30.0f + 1.5f * kGunSizeY - i * kObstacleSizeY));
       }
     }
   }

@@ -50,13 +50,13 @@ public:
 
   float const & GetHealth() const { return m_gunHealth; }
   float const & GetSpeed() const { return m_gunSpeed; }
-  float const & GetScores() const { return m_gunScores; }
+  float & GetScores() { return m_gunScores; }
   int const & GetAmmo() const { return m_ammo; }
 
   void SetScores(float const score)
   {
-    if (score < 0.0f) throw invalid_argument("Negative power");
     m_gunScores += score;
+    if (score < 0.0f) throw invalid_argument("Negative power");
   }
 
   void SetHealth(float const health)

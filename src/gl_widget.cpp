@@ -136,12 +136,17 @@ void GLWidget::paintGLGame()
     QString framesPerSecond;
     framesPerSecond.setNum(m_frames / (elapsed / 1000.0), 'f', 2);
     painter.setPen(Qt::white);
-    painter.drawText(20, 40, framesPerSecond + " fps");
+    painter.drawText(300, 20, framesPerSecond + " fps");
 
     QString scores;
-    scores.setNum(m_space->GetGunScores() * 1.0, 'f', 2);
+    scores.setNum(m_scores);
     painter.setPen(Qt::white);
-    painter.drawText(120, 20, "SCORE: " + scores );
+    painter.drawText(100, 20, "Scores: " + scores );
+
+    QString level;
+    level.setNum(m_level);
+    painter.setPen(Qt::white);
+    painter.drawText(200, 20,  "Level " + level);
 
   }
   painter.end();
@@ -157,72 +162,47 @@ void GLWidget::paintGLGame()
 
 void GLWidget::paintGLGameOver()
 {
-  if (!m_gameOver)
-  {
-    QPainter painter;
-    painter.begin(this);
-    painter.setPen(Qt::white);
+  m_space->clear();
+  QPainter painter;
+  painter.begin(this);
+  painter.setPen(Qt::white);
 
-    glClearColor(m_background.redF(), m_background.greenF(), m_background.blueF(), 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClearColor(m_background.redF(), m_background.greenF(), m_background.blueF(), 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glFrontFace(GL_CW);
-    glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glFrontFace(GL_CW);
+  glCullFace(GL_BACK);
+  glEnable(GL_CULL_FACE);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    Render();
+  this->RenderStars();
 
-    glDisable(GL_CULL_FACE);
-    glDisable(GL_BLEND);
+  glDisable(GL_CULL_FACE);
+  glDisable(GL_BLEND);
 
-    painter.beginNativePainting();
+  painter.beginNativePainting();
+  QString scores;
+  scores.setNum(m_space->GetGun().GetScores(),'g', 0);
+  painter.drawText(kSpaceSizeX / 2.0f, kSpaceSizeY / 2.0f, "SCORES: " + scores);
+  painter.drawText(kSpaceSizeX / 2.0f, kSpaceSizeY / 2.0f - 50.0f, "GAME OVER");
 
-    QString scores;
-    scores.setNum(m_space->GetGun().GetScores());
-    painter.drawText(kSpaceSizeX / 2.0f, kSpaceSizeY / 2.0f, "RESULTS: " + scores);
-    painter.drawText(kSpaceSizeX / 2.0f, kSpaceSizeY / 2.0f - 50.0f, "GAME OVER");
-
-    QPen pen = QPen(Qt::red);
-    pen.setWidth(3);
-    painter.setPen(pen);
-    painter.end();
-  }
+  painter.end();
 }
 
 void GLWidget::NextLevel(int level)
 {
-  // reset flag
   m_nextLevel = false;
-
-  // new level
-  m_space->NewLvlPrepare(level);
+  m_space->NewLevel(level);
   m_time.restart();
 }
 
-// PAINTING
 void GLWidget::paintGLNextLevel()
 {
-  if (!m_nextLevel)  // pause with info
-  {
-    QPainter painter;
-    painter.begin(this);
-    painter.setPen(Qt::white);
-
-    QString rate;
-    rate.setNum(m_space->GetGun().GetScores());
-    painter.drawText(500 / 2 - 150, 500 / 3 - 15, "You current rezult: " + rate);
-    painter.drawText(500 / 2 - 180, 500 / 3 + 15, "Aliens destroyed! You win! Level " + QString::number(m_level + 1));
-    painter.drawText(500 / 2 - 180, 500 / 3 + 30, "Click Enter to go to the next level! ");
-  }
-  else              // next level
-  {
-    NextLevel(++m_level);
-    paintGL();
-  }
+  m_level += 1;
+  NextLevel(m_level);
+  paintGLGame();
 }
-
 
 void GLWidget::resizeGL(int w, int h)
 {
@@ -232,10 +212,10 @@ void GLWidget::resizeGL(int w, int h)
 
 void GLWidget::UpdateGun(float elapsedSeconds)
 {
-  // gun speed
-  float const kSpeed = 10.0f; // pixels per second.
+  float const kSpeed = 10.0f;
 
-  // move gun left
+  m_space->GunHit();
+
   if (m_directions[kLeftDirection])
   {
     if (m_space->GetGun().GetBox().x1() > m_space->GetBox().x1())
@@ -243,7 +223,7 @@ void GLWidget::UpdateGun(float elapsedSeconds)
       m_space->ChangeGunPosition(- kSpeed * elapsedSeconds, 0.0f);
     }
   }
-  // move gun right
+
   if (m_directions[kRightDirection])
   {
     if (m_space->GetGun().GetBox().x2() < m_space->GetBox().x2())
@@ -252,7 +232,6 @@ void GLWidget::UpdateGun(float elapsedSeconds)
     }
   }
 
-  // gun shoot
   if (m_directions[kUpDirection])
   {
     if(m_gunTime > kGunReloadTime)
@@ -262,24 +241,29 @@ void GLWidget::UpdateGun(float elapsedSeconds)
     }
   }
 
-  if(m_space->GetGun().GetHealth() < 0.0f)
-  {
-    m_gameOver = true;
-  }
-
+  if(m_space->GetGun().GetHealth() < 0.0f) { m_gameOver = true; }
 }
-
 
 void GLWidget::UpdateAliens(float elapsedSeconds)
 {
   float const kSpeed = 0.6f;
   m_space->AliensMove(kSpeed * elapsedSeconds, kAlienSizeY);
+  m_space->CheckAlienHit();
+  if(m_space->AddScores()) { m_scores += 10; }
+
+  if(m_alienTime > kAlienReload)
+  {
+    m_space->AliensShoot();
+    m_alienTime = 0.0f;
+  }
 }
 
 void GLWidget::UpdateBullets(float elapsedSeconds)
 {
   float const kSpeed = 0.7f;
   m_space->BulletsMove(kSpeed * elapsedSeconds);
+  m_space->CheckObstacleHit();
+//  m_space->BulletOut();
 }
 
 
@@ -288,14 +272,15 @@ void GLWidget::Update(float elapsedSeconds)
   UpdateGun(elapsedSeconds);
   UpdateAliens(elapsedSeconds);
   UpdateBullets(elapsedSeconds);
-  m_space->CheckObstacleHit();
-  m_space->CheckAlienHit();
-  m_space->GunHit();
+
+  if(m_space->CheckAliensDeath()) { m_nextLevel = true; }
+
+  if(m_space->AlienIntersetionObstacles()) { m_gameOver = true; }
 
   if(m_alienTime > kAlienReload)
   {
-    m_alienTime = 0.0f;
     m_space->AliensShoot();
+    m_alienTime = 0.0f;
   }
 
 }

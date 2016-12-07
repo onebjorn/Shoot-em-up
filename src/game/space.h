@@ -37,7 +37,6 @@ public:
     m_bulletsAliens = new BulletsManager();
     m_obstacles = new ObstaclesManager(2, 6);
     Stars();
-
   }
 
   Space(Box2D const & spaceBox) { m_box = Box2D(spaceBox); }
@@ -59,9 +58,39 @@ public:
       m_gun->SetBox({{delta_x, delta_y},{delta_x, delta_y}});
   }
 
+  bool AlienIntersetionObstacles()
+  {
+    for(auto itAliens = m_aliens->GetAliens().begin(); itAliens != m_aliens->GetAliens().end(); ++itAliens)
+    {
+      for(auto itObstacles = m_obstacles->GetObstacles().begin(); itObstacles != m_obstacles->GetObstacles().end(); ++itObstacles)
+      {
+        if (GameEntity::ObjectsIntersect(*itAliens, *itObstacles)) { return true; }
+      }
+    }
+    return false;
+  }
+
+  void BulletOut()
+  {
+    for (auto itBullet = m_bullets->getBullets().begin(); itBullet != m_bullets->getBullets().end(); ++itBullet)
+    {
+      if (itBullet->GetBox().GetCenter().y() > kSpaceSizeY) { m_bullets->DeleteBullet(itBullet); }
+    }
+    for (auto itBullet = m_bulletsAliens->getBullets().begin(); itBullet != m_bulletsAliens->getBullets().end(); ++itBullet)
+    {
+      if (itBullet->GetBox().GetCenter().y() < 0.0f) { m_bulletsAliens->DeleteBullet(itBullet); }
+    }
+  }
+
   void GunShoot()
   {
     m_bullets->AddBullet(m_gun->Shot());
+  }
+
+  bool CheckAliensDeath()
+  {
+    if (m_aliens->GetAliens().begin() == m_aliens->GetAliens().end()) { return true; }
+    return false;
   }
 
   void AliensShoot()
@@ -82,13 +111,15 @@ public:
   void CheckAlienHit()
   {
     m_aliens->CheckHit(m_bullets->getBullets());
-    if(m_aliens->CheckHit(m_bullets->getBullets()))
-    {
-      m_gun->SetScores(kDeltaScore);
-    }
   }
 
-  void NewLvlPrepare(int const lvl)
+  bool AddScores()
+  {
+    if(m_aliens->CheckHit(m_bullets->getBullets()) > 0) { return true; }
+    return false;
+  }
+
+  void NewLevel(int const level)
   {
     delete m_aliens;
     m_aliens = nullptr;
@@ -96,13 +127,13 @@ public:
     m_bullets = nullptr;
     delete m_bulletsAliens;
     m_bulletsAliens = nullptr;
+    delete m_obstacles;
+    m_obstacles = nullptr;
 
-
+    /*TODO приращение свойств*/
     m_aliens = new AliensManager();
     m_bullets = new BulletsManager();
     m_bulletsAliens = new BulletsManager();
-    m_obstacles->clear();
-    delete m_obstacles;
     m_obstacles = new ObstaclesManager(2, 6);
   }
 
