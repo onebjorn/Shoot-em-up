@@ -63,6 +63,7 @@ private:
   int L2D(int px) const { return px * devicePixelRatio(); }
 
   QOpenGLTexture * m_alienTexture = nullptr;
+  QOpenGLTexture * m_alienTextureBlood = nullptr;
   QOpenGLTexture * m_heartTexture = nullptr;
   QOpenGLTexture * m_starTexture = nullptr;
   QOpenGLTexture * m_gunTexture = nullptr;

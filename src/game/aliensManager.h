@@ -40,7 +40,7 @@ public:
   int const & GetRow() const { return m_rows; }
   int const & GetColumn() const { return m_columns; }
 
-  bool CheckHit(Bullets & obj, Gun & gun)
+  bool CheckHit (Bullets & obj, Gun & gun)
   {
     for(auto itAliens = m_aliens.begin(); itAliens != m_aliens.end(); ++itAliens)
     {

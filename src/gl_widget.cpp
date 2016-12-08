@@ -56,6 +56,7 @@ GLWidget::~GLWidget()
   makeCurrent();
   delete m_texturedRect;
   delete m_alienTexture;
+  delete m_alienTextureBlood;
   delete m_starTexture;
   delete m_gunTexture;
   delete m_bulletTexture;
@@ -81,6 +82,7 @@ void GLWidget::initializeGL()
   m_bulletTexture = new QOpenGLTexture(QImage("data/bullet.png"));
   m_bulletAlienTexture = new QOpenGLTexture(QImage("data/bullet.png"));
   m_heartTexture = new QOpenGLTexture(QImage("data/heart.png"));
+  m_alienTextureBlood = new QOpenGLTexture(QImage("data/alienBoom.png"));
 
   m_space = new Space(Point2D{ 0.0, 0.0 }, Point2D{ kSpaceSizeX, kSpaceSizeY }, kAliensNumberRow, kAliensNumberColumn, kSpaceSizeX, kSpaceSizeY, kAlienHealth, kAlienSpeed);
 
@@ -345,6 +347,10 @@ void GLWidget::RenderAliens()
   {
     for (auto it = m_space->GetAliens().begin(); it != m_space->GetAliens().end(); ++it)
     {
+      if(it->GetHealth() < kBulletDamage)
+      {
+        m_texturedRect->Render(m_alienTextureBlood, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(kAlienSizeX * 3, kAlienSizeY * 3), m_screenSize);
+      }
       m_texturedRect->Render(m_alienTexture, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(kAlienSizeX * 3, kAlienSizeY * 3), m_screenSize);
     }
   }
@@ -352,6 +358,10 @@ void GLWidget::RenderAliens()
   {
     for (auto it = m_space->GetAliens().begin(); it != m_space->GetAliens().end(); ++it)
     {
+      if(it->GetHealth() < kBulletDamage)
+      {
+        m_texturedRect->Render(m_alienTextureBlood, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(kAlienSizeX, kAlienSizeY), m_screenSize);
+      }
       m_texturedRect->Render(m_alienTexture, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(kAlienSizeX, kAlienSizeY), m_screenSize);
     }
   }

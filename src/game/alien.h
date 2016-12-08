@@ -2,6 +2,7 @@
 #include "../include/config_stat.h"
 #include "gameEntity.h"
 #include "bullet.h"
+#include "bulletsManager.h"
 #include <ostream>
 #include <iostream>
 #include "logger.h"
