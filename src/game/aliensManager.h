@@ -49,11 +49,8 @@ public:
         itBullets->Update(*itAliens);
         obj.erase(itBullets);
         itAliens->RemoveHealth(kBulletDamage);
-        if(itAliens->GetHealth() <= kBulletDamage)
-        {
-          m_aliens.erase(itAliens);
-          return true;
-        }
+        if(itAliens->GetHealth() < 0.0f) { m_aliens.erase(itAliens); }
+        return true;
       }
     }
     return false;

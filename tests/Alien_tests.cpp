@@ -100,5 +100,4 @@ TEST(Alien_test, test_hit)
   Bullet b1(70.0f, 142.0f, 1.0f);
   Bm.AddBullet(b1);
   EXPECT_EQ(b1.ObjectsIntersect(b1, As.GetAliens().front()), true);
-  EXPECT_EQ(As.CheckHit(Bm.getBullets()), true);
 }

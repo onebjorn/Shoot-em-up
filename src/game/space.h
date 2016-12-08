@@ -76,11 +76,11 @@ public:
   {
     for (auto itBullet = m_bullets->getBullets().begin(); itBullet != m_bullets->getBullets().end(); ++itBullet)
     {
-      if (itBullet->GetBox().GetCenter().y() > kSpaceSizeY) { m_bullets->DeleteBullet(itBullet); }
+      if (itBullet->GetBox().GetCenter().y() > kSpaceSizeY + 10.0f) { m_bullets->getBullets().erase(itBullet); }
     }
     for (auto itBullet = m_bulletsAliens->getBullets().begin(); itBullet != m_bulletsAliens->getBullets().end(); ++itBullet)
     {
-      if (itBullet->GetBox().GetCenter().y() < 0.0f) { m_bulletsAliens->DeleteBullet(itBullet); }
+      if (itBullet->GetBox().GetCenter().y() < - 10.0f) { m_bulletsAliens->getBullets().erase(itBullet); }
     }
   }
 
@@ -117,8 +117,14 @@ public:
 
   bool AddScores()
   {
-    if(m_aliens->CheckHit(m_bullets->getBullets()) > 0) { return true; }
-    return false;
+    if(m_aliens->CheckHit(m_bullets->getBullets()))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
   void NewLevel(int const level, int const Row, int const Column, float const SpaceSizeX, float const SpaceSizeY, float const Health, float const Speed)

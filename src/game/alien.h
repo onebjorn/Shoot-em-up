@@ -66,9 +66,7 @@ public:
 
   void RemoveHealth(const float deltaHealth)
   {
-    if ((deltaHealth < 0.0f) || (deltaHealth > 100.0f)) throw invalid_argument("Negative health");
-    if (m_alienHealth < deltaHealth) m_alienHealth = 0.0f;
-    if (m_alienHealth > deltaHealth) m_alienHealth -= deltaHealth;
+    m_alienHealth -= deltaHealth;
   }
 
   void AddSpeed(float const deltaSpeed) { m_alienSpeed += deltaSpeed; }

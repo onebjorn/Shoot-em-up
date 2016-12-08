@@ -146,10 +146,10 @@ void GLWidget::paintGLGame()
     painter.setPen(Qt::white);
     painter.drawText(400, 20, framesPerSecond + " fps");
 
-    QString scores;
-    scores.setNum(m_scores);
+    QString score;
+    score.setNum(m_scores + m_space->GetGun().GetScores());
     painter.setPen(Qt::white);
-    painter.drawText(250, 20, "Scores: " + scores );
+    painter.drawText(250, 20, "Scores: " + score);
 
     QString level;
     level.setNum(m_level);
@@ -220,6 +220,7 @@ void GLWidget::paintGLGamePause()
   glDisable(GL_BLEND);
 
   painter.beginNativePainting();
+
   QString scores;
   scores.setNum(m_space->GetGun().GetScores(),'g', 0);
   painter.drawText(kSpaceSizeX / 2.0f, kSpaceSizeY / 2.0f, "SCORES: " + scores);
@@ -293,7 +294,15 @@ void GLWidget::UpdateAliens(float elapsedSeconds)
   float const kSpeed = m_space->GetAliens().front().GetSpeed();
   m_space->AliensMove(kSpeed * elapsedSeconds, kAlienSizeY);
   m_space->CheckAlienHit();
-  if(m_space->AddScores()) { m_scores += 10; }
+  if(m_space->AddScores())
+  {
+    m_scores += 10;
+    m_space->GetGun().SetScores(10);
+  }
+  else
+  {
+    /**/
+  }
 
   if(m_alienTime > kAlienReload)
   {

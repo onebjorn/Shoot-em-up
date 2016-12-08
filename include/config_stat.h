@@ -3,7 +3,7 @@
 
 const float kAlienSizeX = 40.0f;
 const float kAlienSizeY =  40.0f;
-const float kAlienHealth = 10.0f;
+const float kAlienHealth = 15.0f;
 const float kAlienSpeed = 10.0f;
 const float kAlienReload = 200.0f;
 const int kAlienBulletSizeX = 15;
