@@ -3,8 +3,8 @@
 
 const float kAlienSizeX = 40.0f;
 const float kAlienSizeY =  40.0f;
-const float kAlienHealth = 15.0f;
-const float kAlienSpeed = 10.0f;
+const float kAlienHealth = 10.0f;
+const float kAlienSpeed = 2.0f;
 const float kAlienReload = 200.0f;
 const int kAlienBulletSizeX = 15;
 const int kAlienBulletSizeY = 35;
@@ -20,9 +20,9 @@ const float kGunSizeX = 60.0f;
 const float kGunSizeY = 60.0f;
 const float kGunHealth = 3.0f;
 const float kGunSpeed = 8.0f;
-const float kDeltaScore = 10.0f;
+const int kDeltaScore = 100;
 const int kGunAmmo = 1000;
-const float kGunReloadTime = 100.0f;
+const float kGunReloadTime = 50.0f;
 
 const float kBulletSizeX = 10.0f;
 const float kBulletSizeY = 25.0f;

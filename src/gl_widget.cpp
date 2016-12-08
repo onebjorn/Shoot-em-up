@@ -147,7 +147,7 @@ void GLWidget::paintGLGame()
     painter.drawText(400, 20, framesPerSecond + " fps");
 
     QString score;
-    score.setNum(m_scores + m_space->GetGun().GetScores());
+    score.setNum(m_space->GetGun().GetScores());
     painter.setPen(Qt::white);
     painter.drawText(250, 20, "Scores: " + score);
 
@@ -191,7 +191,7 @@ void GLWidget::paintGLGameOver()
 
   painter.beginNativePainting();
   QString scores;
-  scores.setNum(m_space->GetGun().GetScores(),'g', 0);
+  scores.setNum(m_space->GetGun().GetScores());
   painter.drawText(kSpaceSizeX / 2.0f, kSpaceSizeY / 2.0f, "SCORES: " + scores);
   painter.drawText(kSpaceSizeX / 2.0f, kSpaceSizeY / 2.0f - 50.0f, "GAME OVER");
 
@@ -222,7 +222,7 @@ void GLWidget::paintGLGamePause()
   painter.beginNativePainting();
 
   QString scores;
-  scores.setNum(m_space->GetGun().GetScores(),'g', 0);
+  scores.setNum(m_space->GetGun().GetScores());
   painter.drawText(kSpaceSizeX / 2.0f, kSpaceSizeY / 2.0f, "SCORES: " + scores);
 
   painter.end();
@@ -257,7 +257,7 @@ void GLWidget::resizeGL(int w, int h)
 
 void GLWidget::UpdateGun(float elapsedSeconds)
 {
-  float const kSpeed = 10.0f;
+  float const kSpeed = kGunSpeed;
 
   m_space->GunHit();
 

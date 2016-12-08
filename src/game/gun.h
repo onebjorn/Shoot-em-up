@@ -50,7 +50,7 @@ public:
 
   float const & GetHealth() const { return m_gunHealth; }
   float const & GetSpeed() const { return m_gunSpeed; }
-  float & GetScores() { return m_gunScores; }
+  int const & GetScores() const { return m_gunScores; }
   int const & GetAmmo() const { return m_ammo; }
 
   void SetScores(float const score)
@@ -110,7 +110,7 @@ public:
 private:
   float m_gunHealth = 0.0f;
   float m_gunSpeed = 0.0f;
-  float m_gunScores = 0.0f;
+  int m_gunScores = 0;
   int m_ammo = 0;
 };
 

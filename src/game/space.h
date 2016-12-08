@@ -112,12 +112,12 @@ public:
 
   void CheckAlienHit()
   {
-    m_aliens->CheckHit(m_bullets->getBullets());
+    m_aliens->CheckHit(m_bullets->getBullets(), *m_gun);
   }
 
   bool AddScores()
   {
-    if(m_aliens->CheckHit(m_bullets->getBullets()))
+    if(m_aliens->CheckHit(m_bullets->getBullets(), *m_gun))
     {
       return true;
     }
@@ -141,11 +141,11 @@ public:
     /*TODO приращение свойств*/
     if(level % 10 == 0)
     {
-      m_aliens = new AliensManager(Row, Column, SpaceSizeX, SpaceSizeY, Health, Speed + level * 0.1f, 0);
+      m_aliens = new AliensManager(1, 1, SpaceSizeX, SpaceSizeY, Health + kBulletDamage * level, Speed + level * 0.05f, 0);
     }
     else
     {
-      m_aliens = new AliensManager(Row, Column, SpaceSizeX, SpaceSizeY, Health, Speed + level * 0.1f, 0);
+      m_aliens = new AliensManager(Row, Column, SpaceSizeX, SpaceSizeY, Health, Speed + level * 0.05f, 0);
     }
 
     m_bullets = new BulletsManager();

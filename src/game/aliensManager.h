@@ -1,5 +1,6 @@
 #pragma once
 #include "alien.h"
+#include "gun.h"
 #include <vector>
 #include "logger.h"
 #include "bulletsManager.h"
@@ -39,7 +40,7 @@ public:
   int const & GetRow() const { return m_rows; }
   int const & GetColumn() const { return m_columns; }
 
-  bool CheckHit(Bullets & obj)
+  bool CheckHit(Bullets & obj, Gun & gun)
   {
     for(auto itAliens = m_aliens.begin(); itAliens != m_aliens.end(); ++itAliens)
     {
@@ -49,7 +50,11 @@ public:
         itBullets->Update(*itAliens);
         obj.erase(itBullets);
         itAliens->RemoveHealth(kBulletDamage);
-        if(itAliens->GetHealth() < 0.0f) { m_aliens.erase(itAliens); }
+        if(itAliens->GetHealth() <= 0.0f)
+        {
+          m_aliens.erase(itAliens);
+          gun.SetScores(kDeltaScore);
+        }
         return true;
       }
     }
