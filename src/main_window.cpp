@@ -5,8 +5,10 @@
 
 typedef void (QWidget::*QWidgetVoidSlot)();
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(QStackedWidget * widget, HeadWindow * head)
 {
+  m_stackedWidget = widget;
+  m_headWindow = head;
   m_glWidget = new GLWidget(this, qRgb(20, 20, 50));
   m_timer = new QTimer(this);
   m_timer->setInterval(10);

@@ -13,16 +13,19 @@
 #include <QCheckBox>
 #include <QSlider>
 #include <QDialog>
+#include <QStackedWidget>
 
+class HeadWindow;
 
 class MainWindow : public QMainWindow
 {
   Q_OBJECT
 
 public:
-  MainWindow();
+  MainWindow(QStackedWidget * widget, HeadWindow * head);
 
-
+  QStackedWidget * m_stackedWidget = nullptr;
+  HeadWindow * m_headWindow = nullptr;
 private:
   QTimer * m_timer = nullptr;
   QGridLayout * m_layout = nullptr;

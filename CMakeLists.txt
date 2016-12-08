@@ -27,7 +27,7 @@ include_directories(3party/jsoncpp/include)
 aux_source_directory(3party/jsoncpp/src/lib_json JSONCPP_SRC)
 
 # Create executable by SRC_LIST.
-add_executable(${PROJECT_NAME} ${SRC_LIST} ${QT_WRAPPED_SRC} ${JSONCPP_SRC} "src/geometry/point2d.h" "src/game/obstaclesManager.h" "src/geometry/box2d.h" "src/geometry/ray2d.h" "src/settingsWindow.h" "src/game/space.h"  "src/game/alien.h" "src/game/obstacle.h"  "include/config_stat.h" "src/game/gun.h" "src/game/bullet.h" "src/game/gameEntity.h" "src/game/aliensManager.h" "src/game/bulletsManager.h" "src/game/logger.h" "src/game/singleton.h" "src/game/stars.h")
+add_executable(${PROJECT_NAME} ${SRC_LIST} ${QT_WRAPPED_SRC} ${JSONCPP_SRC} "src/geometry/point2d.h" "src/game/obstaclesManager.h" "src/geometry/box2d.h" "src/geometry/ray2d.h" "src/settingsWindow.h" "src/game/space.h"  "src/game/alien.h" "src/game/obstacle.h"  "include/config_stat.h" "src/game/gun.h" "src/game/bullet.h" "src/game/gameEntity.h" "src/game/aliensManager.h" "src/game/bulletsManager.h" "src/game/logger.h" "src/game/singleton.h" "src/game/stars.h" "src/head_window.h")
 
 # Qt modules
 qt5_use_modules(${PROJECT_NAME} Widgets OpenGL)

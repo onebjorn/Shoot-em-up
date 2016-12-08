@@ -2,7 +2,7 @@
 #include <QMainWindow>
 #include <QSurfaceFormat>
 #include "settingsWindow.h"
-#include "main_window.hpp"
+#include "head_window.h"
 
 int main(int argc, char ** argv)
 {
@@ -13,9 +13,9 @@ int main(int argc, char ** argv)
   format.setStencilBufferSize(8);
   QSurfaceFormat::setDefaultFormat(format);
 
-  MainWindow mw;
+  HeadWindow hw;
 
-  mw.show();
+  hw.show();
 
   return app.exec();
 }
