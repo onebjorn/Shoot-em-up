@@ -63,5 +63,5 @@ macro(copy_files GLOBPAT DESTINATION)
   endforeach(FILENAME)
 endmacro(copy_files)
 
-set(DATA_FILES_LIST data/alien.png data/star.png)
+set(DATA_FILES_LIST data/alien.png data/gun.png data/star.png data/bullet.png data/heart.png data/gun.png  data/obstacle.png)
 copy_files("${DATA_FILES_LIST}" ${CMAKE_CURRENT_BINARY_DIR})

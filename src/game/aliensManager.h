@@ -14,13 +14,19 @@ public:
 
   AliensManager()
   {
-    CreateAliens(kAliensNumberRow, kAliensNumberColumn, kSpaceSizeX, kSpaceSizeY);
+    CreateAliens(kAliensNumberRow, kAliensNumberColumn, kSpaceSizeX, kSpaceSizeY, kAlienHealth, kAlienSpeed, 0);
   }
 
   AliensManager(int const row, int const column)
   {
-    CreateAliens(row, column, kSpaceSizeX, kSpaceSizeY);
+    CreateAliens(row, column, kSpaceSizeX, kSpaceSizeY, kAlienHealth, kAlienSpeed, 0);
   }
+
+  AliensManager(int const row, int const column, float const SpaceSizeX, float const SpaceSizeY, float const Health, float const Speed, bool type)
+  {
+    CreateAliens(row, column, SpaceSizeX, SpaceSizeY, Health, Speed, 0);
+  }
+
 
   Bullet AliensShoot()
   {
@@ -55,7 +61,14 @@ public:
 
   void AliensMove(float const deltaX, float const deltaY)
   {
-    if(m_aliens.back().GetBox().x2() > kSpaceSizeX - deltaX)
+    int AlienCase = 0;
+    for (auto it = m_aliens.begin(); it != m_aliens.end(); ++it)
+    {
+      if(it->GetBox().x2() > kSpaceSizeX - deltaX) { AlienCase = 1; }
+      if(it->GetBox().x1() < deltaX) { AlienCase = 2; }
+    }
+
+    if(AlienCase == 1)
     {
       m_dir = - 1.0f;
       for (auto it = m_aliens.begin(); it != m_aliens.end(); ++it)
@@ -63,7 +76,7 @@ public:
         it->SetBox({ -deltaX, - deltaY / 2.0f, -deltaX, - deltaY / 2.0f});
       }
     }
-    else if (m_aliens.front().GetBox().x1() < deltaX)
+    else if (AlienCase == 2)
     {
       m_dir = 1.0f;
       for (auto it = m_aliens.begin(); it != m_aliens.end(); ++it)
@@ -94,7 +107,7 @@ private:
   float m_initX = 0.0f;
   float m_initY = 0.0f;
 
-  void CreateAliens(int const row, int const column, float const X_size, float const Y_size)
+  void CreateAliens(int const row, int const column, float const X_size, float const Y_size,float const health, float const speed, bool type)
   {
     m_rows = row;
     m_columns = column;
@@ -107,7 +120,7 @@ private:
     {
       for (auto k = 0; k < column; k++)
       {
-        m_aliens.push_back(Alien(m_initX + k * kAlienSizeX, m_initY - i * kAlienSizeY));
+        m_aliens.push_back(Alien(m_initX + k * kAlienSizeX, m_initY - i * kAlienSizeY, health, speed, type));
       }
     }
   }

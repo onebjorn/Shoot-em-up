@@ -32,7 +32,9 @@ protected:
 
   void paintGLGameOver();
   void paintGLGame();
+  void paintGLGamePause();
   void paintGLNextLevel();
+  void paintGLNextLevelBoss();
 
   void Update(float elapsedSeconds);
   void UpdateGun(float elapsedSeconds);
@@ -43,6 +45,7 @@ protected:
   void RenderStars();
   void RenderAliens();
   void RenderGun();
+  void RenderBoom();
   void RenderBullets();
   void DeleteSpace();
   void RenderObstacles();
@@ -70,10 +73,11 @@ private:
   float m_gunTime = 0.0f;
   float m_alienTime = 0.0f;
   int m_scores = 0;
-  int m_level = 0;
+  int m_level = 9;
 
   bool m_nextLevel = false;
   bool m_gameOver = false;
+  bool m_pause = false;
 
   MainWindow * m_mainWindow;
 

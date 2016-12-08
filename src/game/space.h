@@ -25,14 +25,16 @@ public:
 
   Space(float const x1, float const y1, float const x2, float const y2) { m_box = Box2D(x1, y1, x2, y2); }
 
-  Space(Point2D const & leftBottom, Point2D const & rightTop)
+  Space(Point2D const & leftBottom, Point2D const & rightTop) { m_box = Box2D(leftBottom.x(), leftBottom.y(), rightTop.x(), rightTop.y()); }
+
+  Space(Point2D const & leftBottom, Point2D const & rightTop, int const Row, int const Column, float const SpaceSizeX, float const SpaceSizeY, float const Health, float const Speed)
   {
     float w = rightTop.x() - leftBottom.x();
     float h = rightTop.y() - leftBottom.y();
 
     m_box = Box2D(leftBottom, rightTop);
     m_gun = new Gun( w / 2.0f, 5.0f + kGunSizeY / 2.0f);
-    m_aliens = new AliensManager();
+    m_aliens = new AliensManager(Row, Column, SpaceSizeX, SpaceSizeY, Health, Speed, 0);
     m_bullets = new BulletsManager();
     m_bulletsAliens = new BulletsManager();
     m_obstacles = new ObstaclesManager(2, 6);
@@ -119,7 +121,7 @@ public:
     return false;
   }
 
-  void NewLevel(int const level)
+  void NewLevel(int const level, int const Row, int const Column, float const SpaceSizeX, float const SpaceSizeY, float const Health, float const Speed)
   {
     delete m_aliens;
     m_aliens = nullptr;
@@ -131,7 +133,15 @@ public:
     m_obstacles = nullptr;
 
     /*TODO приращение свойств*/
-    m_aliens = new AliensManager();
+    if(level % 10 == 0)
+    {
+      m_aliens = new AliensManager(Row, Column, SpaceSizeX, SpaceSizeY, Health, Speed + level * 0.1f, 0);
+    }
+    else
+    {
+      m_aliens = new AliensManager(Row, Column, SpaceSizeX, SpaceSizeY, Health, Speed + level * 0.1f, 0);
+    }
+
     m_bullets = new BulletsManager();
     m_bulletsAliens = new BulletsManager();
     m_obstacles = new ObstaclesManager(2, 6);

@@ -21,6 +21,7 @@ int constexpr kLeftDirection = 0;
 int constexpr kRightDirection = 1;
 int constexpr kUpDirection = 2;
 int constexpr kDownDirection = 3;
+int constexpr kPause = 4;
 
 bool IsLeftButton(Qt::MouseButtons buttons)
 {
@@ -75,13 +76,13 @@ void GLWidget::initializeGL()
 
   m_alienTexture = new QOpenGLTexture(QImage("data/alien.png"));
   m_starTexture = new QOpenGLTexture(QImage("data/star.png"));
-  m_gunTexture = new QOpenGLTexture(QImage("data/alien.png"));
-  m_obstacleTexture= new QOpenGLTexture(QImage("data/alien.png"));
-  m_bulletTexture = new QOpenGLTexture(QImage("data/alien.png"));
-  m_bulletAlienTexture = new QOpenGLTexture(QImage("data/alien.png"));
-  m_heartTexture = new QOpenGLTexture(QImage("data/star.png"));
+  m_gunTexture = new QOpenGLTexture(QImage("data/gun.png"));
+  m_obstacleTexture= new QOpenGLTexture(QImage("data/obstacle.png"));
+  m_bulletTexture = new QOpenGLTexture(QImage("data/bullet.png"));
+  m_bulletAlienTexture = new QOpenGLTexture(QImage("data/bullet.png"));
+  m_heartTexture = new QOpenGLTexture(QImage("data/heart.png"));
 
-  m_space = new Space(Point2D{ 0.0, 0.0 }, Point2D{ kSpaceSizeX, kSpaceSizeY });
+  m_space = new Space(Point2D{ 0.0, 0.0 }, Point2D{ kSpaceSizeX, kSpaceSizeY }, kAliensNumberRow, kAliensNumberColumn, kSpaceSizeX, kSpaceSizeY, kAlienHealth, kAlienSpeed);
 
   m_time.start();
 }
@@ -94,7 +95,14 @@ void GLWidget::paintGL()
   }
   else if(m_nextLevel)
   {
-    paintGLNextLevel();
+    if(m_level % 10 == 0)
+    {
+      paintGLNextLevelBoss();
+    }
+    else
+    {
+      paintGLNextLevel();
+    }
   }
   else
   {
@@ -136,17 +144,17 @@ void GLWidget::paintGLGame()
     QString framesPerSecond;
     framesPerSecond.setNum(m_frames / (elapsed / 1000.0), 'f', 2);
     painter.setPen(Qt::white);
-    painter.drawText(300, 20, framesPerSecond + " fps");
+    painter.drawText(400, 20, framesPerSecond + " fps");
 
     QString scores;
     scores.setNum(m_scores);
     painter.setPen(Qt::white);
-    painter.drawText(100, 20, "Scores: " + scores );
+    painter.drawText(250, 20, "Scores: " + scores );
 
     QString level;
     level.setNum(m_level);
     painter.setPen(Qt::white);
-    painter.drawText(200, 20,  "Level " + level);
+    painter.drawText(350, 20,  "Level " + level);
 
   }
   painter.end();
@@ -190,14 +198,50 @@ void GLWidget::paintGLGameOver()
   painter.end();
 }
 
+void GLWidget::paintGLGamePause()
+{
+  m_space->clear();
+  QPainter painter;
+  painter.begin(this);
+  painter.setPen(Qt::white);
+
+  glClearColor(m_background.redF(), m_background.greenF(), m_background.blueF(), 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  glFrontFace(GL_CW);
+  glCullFace(GL_BACK);
+  glEnable(GL_CULL_FACE);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+  this->RenderStars();
+
+  glDisable(GL_CULL_FACE);
+  glDisable(GL_BLEND);
+
+  painter.beginNativePainting();
+  QString scores;
+  scores.setNum(m_space->GetGun().GetScores(),'g', 0);
+  painter.drawText(kSpaceSizeX / 2.0f, kSpaceSizeY / 2.0f, "SCORES: " + scores);
+
+  painter.end();
+}
+
 void GLWidget::NextLevel(int level)
 {
   m_nextLevel = false;
-  m_space->NewLevel(level);
+  m_space->NewLevel(level, kAliensNumberRow, kAliensNumberColumn, kSpaceSizeX, kSpaceSizeY, kAlienHealth, kAlienSpeed);
   m_time.restart();
 }
 
 void GLWidget::paintGLNextLevel()
+{
+  m_level += 1;
+  NextLevel(m_level);
+  paintGLGame();
+}
+
+void GLWidget::paintGLNextLevelBoss()
 {
   m_level += 1;
   NextLevel(m_level);
@@ -246,7 +290,7 @@ void GLWidget::UpdateGun(float elapsedSeconds)
 
 void GLWidget::UpdateAliens(float elapsedSeconds)
 {
-  float const kSpeed = 0.6f;
+  float const kSpeed = m_space->GetAliens().front().GetSpeed();
   m_space->AliensMove(kSpeed * elapsedSeconds, kAlienSizeY);
   m_space->CheckAlienHit();
   if(m_space->AddScores()) { m_scores += 10; }
@@ -266,9 +310,10 @@ void GLWidget::UpdateBullets(float elapsedSeconds)
 //  m_space->BulletOut();
 }
 
-
 void GLWidget::Update(float elapsedSeconds)
 { 
+  if(kPause) { m_pause = true; }
+
   UpdateGun(elapsedSeconds);
   UpdateAliens(elapsedSeconds);
   UpdateBullets(elapsedSeconds);
@@ -287,10 +332,20 @@ void GLWidget::Update(float elapsedSeconds)
 
 void GLWidget::RenderAliens()
 {
+  if(m_level % 10 == 0)
+  {
+    for (auto it = m_space->GetAliens().begin(); it != m_space->GetAliens().end(); ++it)
+    {
+      m_texturedRect->Render(m_alienTexture, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(kAlienSizeX * 3, kAlienSizeY * 3), m_screenSize);
+    }
+  }
+  else
+  {
     for (auto it = m_space->GetAliens().begin(); it != m_space->GetAliens().end(); ++it)
     {
       m_texturedRect->Render(m_alienTexture, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(kAlienSizeX, kAlienSizeY), m_screenSize);
     }
+  }
 }
 
 void GLWidget::RenderBullets()
@@ -327,11 +382,20 @@ void GLWidget::RenderStars()
   }
 }
 
+void GLWidget::RenderBoom()
+{
+  for (auto it = m_space->GetStars().begin(); it != m_space->GetStars().end(); ++it)
+  {
+    float size = 6.0f * sinf(0.001f * m_time.elapsed() - 0.001f * static_cast <float> (rand()));
+    m_texturedRect->Render(m_starTexture, QVector2D(it->x() * m_screenSize.width(), it->y() * m_screenSize.height()), QSize(size, size), m_screenSize);
+  }
+}
+
 void GLWidget::RenderInformation()
 {
   for(int i = 0; i < m_space->GetGun().GetHealth() / 10; i++)
   {
-    m_texturedRect->Render(m_heartTexture, QVector2D(7 + kHeartSize * (i + 1), kSpaceSizeY - 7 - kHeartSize/ 2), QSize(kHeartSize, kHeartSize), m_screenSize);
+    m_texturedRect->Render(m_heartTexture, QVector2D(7 + (kHeartSize + 7) * (i + 1), kSpaceSizeY - 7 - kHeartSize/ 2), QSize(kHeartSize, kHeartSize), m_screenSize);
   }
 }
 
@@ -413,6 +477,9 @@ void GLWidget::keyPressEvent(QKeyEvent * e)
     m_directions[kLeftDirection] = true;
   else if (e->key() == Qt::Key_Right)
     m_directions[kRightDirection] = true;
+  else if(e->key() == Qt::Key_Escape)
+    m_directions[kPause] = true;
+
 }
 
 void GLWidget::keyReleaseEvent(QKeyEvent * e)
@@ -425,6 +492,8 @@ void GLWidget::keyReleaseEvent(QKeyEvent * e)
     m_directions[kLeftDirection] = false;
   else if (e->key() == Qt::Key_Right)
     m_directions[kRightDirection] = false;
+  else if(e->key() == Qt::Key_Escape)
+    m_directions[kPause] = false;
 }
 
 void GLWidget::Render()

@@ -8,6 +8,7 @@ const float kAlienSpeed = 10.0f;
 const float kAlienReload = 200.0f;
 const int kAlienBulletSizeX = 15;
 const int kAlienBulletSizeY = 35;
+const float kBossHealth = 10.0f;
 
 const float kObstacleSizeX  = 20.0f;
 const float kObstacleSizeY  = 20.0f;
@@ -34,7 +35,7 @@ const float kSpaceSizeY = 720.0f;
 const int kHeartSize = 35;
 
 const int kAliensNumber = 50;
-const int kAliensNumberRow = 5;
-const int kAliensNumberColumn = 10;
+const int kAliensNumberRow = 1;
+const int kAliensNumberColumn = 1;
 
 const int kStars = 100;
