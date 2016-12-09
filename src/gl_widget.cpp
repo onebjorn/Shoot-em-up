@@ -8,6 +8,7 @@
 #include <QtGui/QMouseEvent>
 #include <QtGui/QGuiApplication>
 #include <cmath>
+#include "settingsWindow.h"
 
 #include <iostream>
 #include "main_window.hpp"
@@ -84,7 +85,7 @@ void GLWidget::initializeGL()
   m_heartTexture = new QOpenGLTexture(QImage("data/heart.png"));
   m_alienTextureBlood = new QOpenGLTexture(QImage("data/alienBoom.png"));
 
-  m_space = new Space(Point2D{ 0.0, 0.0 }, Point2D{ kSpaceSizeX, kSpaceSizeY }, kAliensNumberRow, kAliensNumberColumn, kSpaceSizeX, kSpaceSizeY, kAlienHealth, kAlienSpeed);
+  m_space = new Space(Point2D{ 0.0, 0.0 }, Point2D{ kSpaceSizeX, kSpaceSizeY }, kAliensNumberRow, kAliensNumberColumn, kSpaceSizeX, kSpaceSizeY,kAlienSpeed, kAlienSpeed);
 
   m_time.start();
 }
@@ -117,6 +118,7 @@ void GLWidget::paintGLGame()
   int const elapsed = m_time.elapsed();
   Update(elapsed / 1000.0f);
 
+  m_time.addMSecs(m_pauseTime.elapsed());
   QPainter painter;
   painter.begin(this);
   painter.beginNativePainting();
@@ -202,7 +204,6 @@ void GLWidget::paintGLGameOver()
 
 void GLWidget::paintGLGamePause()
 {
-  m_space->clear();
   QPainter painter;
   painter.begin(this);
   painter.setPen(Qt::white);
@@ -226,7 +227,6 @@ void GLWidget::paintGLGamePause()
   QString scores;
   scores.setNum(m_space->GetGun().GetScores());
   painter.drawText(kSpaceSizeX / 2.0f, kSpaceSizeY / 2.0f, "SCORES: " + scores);
-
   painter.end();
 }
 
@@ -288,6 +288,18 @@ void GLWidget::UpdateGun(float elapsedSeconds)
     }
   }
 
+  if (m_directions[kDownDirection])
+  {
+    if(m_pause)
+    {
+      m_pause = false;
+    }
+    else
+    {
+      m_pause= true;
+    }
+  }
+
   if(m_space->GetGun().GetHealth() < 0.0f) { m_gameOver = true; }
 }
 
@@ -323,8 +335,6 @@ void GLWidget::UpdateBullets(float elapsedSeconds)
 
 void GLWidget::Update(float elapsedSeconds)
 { 
-  if(kPause) { m_pause = true; }
-
   UpdateGun(elapsedSeconds);
   UpdateAliens(elapsedSeconds);
   UpdateBullets(elapsedSeconds);
@@ -349,9 +359,9 @@ void GLWidget::RenderAliens()
     {
       if(it->GetHealth() < kBulletDamage)
       {
-        m_texturedRect->Render(m_alienTextureBlood, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(kAlienSizeX * 3, kAlienSizeY * 3), m_screenSize);
+        m_texturedRect->Render(m_alienTextureBlood, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(kAlienSizeX * 4, kAlienSizeY *4), m_screenSize);
       }
-      m_texturedRect->Render(m_alienTexture, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(kAlienSizeX * 3, kAlienSizeY * 3), m_screenSize);
+      m_texturedRect->Render(m_alienTextureBlood, QVector2D(it->GetBox().GetCenter().x(), it->GetBox().GetCenter().y()), QSize(kAlienSizeX * 4, kAlienSizeY * 4), m_screenSize);
     }
   }
   else

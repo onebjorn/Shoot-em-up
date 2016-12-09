@@ -8,6 +8,7 @@
 #include "game/gameEntity.h"
 #include "game/space.h"
 #include "game/gun.h"
+#include "settingsWindow.h"
 
 class MainWindow;
 
@@ -84,6 +85,7 @@ private:
 
   unsigned int m_frames = 0;
   QTime m_time;
+  QTime m_pauseTime;
   QColor m_background;
   QSize m_screenSize;
   TexturedRect * m_texturedRect = nullptr;

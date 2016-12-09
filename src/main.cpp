@@ -14,7 +14,6 @@ int main(int argc, char ** argv)
   QSurfaceFormat::setDefaultFormat(format);
 
   MainWindow mw;
-
   mw.show();
 
   return app.exec();

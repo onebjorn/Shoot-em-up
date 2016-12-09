@@ -133,6 +133,8 @@ public:
     layout->addWidget(m_buttonExit);
 
   }
+  int m_alienHealth = 0.0f;
+  int GetHealth() const { return m_alienHealth; }
 
 public slots:
 
@@ -140,7 +142,11 @@ public slots:
   void SliderObstaclesChangedHealth(int value) { m_sliderObstaclesLabelHealth->setText("Obstacles health = " + QString::number(value)); }
 
   void SliderAliensChanged(int value) { m_sliderAliensLabel->setText("Aliens count = " + QString::number(value)); }
-  void SliderAliensChangedHealth(int value) { m_sliderAliensLabelHealth->setText("Aliens health = " + QString::number(value)); }
+  void SliderAliensChangedHealth(int value)
+  {
+    m_sliderAliensLabelHealth->setText("Aliens health = " + QString::number(value));
+    m_alienHealth = value;
+  }
 
   void SliderSpeedChanged(int val) { m_sliderSpeedLabel->setText("Gun speed = " + QString::number(val)); }
 
@@ -171,6 +177,7 @@ private:
   QGroupBox * m_groupBoxSpeed = nullptr;
   QGroupBox * m_groupBoxAliens = nullptr;
   QGroupBox * m_groupBoxDifficulty = nullptr;
+
 
   void WriteJson()
   {
