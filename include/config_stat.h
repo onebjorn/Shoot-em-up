@@ -35,7 +35,14 @@ const float kSpaceSizeY = 720.0f;
 const int kHeartSize = 35;
 
 const int kAliensNumber = 50;
+extern int kAliensRow;
+extern int kAliensColumn;
+extern float kAliensHealth;
 const int kAliensNumberRow = 1;
 const int kAliensNumberColumn = 1;
 
+extern int kObstaclesCount;
 const int kStars = 100;
+
+extern float kGunspeed;
+extern float kAliensSpeed;

@@ -15,7 +15,10 @@
 #include <QDialog>
 #include <QStackedWidget>
 
+#include "gl_widget.hpp"
+
 class HeadWindow;
+class GLWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -23,13 +26,13 @@ class MainWindow : public QMainWindow
 
 public:
   MainWindow(QStackedWidget * widget, HeadWindow * head);
-
+  GLWidget * m_glWidget = nullptr;
   QStackedWidget * m_stackedWidget = nullptr;
   HeadWindow * m_headWindow = nullptr;
 private:
   QTimer * m_timer = nullptr;
   QGridLayout * m_layout = nullptr;
-  QOpenGLWidget * m_glWidget = nullptr;
+
 
 
 };

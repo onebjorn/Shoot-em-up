@@ -14,7 +14,7 @@ int main(int argc, char ** argv)
   QSurfaceFormat::setDefaultFormat(format);
 
   HeadWindow hw;
-
+  //hw.showFullScreen();
   hw.show();
 
   return app.exec();

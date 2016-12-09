@@ -1,5 +1,5 @@
 #include "main_window.hpp"
-
+#include "../include/config_stat.h"
 #include <QApplication>
 #include "gl_widget.hpp"
 

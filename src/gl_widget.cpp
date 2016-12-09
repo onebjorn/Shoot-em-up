@@ -7,12 +7,13 @@
 #include <QCoreApplication>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QGuiApplication>
+#include <QFont>
 #include <cmath>
 
 #include <iostream>
 #include "main_window.hpp"
 #include "game/space.h"
-
+#include "../include/config_stat.h"
 
 namespace
 {
@@ -82,7 +83,7 @@ void GLWidget::initializeGL()
   m_bulletAlienTexture = new QOpenGLTexture(QImage("data/bullet.png"));
   m_heartTexture = new QOpenGLTexture(QImage("data/heart.png"));
 
-  m_space = new Space(Point2D{ 0.0, 0.0 }, Point2D{ kSpaceSizeX, kSpaceSizeY }, kAliensNumberRow, kAliensNumberColumn, kSpaceSizeX, kSpaceSizeY, kAlienHealth, kAlienSpeed);
+  m_space = new Space(Point2D{ 0.0, 0.0 }, Point2D{ kSpaceSizeX, kSpaceSizeY }, kAliensRow, kAliensColumn, kSpaceSizeX, kSpaceSizeY, kAliensHealth, kAliensSpeed);
 
   m_time.start();
 }
@@ -116,8 +117,11 @@ void GLWidget::paintGLGame()
   Update(elapsed / 1000.0f);
 
   QPainter painter;
+  QFont fontGame;
+  fontGame.setPointSize(12);
   painter.begin(this);
   painter.beginNativePainting();
+  painter.setFont(fontGame);
 
   glClearColor(m_background.redF(), m_background.greenF(), m_background.blueF(), 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -149,12 +153,12 @@ void GLWidget::paintGLGame()
     QString score;
     score.setNum(m_space->GetGun().GetScores());
     painter.setPen(Qt::white);
-    painter.drawText(250, 20, "Scores: " + score);
+    painter.drawText(200, 20, "Scores: " + score);
 
     QString level;
     level.setNum(m_level);
     painter.setPen(Qt::white);
-    painter.drawText(350, 20,  "Level " + level);
+    painter.drawText(300, 20,  "Level " + level);
 
   }
   painter.end();
@@ -165,14 +169,24 @@ void GLWidget::paintGLGame()
     m_frames = 0;
   }
   ++m_frames;
+  if (m_pause)
+  {
+   /**/
+  }
+  else
+  {
   update();
+  }
 }
 
 void GLWidget::paintGLGameOver()
 {
   m_space->clear();
   QPainter painter;
+  QFont fontGameOver;
   painter.begin(this);
+  fontGameOver.setPointSize(20);
+  painter.setFont(fontGameOver);
   painter.setPen(Qt::white);
 
   glClearColor(m_background.redF(), m_background.greenF(), m_background.blueF(), 1.0f);
@@ -284,6 +298,14 @@ void GLWidget::UpdateGun(float elapsedSeconds)
       m_space->GunShoot();
       m_gunTime = 0.0f;
     }
+  }
+
+  if (m_directions[kDownDirection])
+  {
+    //m_space->clear();
+    m_pause = true;
+
+    m_mainWindow->m_stackedWidget->setCurrentIndex(0);
   }
 
   if(m_space->GetGun().GetHealth() < 0.0f) { m_gameOver = true; }

@@ -4,6 +4,10 @@
 #include <json/value.h>
 #include <json/writer.h>
 #include <fstream>
+#include <QSize>
+#include <QPalette>
+#include <QFont>
+#include "../include/config_stat.h"
 
 HeadWindow::HeadWindow()
 {
@@ -15,19 +19,35 @@ HeadWindow::HeadWindow()
   m_menuSettingsBtn = new QPushButton("Settings");
   m_menuExitBtn = new QPushButton("Exit");
 
+  QSize btnsize(400, 100);
+  QPalette Palette(palette());
+
   connect(m_menuNewGameBtn, SIGNAL(clicked(bool)), this, SLOT(NewGame()));
   connect(m_menuContinueGameBtn, SIGNAL(clicked(bool)), this, SLOT(ContinueGame()));
   connect(m_menuSettingsBtn, SIGNAL(clicked(bool)), this, SLOT(Settings()));
   connect(m_menuExitBtn, SIGNAL(clicked(bool)), this, SLOT(close()));
+  m_menuNewGameBtn->setFixedSize(btnsize);
+  m_menuContinueGameBtn->setFixedSize(btnsize);
+  m_menuSettingsBtn->setFixedSize(btnsize);
+  m_menuExitBtn->setFixedSize(btnsize);
+
 
   m_menuLayout = new QGridLayout;
   m_menuLayout->addWidget(m_menuNewGameBtn, 1, 1, 1, 1);
   m_menuLayout->addWidget(m_menuContinueGameBtn, 2, 1, 1, 1);
-  m_menuLayout->addWidget(m_menuSettingsBtn, 3, 1, 1 ,1);
+  m_menuLayout->addWidget(m_menuSettingsBtn, 3, 1, 1, 1);
   m_menuLayout->addWidget(m_menuExitBtn, 4, 1, 1, 1);
 
   m_menuWidget = new QWidget(m_widgetStacked);
+  Palette.setColor(QPalette::Background, Qt::black);
+  m_menuWidget->setAutoFillBackground(true);
+  m_menuWidget->setPalette(Palette);
   m_menuWidget->setLayout(m_menuLayout);
+  m_menuWidget->setStyleSheet("QPushButton {\n"
+                                "font-size: 18pt;\n"
+                                "font-weight: bold;\n"
+                                "color: #ff0000;}");
+  m_menuWidget->adjustSize();
 
   m_windowGame = new MainWindow(m_widgetStacked, this);
 
@@ -54,6 +74,7 @@ HeadWindow::HeadWindow()
   m_comboBox->addItem("Life", 3);
   m_comboBox->setCurrentIndex(1);
   m_comboBox->adjustSize();
+  connect(m_comboBox, SIGNAL(activated(int)), this, SLOT(ComboboxDifficultyChanged(int)));
 
   m_groupBoxObstacles = new QGroupBox("Enable obstacles", this);
   m_groupBoxObstacles->setCheckable(true);
@@ -144,13 +165,14 @@ HeadWindow::HeadWindow()
 
 void HeadWindow::ContinueGame()
 {
+  m_windowGame->m_glWidget->ChangePause();
   m_widgetStacked->setCurrentIndex(2);
 }
 
 void HeadWindow::NewGame()
 {
-  m_gameStarted = true;
-  //m_windowGame->NewGame();
+  if (! m_settingsChanged) HeadWindow::DefaultSettings();
+  //m_gameStarted = true;
   m_widgetStacked->setCurrentIndex(2);
 }
 
@@ -172,38 +194,97 @@ void HeadWindow::SaveSettings()
 
 void HeadWindow::SliderAliensChanged(int value)
 {
+  HeadWindow::DefineAliensMesh(value);
   m_sliderAliensLabel->setText("Aliens count = " + QString::number(value));
+  m_settingsChanged = true;
 }
 
 void HeadWindow::SliderAliensChangedHealth(int value)
 {
-   m_sliderAliensLabelHealth->setText("Aliens health = " + QString::number(value));
+  m_windowGame->m_glWidget->kAliensHealth = float(value);
+  m_sliderAliensLabelHealth->setText("Aliens health = " + QString::number(value));
+  m_settingsChanged = true;
 }
 
 void HeadWindow::SliderObstaclesChanged(int value)
 {
-   m_sliderObstaclesLabel->setText("Obstacles count = " + QString::number(value));
+  m_sliderObstaclesLabel->setText("Obstacles count = " + QString::number(value));
+  m_settingsChanged = true;
 }
 
 void HeadWindow::SliderObstaclesChangedHealth(int value)
 {
-   m_sliderObstaclesLabelHealth->setText("Obstacles health = " + QString::number(value));
+  m_sliderObstaclesLabelHealth->setText("Obstacles health = " + QString::number(value));
+  m_settingsChanged = true;
 }
 
 void HeadWindow::SliderSpeedChanged(int val)
 {
-   m_sliderSpeedLabel->setText("Gun speed = " + QString::number(val));
+  m_windowGame->m_glWidget->kGunspeed = float(val);
+  m_sliderSpeedLabel->setText("Gun speed = " + QString::number(val));
+  m_settingsChanged = true;
 }
 
-int const HeadWindow::GetAliensCount()
+void HeadWindow::ComboboxDifficultyChanged(int val)
 {
-  std::cout << "I'm released!" << std::endl;
-  return m_sliderAliens->value();
+  switch(val)
+    {
+      case 0:
+      {
+        m_windowGame->m_glWidget->kAliensSpeed = kAlienSpeed;
+        break;
+      }
+    case 1:
+      {
+        m_windowGame->m_glWidget->kAliensSpeed = kAlienSpeed * 1.2f;
+        break;
+      }
+    case 2:
+      {
+        m_windowGame->m_glWidget->kAliensSpeed = kAlienSpeed * 1.5f;
+        break;
+      }
+    case 3:
+      {
+        m_windowGame->m_glWidget->kAliensSpeed = kAlienSpeed * 2.0f;
+        break;
+      }
+    }
+  m_settingsChanged = true;
 }
 
-float const HeadWindow::GetAliensHealth()
+int const HeadWindow::DefineAliensMesh(int value)
 {
-  return m_sliderAliensHealth->value();
+  if (value % 4 == 0)
+    {
+      m_windowGame->m_glWidget->kAliensRow = 4;
+      m_windowGame->m_glWidget->kAliensColumn = value / 4;
+    }
+  else if (value % 3 == 0)
+    {
+      m_windowGame->m_glWidget->kAliensRow = 3;
+      m_windowGame->m_glWidget->kAliensColumn = value / 3;
+    }
+  else if (value % 5 == 0)
+    {
+      m_windowGame->m_glWidget->kAliensRow = 5;
+      m_windowGame->m_glWidget->kAliensColumn = value / 5;
+    }
+  else
+    {
+      m_windowGame->m_glWidget->kAliensRow = 2;
+      m_windowGame->m_glWidget->kAliensColumn = (value-1) / 2;
+    }
+}
+
+void HeadWindow::DefaultSettings()
+{
+  m_windowGame->m_glWidget->kAliensRow = kAliensNumberRow;
+  m_windowGame->m_glWidget->kAliensColumn = kAliensNumberColumn;
+  m_windowGame->m_glWidget->kAliensHealth = kAlienHealth;
+  m_windowGame->m_glWidget->kAliensSpeed = kAlienSpeed;
+
+  m_windowGame->m_glWidget->kGunspeed = kGunSpeed;
 }
 
 /*

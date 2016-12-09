@@ -8,6 +8,7 @@
 #include "game/gameEntity.h"
 #include "game/space.h"
 #include "game/gun.h"
+#include "main_window.hpp"
 
 class MainWindow;
 
@@ -24,6 +25,16 @@ public:
   GLWidget(MainWindow * mw, QColor const & background);
   ~GLWidget();
   void NextLevel(int level);
+  void ChangePause()
+  {
+    m_pause = false;
+  }
+
+  int kAliensRow;
+  int kAliensColumn;
+  float kAliensHealth;
+  float kGunspeed;
+  float kAliensSpeed;
 
 protected:
   void resizeGL(int w, int h) override;

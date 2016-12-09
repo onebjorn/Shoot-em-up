@@ -11,7 +11,7 @@
 
 
 #include "main_window.hpp"
-
+#include "../include/config_stat.h"
 class MainWindow;
 
 class HeadWindow: public QMainWindow
@@ -23,9 +23,10 @@ public:
 
   //void WriteJson();
   //void ReadJson();
-
   int const GetAliensCount();
   float const GetAliensHealth();
+  int const DefineAliensMesh(int value);
+  void DefaultSettings();
 
 private slots:
   void NewGame();
@@ -41,6 +42,8 @@ private slots:
   void SliderAliensChangedHealth(int value);
 
   void SliderSpeedChanged(int val);
+  void ComboboxDifficultyChanged(int val);
+
 
 private:
   QShortcut * m_shortcutGamePause = nullptr;
@@ -100,5 +103,6 @@ private:
   QStackedWidget * m_widgetStacked = nullptr;
   QSize m_size;
   QString m_style;
+
 
 };
