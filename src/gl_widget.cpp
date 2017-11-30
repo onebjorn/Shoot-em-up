@@ -114,7 +114,7 @@ void GLWidget::paintGL()
 void GLWidget::paintGLGame()
 {
   int const elapsed = m_time.elapsed();
-  Update(elapsed / 1000.0f);
+  Update(elapsed / 100.0f);
 
   QPainter painter;
   QFont fontGame;
@@ -134,8 +134,8 @@ void GLWidget::paintGLGame()
 
   Render();
 
-  m_gunTime += elapsed / 1000.0f;
-  m_alienTime += elapsed / 1000.0f;
+  m_gunTime += elapsed / 100.0f;
+  m_alienTime += elapsed / 100.0f;
 
   glDisable(GL_CULL_FACE);
   glDisable(GL_BLEND);
@@ -146,7 +146,7 @@ void GLWidget::paintGLGame()
   if (elapsed != 0)
   {
     QString framesPerSecond;
-    framesPerSecond.setNum(m_frames / (elapsed / 1000.0), 'f', 2);
+    framesPerSecond.setNum(m_frames / (elapsed / 100.0), 'f', 2);
     painter.setPen(Qt::white);
     painter.drawText(400, 20, framesPerSecond + " fps");
 
@@ -163,7 +163,7 @@ void GLWidget::paintGLGame()
   }
   painter.end();
 
-  if (!(m_frames % 100))
+  if (!(m_frames % 10))
   {
     m_time.start();
     m_frames = 0;

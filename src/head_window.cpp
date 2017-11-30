@@ -331,7 +331,6 @@ void HeadWindow::ReadJson()
     }
 
   auto & root = settings["Settings"];
-    //FOR RESOLUTION MUTHERFUCKAA!!!!!
   Json::Value & aliensCount = root["aliens count"];
   if (! aliensCount.empty())
     {

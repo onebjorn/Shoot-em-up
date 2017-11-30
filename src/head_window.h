@@ -21,8 +21,8 @@ class HeadWindow: public QMainWindow
 public:
   HeadWindow();
 
-  //void WriteJson();
-  //void ReadJson();
+  void WriteJson();
+  void ReadJson();
   int const GetAliensCount();
   float const GetAliensHealth();
   int const DefineAliensMesh(int value);
