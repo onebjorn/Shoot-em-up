@@ -14,17 +14,32 @@ public:
 
   BulletsManager() = default;
 
-  Bullets const & getBullets() const { return m_bullets; }
+  Bullets & getBullets() { return m_bullets; }
+
+  void DeleteBullet(vector<Bullet>::iterator it) { m_bullets.erase(it); }
 
   void AddBullet(Bullet const & obj) { m_bullets.push_back(obj); }
 
+  void BulletsMove(float const deltaY)
+  {
+    for (auto it = m_bullets.begin(); it != m_bullets.end(); ++it)
+    {
+      it->SetBox({ 0.0f, deltaY * it->GetSpeed(), 0.0f, deltaY * it->GetSpeed() });
+    }
+ }
+
   ~BulletsManager() = default;
+
+  void clear()
+  {
+    m_bullets.erase(m_bullets.begin(), m_bullets.end());
+  }
 
 private:
   vector<Bullet> m_bullets;
 };
 
-inline ostream & operator << (ostream & os, BulletsManager const & obj)
+inline ostream & operator << (ostream & os, BulletsManager & obj)
 {
   os << "Bullets:  " << " Count = " << obj.getBullets().size() << endl;
   Logger::Instance().Log(os, obj.getBullets());

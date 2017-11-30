@@ -15,7 +15,7 @@ public:
   Gun(float const x1, float const y1, float const x2, float const y2)
     : m_gunHealth(kGunHealth)
     , m_gunSpeed(kGunSpeed)
-    , m_gunPower(kGunPower)
+    , m_gunScores(0.0)
     , m_ammo(kGunAmmo)
   {
      m_box = Box2D(x1, y1, x2, y2);
@@ -24,7 +24,7 @@ public:
   Gun(Point2D const & leftBottom, Point2D const & rightTop)
     : m_gunHealth(kGunHealth)
     , m_gunSpeed(kGunSpeed)
-    , m_gunPower(kGunPower)
+    , m_gunScores(0.0)
     , m_ammo(kGunAmmo)
   {
     m_box = Box2D(leftBottom, rightTop);
@@ -33,7 +33,7 @@ public:
   Gun(float const x, float const y)
     : m_gunHealth(kGunHealth)
     , m_gunSpeed(kGunSpeed)
-    , m_gunPower(kGunPower)
+    , m_gunScores(0.0)
     , m_ammo(kGunAmmo)
   {
     m_box = Box2D(x - kGunSizeX / 2.0f, y - kGunSizeY / 2.0f , x + kGunSizeX / 2.0f, y + kGunSizeY / 2.0f);
@@ -42,7 +42,7 @@ public:
   Gun(Box2D const & gunobj)
     : m_gunHealth(kGunHealth)
     , m_gunSpeed(kGunSpeed)
-    , m_gunPower(kGunPower)
+    , m_gunScores(0.0)
     , m_ammo(kGunAmmo)
   {
     m_box = Box2D(gunobj);
@@ -50,13 +50,13 @@ public:
 
   float const & GetHealth() const { return m_gunHealth; }
   float const & GetSpeed() const { return m_gunSpeed; }
-  float const & GetRate() const { return m_gunPower; }
+  int const & GetScores() const { return m_gunScores; }
   int const & GetAmmo() const { return m_ammo; }
 
-  void SetPower(float const power)
+  void SetScores(float const score)
   {
-    if (power < 0.0f) throw invalid_argument("Negative power");
-    m_gunPower = power;
+    m_gunScores += score;
+    if (score < 0.0f) throw invalid_argument("Negative power");
   }
 
   void SetHealth(float const health)
@@ -81,19 +81,28 @@ public:
 
   Bullet Shot()
   {
-    m_ammo--;
+    if(m_ammo > 0)
+    {
+          m_ammo--;
     Bullet m_bullet = { m_box.GetCenter().x() - kBulletSizeX / 2.0f, m_box.GetCenter().y() + kGunSizeY / 2.0f,
                         m_box.GetCenter().x() + kBulletSizeX / 2.0f, m_box.GetCenter().y() + kGunSizeY / 2.0f + kBulletSizeY };
     return m_bullet;
+    }
   }
 
-  bool CheckHit(Bullets const & obj, Gun const & gun)
+  bool CheckHit(Bullets & obj, Gun & gun)
   {
     for(auto itBullets = obj.begin(); itBullets != obj.end(); ++itBullets)
     if (m_box.BoxesIntersect(gun.GetBox(), itBullets->GetBox()))
     {
+      obj.erase(itBullets);
+      gun.HealthLoss(kBulletDamage);
+      if (gun.GetHealth() < 0.0f)
+      {
+        return true;
+      }
       itBullets->Update(gun);
-      return true;
+      return false;
     }
     return false;
   }
@@ -101,7 +110,7 @@ public:
 private:
   float m_gunHealth = 0.0f;
   float m_gunSpeed = 0.0f;
-  float m_gunPower = 0.0f;
+  int m_gunScores = 0;
   int m_ammo = 0;
 };
 

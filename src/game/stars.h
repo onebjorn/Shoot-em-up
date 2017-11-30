@@ -5,19 +5,14 @@
 #include <cmath>
 
 using MStars = vector<Point2D>;
+
 class Stars
 {
 public:
 
-  Stars()
-  {
-    Create(kStars);
-  }
+  Stars() { Create(kStars); }
 
-  Stars(int const size)
-  {
-    Create(size);
-  }
+  Stars(int const size) { Create(size); }
 
   MStars const & GetStars() const { return m_stars; }
 

@@ -25,6 +25,13 @@ public:
     m_box = Box2D(x - kAlienSizeX / 2, y - kAlienSizeY / 2 , x + kAlienSizeX / 2, y + kAlienSizeY / 2);
   }
 
+  Alien(float const x, float const y, float const Health, float const Speed, bool type)
+    : m_alienHealth(Health)
+    , m_alienSpeed(Speed)
+  {
+    m_box = Box2D(x - kAlienSizeX / 2, y - kAlienSizeY / 2 , x + kAlienSizeX / 2, y + kAlienSizeY / 2);
+  }
+
   Alien(Point2D const & center)
     : m_alienHealth(kAlienHealth)
     , m_alienSpeed(kAlienSpeed)
@@ -59,9 +66,7 @@ public:
 
   void RemoveHealth(const float deltaHealth)
   {
-    if ((deltaHealth < 0.0f) || (deltaHealth > 100.0f)) throw invalid_argument("Negative health");
-    if (m_alienHealth < deltaHealth) m_alienHealth = 0.0f;
-    if (m_alienHealth > deltaHealth) m_alienHealth -= deltaHealth;
+    m_alienHealth -= deltaHealth;
   }
 
   void AddSpeed(float const deltaSpeed) { m_alienSpeed += deltaSpeed; }

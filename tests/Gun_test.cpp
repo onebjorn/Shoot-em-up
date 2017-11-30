@@ -24,7 +24,7 @@ TEST(gun_test, test_construction)
   EXPECT_EQ(a1.GetSpeed(), kGunSpeed);
   EXPECT_EQ(a1.GetAmmo(), kGunAmmo);
   EXPECT_EQ(a1.GetHealth(), kGunHealth);
-  EXPECT_EQ(a1.GetRate(), kGunPower);
+  EXPECT_EQ(a1.GetScores(), 0.0f);
 
   Gun a2(1.5f, 1.0f, 2.5f, 5.0f);
   EXPECT_EQ(a2.GetBox().x1(), 1.5f);
@@ -34,7 +34,7 @@ TEST(gun_test, test_construction)
   EXPECT_EQ(a2.GetSpeed(), kGunSpeed);
   EXPECT_EQ(a2.GetAmmo(), kGunAmmo);
   EXPECT_EQ(a2.GetHealth(), kGunHealth);
-  EXPECT_EQ(a2.GetRate(), kGunPower);
+  EXPECT_EQ(a2.GetScores(), 0.0f);
 
   Gun a3(b1);
   EXPECT_EQ(a3.GetBox().x1(), 1.5f);
@@ -44,7 +44,7 @@ TEST(gun_test, test_construction)
   EXPECT_EQ(a3.GetSpeed(), kGunSpeed);
   EXPECT_EQ(a3.GetAmmo(), kGunAmmo);
   EXPECT_EQ(a3.GetHealth(), kGunHealth);
-  EXPECT_EQ(a3.GetRate(), kGunPower);
+  EXPECT_EQ(a3.GetScores(), 0.0f);
 
   Factory factory;
   auto gun = factory.Create<Gun>(1.0f, 2.0f, 3.0f, 4.0f);
@@ -86,7 +86,7 @@ TEST(Gun_test, test_exceptions)
   EXPECT_THROW(gun1.HealthLoss(101.0f), invalid_argument);
   EXPECT_THROW(gun1.SpeedLoss(20.0f), invalid_argument);
   EXPECT_THROW(gun1.SetHealth(-101.0f), invalid_argument);
-  EXPECT_THROW(gun1.SetPower(-10.0f), invalid_argument);
+
 
   EXPECT_NO_THROW(gun1.SetHealth(20.0f));
 }
