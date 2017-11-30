@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+int main()
+{
+  return 0;
+=======
 #include <QApplication>
 #include <QMainWindow>
 #include <QSurfaceFormat>
@@ -18,4 +23,5 @@ int main(int argc, char ** argv)
   hw.show();
 
   return app.exec();
+>>>>>>> tmp
 }
